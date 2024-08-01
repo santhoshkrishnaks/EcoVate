@@ -30,10 +30,10 @@ const StatsSection = () => {
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-extrabold leading-8 text-slate-700 sm:text-3xl sm:leading-9 lg:text-4xl lg:leading-10">
-            Trusted by developers
+          Earth Health Metrics
           </h2>
-          <p className="mt-3 text-lg leading-7 text-slate-700 dark:text-gray-400 sm:text-xl sm:mt-4">
-            This package powers many production applications on many different hosting platforms.
+          <p className="mt-3 text-lg leading-7 text-slate-700  sm:text-xl sm:mt-4">
+          Current data on environmental destruction, species extinction, and forest loss.
           </p>
         </div>
       </div>

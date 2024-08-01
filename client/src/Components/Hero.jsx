@@ -9,9 +9,9 @@ const Hero = () => {
         <div className="mb-10 mx-auto max-w-7xl px-4 sm:-mt-[24px] sm:px-6 lg:mt-20 lg:px-3 xl:mt-28 flex gap-3 flex-col lg:flex-row">
           <div className="text-left lg:py-14 sm:py-8 sm:mt-10">
             <h1 className="text-4xl tracking-tight font-extrabold text-neutral-700 sm:text-5xl md:text-6xl lg:text-7xl">
-              <span className="block xl:inline text-green-600">Hello </span>
+              <span className="block xl:inline text-green-700">Hello </span>
               <span className="block text-neutral-700 xl:inline">The Perfect Platform for Environment </span>
-              <span className="block xl:inline text-green-600">Sustainability</span>
+              <span className="block xl:inline text-green-700">Sustainability</span>
             </h1>
             <p className="mt-3 text-base text-neutral-700 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
               Hello World

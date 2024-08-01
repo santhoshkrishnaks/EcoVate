@@ -8,7 +8,7 @@ const Feature = () => {
         <StatsSection />
       </div>
 
-      <div className="flex-1 bg-green-50 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
+      <div className="flex-1 bg-green-100 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
         {/* Content */}
         <div className="flex flex-col items-center text-center space-y-4 lg:space-y-6 lg:w-1/2">
   <h1 className="text-2xl lg:text-6xl font-bold">
@@ -19,9 +19,9 @@ const Feature = () => {
   </p>
   <a
     href="https://www.ecoconnect.com"
-    className="inline-block px-8 py-3  bg-green-500 text-white rounded-lg font-semibold hover:bg-green-900"
+    className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
   >
-    Learn More
+    Join Now !!
   </a>
 </div>
 
