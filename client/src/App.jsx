@@ -1,17 +1,15 @@
+import React from 'react'
+import Nav from './Components/Nav'
 
-import viteLogo from '/vite.svg'
-import { Donate } from './Components/Donate'
-import DonateForms from './Components/DonateForms'
-import DonateActivities from './Components/DonateActivities'
-import { EcoCorpHero } from './Components/EcoCorpHero'
-import { Page1 } from './Components/EcoCsrp/Page1'
+import Feature from './Components/Feature'
+import Footer from './Components/Footer'
+import ContactSection from './Components/Contact'
+import Hero from './Components/Hero'
 
-
-function App() {
-  
-
+const App = () => {
   return (
-<Page1/>
+    <div>
+    </div>
   )
 }
 
