@@ -1,3 +1,4 @@
+
 /* 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -70,4 +71,15 @@ button:focus-visible {
 .post-image{
   height: 350px;
   width: 600px;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width:550px) {
+  .image-footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 }
