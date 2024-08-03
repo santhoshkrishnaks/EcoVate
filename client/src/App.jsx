@@ -1,22 +1,17 @@
-import React from 'react'
-import Nav from './Components/Nav'
-
-import Feature from './Components/Feature'
-import Footer from './Components/Footer'
-import ContactSection from './Components/Contact'
-import Hero from './Components/Hero'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Ecocalc from './Components/Ecocalc/Ecocalc';
+import Results from './Components/Ecocalc/Results';
 
 const App = () => {
   return (
-    <div>
-        <Nav/>
-        <Hero/>
-        <Feature/>
-        <ContactSection/>
-        <Footer/>
-        
-    </div>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Ecocalc />} />
+        <Route path="/results" element={<Results />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
