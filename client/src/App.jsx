@@ -5,13 +5,9 @@ import Results from './Components/Ecocalc/Results';
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Ecocalc />} />
-        <Route path="/results" element={<Results />} />
-      </Routes>
-    </Router>
-  );
+    <div>
+    </div>
+  )
 }
 
 export default App;
