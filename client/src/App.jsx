@@ -9,12 +9,6 @@ import Hero from './Components/Hero'
 const App = () => {
   return (
     <div>
-        <Nav/>
-        <Hero/>
-        <Feature/>
-        <ContactSection/>
-        <Footer/>
-        
     </div>
   )
 }
