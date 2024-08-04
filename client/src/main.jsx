@@ -8,6 +8,6 @@ import Feed from './Components/EcoConnect/Feed.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Feed/>
+    <App/>
   </React.StrictMode>,
 )

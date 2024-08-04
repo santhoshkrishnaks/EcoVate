@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
 
-const Post = ({ post, onProfileClick }) => {
+const Post = ({ post, onProfileClick, handleSearch }) => {
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState(post.comments || []);
@@ -17,7 +17,6 @@ const Post = ({ post, onProfileClick }) => {
   const handleLike = () => {
     setLiked(!liked);
     setLikes((prevLikes) => (liked ? prevLikes - 1 : prevLikes + 1));
-    // Backend update for like status can be added here
   };
 
   const handleAddComment = () => {
@@ -31,18 +30,14 @@ const Post = ({ post, onProfileClick }) => {
       setComments([...comments, newComment]);
       setCommentText("");
       setShowCommentBox(false);
-      // Optionally, send the new comment to the backend here
     } else {
       console.error("Comment text is empty");
     }
   };
 
   const handleDeleteComment = (index) => {
-    // Removing user ID check for now
     setComments(comments.filter((_, i) => i !== index));
-    // Optionally, inform the backend to delete the comment
   };
-
 
   const handleJoinTeam = () => {
     const subject = `Interested in joining your team for: ${post.title}`;
@@ -53,78 +48,70 @@ const Post = ({ post, onProfileClick }) => {
 
     window.location.href = mailtoLink;
   };
-  
+
   return (
-    <div className="post bg-white rounded-lg shadow-md p-4 mb-6">
-      <div className="post-header flex items-center mb-4">
-        <img
-          src={post.user.profilePicture}
-          alt={post.user.name}
-          className="profile-picture w-12 h-12 rounded-full cursor-pointer"
-          onClick={() => onProfileClick(post.userId)} // Call the profile click handler
-        />
-        <div className="post-user-info ml-4">
-          <div
-            className="user-name font-semibold cursor-pointer"
-            onClick={() => onProfileClick(post.userId)} // Call the profile click handler
-          >
-            {post.user.name}
-          </div>
-          <div className="post-timestamp text-gray-500 text-sm">
-            {new Date(post.timestamp).toLocaleString()}
+    <div className="post bg-gray-100 rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+      <div className="post-header flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+        <div className="post-header flex items-start sm:items-center mb-4 sm:mb-0">
+          <img
+            src={post.user.profilePicture}
+            alt={post.user.name}
+            className="profile-picture w-12 h-12 rounded-full cursor-pointer"
+            onClick={() => onProfileClick(post.userId)}
+          />
+          <div className="post-user-info ml-4">
+            <div
+              className="user-name font-semibold cursor-pointer"
+              onClick={() => onProfileClick(post.userId)}
+            >
+              {post.user.name}
+            </div>
+            <div className="post-location text-gray-700">
+              {post.location && (
+                <span className="text-slate-700">{post.location}</span>
+              )}
+            </div>
+            <div className="post-timestamp text-gray-500 text-sm">
+              {new Date(post.timestamp).toLocaleString()}
+            </div>
           </div>
         </div>
+
+        <div className="post-status text-green-500 font-semibold sm:mr-4">
+          {post.status}
+        </div>
       </div>
+
       <div className="post-content mb-4">
-        <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-        <p className="mb-2">{post.description}</p>
+        <h3 className="text-xl font-bold mb-2 text-slate-700">{post.title}</h3>
+
         {post.image && (
           <img
             src={post.image}
             alt="Post content"
-            height="200"
-            width="600"
-            className="post-image rounded-lg"
+            className="w-full h-auto rounded-lg"
           />
         )}
       </div>
-      <div className="post-tags mb-4">
-        {post.tags.map((tag) => (
-          <span
-            key={tag}
-            className="post-tag bg-teal-100 text-teal-800 px-2 py-1 rounded-lg mr-2"
-          >
-            #{tag}
-          </span>
-        ))}
-      </div>
-      <div className="post-location mb-4 text-gray-700">
-        {post.location && <span>Location: {post.location}</span>}
-      </div>
-      <div className="post-status mb-4 text-green-500 font-semibold">
-        Status: {post.status}
-      </div>
-      {post.status === "Ongoing" && (
-        <div className="post-call-to-action mb-4">
-          <p>Be Part of This Impactful Change!</p>
-          <button onClick={handleJoinTeam} className="text-green-700">Join the team</button>
-        </div>
-      )}
-      <div className="post-engagement flex space-x-4">
+      <p className="mb-2">{post.description}</p>
+      <div className="post-engagement flex flex-row space-x-4 mb-4">
         <button
           onClick={handleLike}
           className={`like-button ${liked ? "text-red-500" : "text-blue-500"}`}
         >
-          {liked ? "Unlike" : "Like"} ({likes})
+          {liked ? "Unlike" : "Like"}
         </button>
         <button
           onClick={() => setShowCommentBox(!showCommentBox)}
-          className="comment-button text-blue-500"
+          className="comment-button text-blue-500 mt-0"
         >
           Comment
         </button>
         {post.status === "Ongoing" && (
-          <a href={post.donationLink} className="donate-button text-blue-500">
+          <a
+            href={post.donationLink}
+            className="donate-button text-blue-500 mt-0"
+          >
             Donate
           </a>
         )}
@@ -149,7 +136,7 @@ const Post = ({ post, onProfileClick }) => {
         {comments.map((comment, index) => (
           <div
             key={index}
-            className="comment bg-gray-100 p-2 rounded-lg mb-2 flex items-center"
+            className="comment bg-gray-100 p-2 rounded-lg mb-2 flex flex-col sm:flex-row items-start sm:items-center"
           >
             <div className="comment-user font-semibold mr-2">
               {comment.user?.name || "Anonymous"}:
@@ -157,11 +144,32 @@ const Post = ({ post, onProfileClick }) => {
             <div className="comment-text flex-1">{comment.text}</div>
             <button
               onClick={() => handleDeleteComment(index)}
-              className="text-red-500 ml-4"
+              className="text-red-500 mt-2 sm:mt-0"
             >
               <img src={img} alt="delete" height={20} width={20} />
             </button>
           </div>
+        ))}
+      </div>
+
+      {post.status === "Ongoing" && (
+        <div className="post-call-to-action mb-4 lg:block">
+          <p className="hidden md:block">Be Part of This Impactful Change!</p>
+          <button onClick={handleJoinTeam} className="text-green-700">
+            Join the team
+          </button>
+        </div>
+      )}
+
+      <div className="post-tags flex flex-wrap">
+        {post.tags.map((tag) => (
+          <button
+            key={tag}
+            className="post-tag bg-teal-100 text-teal-800 px-2 py-1 rounded-lg mr-2 mb-2"
+            onClick={() => handleSearch(tag)}
+          >
+            #{tag}
+          </button>
         ))}
       </div>
     </div>

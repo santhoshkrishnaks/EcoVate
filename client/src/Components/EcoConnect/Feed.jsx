@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Post from "./Post";
 import beach from "../../assets/beach.webp";
 import tree from "../../assets/tree.jpg";
 import solar from "../../assets/solar.jpg";
-// Assuming images and other imports are here...
+import Modal from "./Modal";
+import EcoNav from "./EcoNav";
+
 const users = [
   {
     id: 1,
     name: "Jane Doe",
     email: "jane@example.com",
     profilePicture: "https://via.placeholder.com/50",
-    isLoggedIn: false, // to simulate authentication state
+    isLoggedIn: false,
   },
   {
     id: 2,
     name: "John Smith",
     email: "john@example.com",
     profilePicture: "https://via.placeholder.com/50",
-    isLoggedIn: false, // to simulate authentication state
+    isLoggedIn: false,
   },
-  // More users...
 ];
 
-// Sample post data
-const samplePosts = [
+const initialPosts = [
   {
     id: 1,
-    userId: 1, // Links to user ID
+    userId: 1,
     user: {
       name: "Jane Doe",
       profilePicture: "https://via.placeholder.com/50",
@@ -42,11 +42,11 @@ const samplePosts = [
     status: "Ongoing",
     callToAction: "Join our next planting event...",
     donationLink: "https://example.com/donate-trees",
-    contactEmail:"greenearth@gmail.com"
+    contactEmail: "greenearth@gmail.com",
   },
   {
     id: 2,
-    userId: 2, // Links to user ID
+    userId: 2,
     user: {
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
@@ -65,7 +65,7 @@ const samplePosts = [
   },
   {
     id: 3,
-    userId: 2, // Ensure unique post IDs
+    userId: 2,
     user: {
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
@@ -74,7 +74,7 @@ const samplePosts = [
     initiativeType: "Solar Energy",
     title: "Solar Energy for All",
     description:
-      "Installed solar panels across 50 homes to promote renewable energy use. This initiative aims to reduce carbon footprints in our community.",
+      "Installed solar panels across 50 homes to promote renewable energy use.",
     image: solar,
     tags: ["SolarEnergy", "Renewables"],
     location: "Los Angeles",
@@ -84,27 +84,84 @@ const samplePosts = [
       "Learn how you can install solar panels at a discounted rate by contacting us.",
     donationLink: "https://example.com/donate-solar",
   },
-  // More posts...
 ];
-// Sample user and post data, assuming it's already defined...
 
 const Feed = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [posts, setPosts] = useState(initialPosts);
+  const [newPost, setNewPost] = useState({
+    initiativeType: "",
+    title: "",
+    description: "",
+    image: "",
+    tags: [],
+    location: "",
+    organization: "",
+    status: "",
+    donationLink: "",
+    contactEmail: "",
+  });
+
+  // Function to get top 5 hashtags
+  const getTopHashtags = () => {
+    const hashtagCount = {};
+
+    // Count hashtags
+    posts.forEach((post) => {
+      post.tags.forEach((tag) => {
+        hashtagCount[tag] = (hashtagCount[tag] || 0) + 1;
+      });
+    });
+
+    // Convert object to array and sort by count
+    const sortedHashtags = Object.entries(hashtagCount)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([tag]) => tag);
+
+    return sortedHashtags;
+  };
+
+  const topHashtags = getTopHashtags();
 
   const handleSearch = (term) => {
     setSearchTerm(term.toLowerCase());
   };
 
+  const handleSearchSubmit = (term) => {
+    setSearchTerm(term.toLowerCase());
+  };
+
   const handleCreatePost = () => {
-    alert("Redirecting to post creation form...");
+    setIsModalVisible(true);
   };
 
   const handleProfileClick = (userId) => {
     setSelectedUserId(userId);
   };
 
-  const filteredPosts = samplePosts
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setNewPost((prevPost) => ({ ...prevPost, [name]: value }));
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const postWithId = {
+      ...newPost,
+      id: posts.length + 1,
+      timestamp: new Date().toISOString(),
+      userId: 1,
+      user: users[0],
+    };
+    setPosts([postWithId, ...posts]);
+    alert("New initiative submitted!");
+    setIsModalVisible(false);
+  };
+
+  const filteredPosts = posts
     .filter((post) =>
       post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
     )
@@ -112,85 +169,84 @@ const Feed = () => {
 
   return (
     <div>
-      <header className="w-full bg-green-200 p-6 text-slate-700 text-center">
-        <h1 className="text-4xl font-bold">EcoConnect</h1>
-        <p className="text-lg mt-2">
-          Connecting Communities for a Sustainable Future
-        </p>
-      </header>
+      <EcoNav
+        searchTerm={searchTerm}
+        onSearchChange={handleSearch}
+        onSearchSubmit={handleSearchSubmit}
+        setSearchTerm={setSearchTerm}
+      />
 
-      <div className="feed-container flex justify-center bg-slate-700">
-        <div className="left-sidebar hidden lg:block w-1/4 p-4">
+      <div className="feed-container flex justify-center bg-green-100 px-6">
+        <div className="left-sidebar hidden lg:block w-1/4 p-4 h-screen sticky top-20">
           <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
           <ul>
-            <li className="mb-2">
-              <button
-                onClick={() => handleSearch("CleanBeaches")}
-                className="text-blue-500"
-              >
-                #CleanBeaches
-              </button>
-            </li>
-            <li className="mb-2">
-              <button
-                onClick={() => handleSearch("TreePlanting")}
-                className="text-blue-500"
-              >
-                #TreePlanting
-              </button>
-            </li>
-            <li className="mb-2">
-              <button
-                onClick={() => handleSearch("SaveRivers")}
-                className="text-blue-500"
-              >
-                #SaveRivers
-              </button>
-            </li>
+            {topHashtags.map((hashtag) => (
+              <li key={hashtag} className="mb-2">
+                <button
+                  onClick={() => handleSearch(hashtag)}
+                  className="text-blue-500"
+                >
+                  #{hashtag}
+                </button>
+              </li>
+            ))}
           </ul>
 
-          <h2 className="text-xl font-bold mt-6 mb-4">Partner Organizations</h2>
-          <ul>
-            <li className="mb-2">
-              <a href="#" className="text-blue-500">
-                Green Earth Volunteers
-              </a>
-            </li>
-            <li className="mb-2">
-              <a href="#" className="text-blue-500">
-                Ocean Protectors
-              </a>
-            </li>
-            <li className="mb-2">
-              <a href="#" className="text-blue-500">
-                Solar Solutions
-              </a>
-            </li>
-          </ul>
+          {/* New Section: Upcoming Events */}
+          <div className="mt-6">
+            <h3 className="text-lg font-bold mb-4">Upcoming Events</h3>
+            <ul>
+              <li className="mb-2">
+                <a href="#" className="text-blue-500">
+                  Tree Planting Day at Central Park - August 20, 2024
+                </a>
+              </li>
+              <li className="mb-2">
+                <a href="#" className="text-blue-500">
+                  Beach Cleanup Drive at Santa Monica - August 25, 2024
+                </a>
+              </li>
+              <li className="mb-2">
+                <a href="#" className="text-blue-500">
+                  Solar Panel Installation Workshop - August 30, 2024
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-6">
+            <h3 className="text-lg font-bold mb-4">
+              Join Our Volunteer Program
+            </h3>
+            <p className="mb-4">
+              Interested in making a difference? Join our volunteer program and
+              be part of our impactful initiatives!
+            </p>
+            <a
+              href="https://example.com/volunteer-signup"
+              className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+            >
+              Join Us
+            </a>
+          </div>
         </div>
 
         <div className="feed mx-auto max-w-2xl w-full p-4 min-h-screen">
-          <div className="flex flex-col mb-6">
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl font-bold">Initiatives Feed</h1>
+          <div className="hidden md:flex flex-col mb-6">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
+              <h1 className="text-4xl font-bold md:mb-0 mb-6">
+                <span className="text-green-700">Eco</span>Connect
+              </h1>
               <button
                 onClick={handleCreatePost}
-                className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+                className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
               >
                 Post New Initiative
               </button>
             </div>
-
-            <div className="mb-4">
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => handleSearch(e.target.value)}
-                placeholder="Search by hashtag..."
-                className="w-full px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
           </div>
+
+          {/* Feed Posts */}
 
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
@@ -198,6 +254,7 @@ const Feed = () => {
                 key={post.id}
                 post={post}
                 onProfileClick={handleProfileClick}
+                handleSearch={handleSearch}
               />
             ))
           ) : (
@@ -207,7 +264,9 @@ const Feed = () => {
           )}
         </div>
 
-        <div className="right-sidebar hidden lg:block w-1/4 p-4">
+        {/* Right side */}
+
+        <div className="right-sidebar hidden lg:block w-1/4 p-4 sticky top-20 h-screen">
           <h2 className="text-xl font-bold mb-4">Recent News</h2>
           <ul>
             <li className="mb-2">
@@ -225,9 +284,38 @@ const Feed = () => {
                 Community solar energy project reaches new milestone.
               </a>
             </li>
+            <li className="mb-2">
+              <a href="#" className="text-blue-500">
+                Community solar energy project reaches new milestone.
+              </a>
+            </li>
+            <li className="mb-2">
+              <a href="#" className="text-blue-500">
+                Community solar energy project reaches new milestone.
+              </a>
+            </li>
+            <li className="mb-2 mt-10 ">
+              <iframe
+                width="300"
+                height="200"
+                src="https://www.youtube.com/embed/W5bh1JFo43U?si=zLDv3o7ApAzlV43o"
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              ></iframe>
+            </li>
           </ul>
         </div>
       </div>
+
+      <Modal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        onSubmit={handleFormSubmit}
+        formData={newPost}
+        onChange={handleFormChange}
+      />
     </div>
   );
 };

@@ -5,16 +5,14 @@ import Feature from './Components/Feature'
 import Footer from './Components/Footer'
 import ContactSection from './Components/Contact'
 import Hero from './Components/Hero'
+import Feed from './Components/EcoConnect/Feed'
+import About from './Components/About'
 
 const App = () => {
   return (
     <div>
-        <Nav/>
-        <Hero/>
-        <Feature/>
-        <ContactSection/>
-        <Footer/>
-        
+         
+        <Feed/>
     </div>
   )
 }
