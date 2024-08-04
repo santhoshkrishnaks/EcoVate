@@ -11,7 +11,7 @@ const EcoNav = ({
   const [productMenuOpen, setProductMenuOpen] = useState(false);
   const [inputWidth, setInputWidth] = useState("w-12");
 
-  const handleFocus = () => setInputWidth("w-32");
+  const handleFocus = () => setInputWidth("w-32 sm:w-48");
   const handleBlur = (e) => {
     if (e.target.value === "") {
       setInputWidth("w-1");
@@ -285,30 +285,7 @@ const EcoNav = ({
               </button>
             </div>
             <div className="mt-6">
-              <div className="relative mb-6">
-                <input
-                  type="text"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  placeholder="Search..."
-                  className={`bg-white h-8 px-4 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${inputWidth} border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500`}
-                  onFocus={handleFocus}
-                  onBlur={handleBlur}
-                />
-                <button
-                  type="submit"
-                  className="absolute right-0 top-0 mt-2 mr-2"
-                >
-                  <svg
-                    className="h-4 w-4 fill-current text-gray-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                  >
-                    <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-                  </svg>
-                </button>
-              </div>
+             
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
                   <a
