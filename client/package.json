@@ -11,10 +11,16 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.7.12",
+    "@tailwindcss/forms": "^0.5.7",
+    "pdf-lib": "^1.17.1",
+    "pdfmake": "^0.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "scrollreveal": "^4.0.9"
-    
+    ,
+    "react-router-dom": "^6.26.0",
+    "uuid": "^10.0.0",
+    "@dotlottie/player-component": "^2.7.12"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
