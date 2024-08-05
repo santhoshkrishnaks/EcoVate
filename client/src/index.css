@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+.cl-avatarBox{
+  width: 40px;
+  height:40px;
+}
 @media (max-width:550px) {
   .image-footer{
     width: 100%;
