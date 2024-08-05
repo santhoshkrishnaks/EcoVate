@@ -5,6 +5,7 @@ import tree from "../../assets/tree.jpg";
 import solar from "../../assets/solar.jpg";
 import Modal from "./Modal";
 import EcoNav from "./EcoNav";
+import Footer from "../Footer";
 
 const users = [
   {
@@ -316,6 +317,7 @@ const Feed = () => {
         formData={newPost}
         onChange={handleFormChange}
       />
+      <Footer/>
     </div>
   );
 };

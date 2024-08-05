@@ -1,5 +1,6 @@
 import { useState } from "react";
 import logo from "../../assets/logo.png";
+import { useAuth,UserButton,SignInButton } from "@clerk/clerk-react";
 
 const EcoNav = ({
   searchTerm,
@@ -7,6 +8,8 @@ const EcoNav = ({
   onSearchChange,
   onSearchSubmit,
 }) => {
+  const { isSignedIn } = useAuth();
+  const login = isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
   const [inputWidth, setInputWidth] = useState("w-12");
@@ -34,7 +37,7 @@ const EcoNav = ({
   };
 
   return (
-    <header className="bg-green-100 sticky top-0">
+    <header className="bg-green-100 sticky top-0 z-50">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
         aria-label="Global"
@@ -245,12 +248,11 @@ const EcoNav = ({
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
-            className="text-lg font-semibold leading-6 text-gray-900 mb-3"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+        {login ? (
+          <UserButton />
+        ) : (
+          <span className="text-lg font-semibold leading-6 text-gray-900"><SignInButton>Log in </SignInButton><span aria-hidden="true">&rarr;</span></span>
+          )}
         </div>
       </nav>
       {mobileMenuOpen && (
@@ -314,12 +316,11 @@ const EcoNav = ({
                   </a>
                 </div>
                 <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                  >
+                {isSignedIn?(<div></div>):(<div className="py-6">
+                  <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
                     Log in
-                  </a>
+                  </span>
+                </div>)}
                 </div>
               </div>
             </div>

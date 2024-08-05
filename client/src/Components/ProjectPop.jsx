@@ -1,6 +1,8 @@
 import Create from "./Context";
+import Footer from "./Footer";
 import Form from "./Form";
 import { useContext, useState } from "react";
+import Nav from "./Nav";
 export const ProjectPop = () => {
   const {showForm,setShowForm}=useContext(Create);
 const handleFormClick = () => {
@@ -11,6 +13,8 @@ const handleFormClick = () => {
   }
   
   return (
+    <div>
+    <Nav/>
     <div className="min-h-screen bg-green-50">
 <div className="flex-1  flex flex-col lg:flex-row items-center lg:items-start justify-between p-4" id="form">
         {/* Content */}
@@ -107,10 +111,8 @@ const handleFormClick = () => {
             <Form />
             </div>
           </div>
-        )}
-
-
-
+          )}</div>
+          <Footer/>
     </div>
   )
 }

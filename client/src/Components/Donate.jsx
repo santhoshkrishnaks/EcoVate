@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { DonateStats } from "./DonateStats";
 import DonateForms from "./DonateForms";
 import DonateActivities from "./DonateActivities";
+import Nav from "./Nav";
+import Footer from "./Footer";
 
 export const Donate = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -22,7 +24,8 @@ export const Donate = () => {
 
   return (
     <>
-      <div className=" overflow-hidden bg-green-100  lg:min-h-screen flex flex-col">
+    <Nav/>
+      <div className=" overflow-hidden bg-green-50  lg:min-h-screen flex flex-col">
         <h1 className="text-center lg:text-6xl font-bold  mt-[100px] text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
           EcoFund
         </h1>
@@ -31,7 +34,7 @@ export const Donate = () => {
             Donate-Impact-Sustain
           </p>
         </div>
-        <div className=" lg:flex  bg-green-100 mt-[10px]">
+        <div className=" lg:flex  bg-green-50 mt-[10px]">
           {/* Section 1: Donate to Eco */}
 
           <div className=" ml-[30px] lg:p-10 lg:flex flex-col lg:items-center rounded transition-all duration-500 transform hover:scale-110 hover:border-t-2 hover:border-b-2 hover:border-l-2 hover:border-r-2 lg:w-[600px] lg:h-[300px]  lg:ml-[120px] border-slate-400">
@@ -127,6 +130,7 @@ export const Donate = () => {
           </div>
         )}
       </div>
+      <Footer/>
     </>
   );
 };

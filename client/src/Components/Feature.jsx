@@ -4,7 +4,7 @@ import StatsSection from './Counter';
 const Feature = () => {
   return (
     <div className='min-h-screen flex flex-col'>
-      <div className='flex-1'>
+      <div className='flex-1 bg-slate-50' >
         <StatsSection />
       </div>
 
