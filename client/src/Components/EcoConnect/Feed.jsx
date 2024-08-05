@@ -4,8 +4,9 @@ import beach from "../../assets/beach.webp";
 import tree from "../../assets/tree.jpg";
 import solar from "../../assets/solar.jpg";
 import Modal from "./Modal";
-import EcoNav from "./EcoNav";
 import Footer from "../Footer";
+import EcoNav from "./EcoNav";
+import JoinVolunteerForm from "../Volunteer"; // Import the JoinVolunteerForm component
 
 const users = [
   {
@@ -32,7 +33,7 @@ const initialPosts = [
       name: "Jane Doe",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: new Date().toISOString(),
+    timestamp: "2024-08-01T10:00Z", // Static timestamp
     initiativeType: "Tree Planting",
     title: "Green City Initiative",
     description: "We planted 500 new trees in our local park...",
@@ -52,7 +53,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: new Date().toISOString(),
+    timestamp: "2024-07-25T15:30", // Static timestamp
     initiativeType: "Beach Cleanup",
     title: "Clean Beaches Project",
     description: "Our team cleaned up over 200 pounds of trash...",
@@ -71,7 +72,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: new Date().toISOString(),
+    timestamp: "2024-08-02T09:00:00Z", // Static timestamp
     initiativeType: "Solar Energy",
     title: "Solar Energy for All",
     description:
@@ -84,7 +85,7 @@ const initialPosts = [
     callToAction:
       "Learn how you can install solar panels at a discounted rate by contacting us.",
     donationLink: "https://example.com/donate-solar",
-  },
+  }
 ];
 
 const Feed = () => {
@@ -104,6 +105,7 @@ const Feed = () => {
     donationLink: "",
     contactEmail: "",
   });
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false); // State for managing volunteer form visibility
 
   // Function to get top 5 hashtags
   const getTopHashtags = () => {
@@ -160,6 +162,10 @@ const Feed = () => {
     setPosts([postWithId, ...posts]);
     alert("New initiative submitted!");
     setIsModalVisible(false);
+  };
+
+  const handleJoinNowClick = () => {
+    setShowVolunteerForm(true);
   };
 
   const filteredPosts = posts
@@ -223,12 +229,12 @@ const Feed = () => {
               Interested in making a difference? Join our volunteer program and
               be part of our impactful initiatives!
             </p>
-            <a
-              href="https://example.com/volunteer-signup"
+            <button
+              onClick={handleJoinNowClick}
               className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
             >
               Join Us
-            </a>
+            </button>
           </div>
         </div>
 
@@ -248,7 +254,6 @@ const Feed = () => {
           </div>
 
           {/* Feed Posts */}
-
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <Post
@@ -266,7 +271,6 @@ const Feed = () => {
         </div>
 
         {/* Right side */}
-
         <div className="right-sidebar hidden lg:block w-1/4 p-4 sticky top-20 h-screen">
           <h2 className="text-xl font-bold mb-4">Recent News</h2>
           <ul>
@@ -317,6 +321,11 @@ const Feed = () => {
         formData={newPost}
         onChange={handleFormChange}
       />
+      
+      {showVolunteerForm && (
+        <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
+      )}
+
       <Footer/>
     </div>
   );

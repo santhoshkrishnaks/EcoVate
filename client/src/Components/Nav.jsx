@@ -27,6 +27,7 @@ const Nav = () => {
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </a>
         </div>
+
         <div className="flex lg:hidden">
         <button
         type="button"
@@ -51,6 +52,7 @@ const Nav = () => {
             </svg>
           </button>
         </div>
+
         <div className="hidden lg:flex lg:gap-x-12">
         <a href="/Ecoconnect" className="text-lg font-semibold leading-6 text-gray-900">
           EcoConnect
@@ -117,6 +119,7 @@ const Nav = () => {
           </div>
 
         </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
         {login ? (
           <UserButton />
