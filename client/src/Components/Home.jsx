@@ -5,7 +5,6 @@ import Footer from "./Footer.jsx";
 import ContactSection from "./Contact.jsx";
 import {EcoCorpHero} from "./EcoCorpHero.jsx";
 import Hero from "./Hero.jsx";
-import { EcoCorpHero } from "./EcoCorpHero.jsx";
 const Home = () => {
   return (
     <div>

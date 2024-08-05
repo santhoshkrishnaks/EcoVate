@@ -1,16 +1,6 @@
 import { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
-<<<<<<< HEAD
-import { useNavigate } from "react-router-dom";
-
-const Nav = () => {
-  const { isSignedIn } = useAuth();
-  const login = isSignedIn;
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [productMenuOpen, setProductMenuOpen] = useState(false);
-  const navigate = useNavigate();
-=======
 import Create from "./Context";
 
 const Nav = () => {
@@ -19,7 +9,6 @@ const Nav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
 
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -65,28 +54,6 @@ const Nav = () => {
           </button>
         </div>
 
-<<<<<<< HEAD
-        <div className="hidden lg:flex lg:gap-x-12">
-          <a
-            href="/#connect"
-            className="text-lg font-semibold leading-6 text-gray-900"
-          >
-            EcoConnect
-          </a>
-          <a
-            href="/Ecofund"
-            className="text-lg font-semibold leading-6 text-gray-900"
-          >
-            EcoFund
-          </a>
-          <a
-            href="/#"
-            className="text-lg font-semibold leading-6 text-gray-900"
-          >
-            EcoCorp
-          </a>
-
-=======
         <div className="hidden lg:flex lg:gap-x-12" >
         <span className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer" onClick={()=>{ if (isSignedIn) {
       window.location.href = '/Ecoconnect';
@@ -109,7 +76,6 @@ const Nav = () => {
         }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
           EcoCorp
         </span>
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
           <div className="relative">
             <button
               type="button"
@@ -133,17 +99,6 @@ const Nav = () => {
             </button>
 
             {productMenuOpen && (
-<<<<<<< HEAD
-              <div className="absolute -left-8 top-full z-10 mt-3 w-auto max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
-                <div className="p-4">
-                  {[
-                    { name: "EcoVision", path: "/Ecovision" },
-                    { name: "EcoCalc", path: "/Ecocalc" },
-                  ].map((item) => (
-                    <div
-                      key={item.path} // or item.name if it's guaranteed to be unique
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100"
-=======
               <div className="absolute -left-8 top-full z-10 mt-3 w-44 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {[
@@ -159,7 +114,6 @@ const Nav = () => {
                     <div
                       key={item.path}
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
                     >
                       <div className="flex-auto">
                         <a
@@ -176,10 +130,6 @@ const Nav = () => {
               </div>
             )}
           </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -257,23 +207,11 @@ const Nav = () => {
                     EcoCalc
                   </a>
                 </div>
-<<<<<<< HEAD
-                {isSignedIn ? (
-                  <div></div>
-                ) : (
-                  <div className="py-6">
-                    <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
-                      Log in
-                    </span>
-                  </div>
-                )}
-=======
                 {isSignedIn?(<div></div>):(<div className="py-6">
                   <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
                   <SignInButton>Log in </SignInButton>
                   </span>
                 </div>)}
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
               </div>
             </div>
           </div>
