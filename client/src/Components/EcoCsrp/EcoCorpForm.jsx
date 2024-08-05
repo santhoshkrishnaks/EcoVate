@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Footer from '../Footer';
+import Nav from '../Nav';
 
 const Form = () => {
   // State to store form data
@@ -57,6 +59,8 @@ const Form = () => {
   };
 
   return (
+    <div>
+    <Nav/>
     <form className="bg-white p-8 rounded-lg shadow-lg" onSubmit={handleFormSubmit}>
       <div className="space-y-8">
         {/* Organization Details Section */}
@@ -326,6 +330,8 @@ const Form = () => {
         </div>
       </div>
     </form>
+    <Footer/>
+    </div>
   );
 };
 
