@@ -1,22 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
-import { useUser } from "@clerk/clerk-react";
+import Create from "./Context";
 
 const Nav = () => {
-  const { isSignedIn } = useUser();
-
-  const handleButtonClick = () => {
-    if (isSignedIn) {
-      window.location.href = '/Ecoconnect';
-    } else {
-      window.location.href = '/SignUp';
-    }
-  };
-  
+  const { isSignedIn } = useAuth();
+  const login=isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
-  const login = isSignedIn;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -33,7 +24,7 @@ const Nav = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 lg:-ml-10 ">
+          <a href="/" className="-m-1.5 lg:-ml-10 ">
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </a>
         </div>
@@ -63,19 +54,28 @@ const Nav = () => {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:gap-x-12">
-        <button
-      onClick={handleButtonClick}
-      className="text-lg font-semibold leading-6 text-gray-900 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
-    >
-      Ecoconnect
-      </button>
-        <a href="/Ecofund" className="text-lg font-semibold leading-6 text-gray-900">
+        <div className="hidden lg:flex lg:gap-x-12" >
+        <span className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer" onClick={()=>{ if (isSignedIn) {
+      window.location.href = '/Ecoconnect';
+    } else {
+      window.location.href = '/signin';
+    }}}>
+          EcoConnect
+        </span>
+        <span onClick={()=>{ if (isSignedIn) {
+          window.location.href = '/Ecofund';
+        } else {
+          window.location.href = '/signin';
+        }}} className="text-lg font-semibold leading-6 text-gray-900">
           EcoFund
-        </a>
-        <a href="/Ecocorp" className="text-lg font-semibold leading-6 text-gray-900">
+        </span>
+        <span onClick={()=>{ if (isSignedIn) {
+          window.location.href = '/EcoCorp';
+        } else {
+          window.location.href = '/signin';
+        }}} className="text-lg font-semibold leading-6 text-gray-900">
           EcoCorp
-        </a>
+        </span>
           <div className="relative">
             <button
               type="button"
@@ -146,7 +146,7 @@ const Nav = () => {
           <div className="fixed inset-0 z-10"></div>
           <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-green-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <a href="/" className="-m-1.5 p-1.5">
                 <img className="h-8 w-auto" src={logo} alt="" />
               </a>
               <button
@@ -175,31 +175,31 @@ const Nav = () => {
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
                   <a
-                    href="#"
+                    href="/Ecoconnect"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoConnect
                   </a>
                   <a
-                    href="#"
+                    href="/Ecofund"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoFund
                   </a>
                   <a
-                    href="#"
+                    href="/Ecocorp"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoCorp
                   </a>
                   <a
-                    href="#"
+                    href="/Ecovision"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoVision
                   </a>
                   <a
-                    href=""
+                    href="/Ecocalc"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoCalc
