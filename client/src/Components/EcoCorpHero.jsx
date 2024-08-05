@@ -1,7 +1,10 @@
+import { useAuth } from "@clerk/clerk-react";
 import { DotLottiePlayer } from "@dotlottie/player-component";
 import React from "react";
 
 export const EcoCorpHero = () => {
+  const { isSignedIn } = useAuth();
+  const login=isSignedIn;
   return (
     <div>
       <div className="flex-1 bg-green-50 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
@@ -15,12 +18,22 @@ export const EcoCorpHero = () => {
             and innovative solutions to help corporate organization reduce their
             environmental footprint.
           </p>
+<<<<<<< HEAD
           <a
             href="/Ecocorp"
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
+=======
+          <span
+          onClick={()=>{ if (isSignedIn) {
+            window.location.href = '/Ecocrop';
+          } else {
+            window.location.href = '/signin';
+          }}}
+            className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
           >
             Visit Now !!
-          </a>
+          </span>
         </div>
 
         {/* Animated SVG */}
@@ -71,3 +84,4 @@ export const EcoCorpHero = () => {
     </div>
   );
 };
+ 

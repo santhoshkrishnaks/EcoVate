@@ -3,7 +3,7 @@ import React from 'react'
 
 const ContactSection = () => {
     return (
-        <section className="min-h-screen bg-green-100 " id="contact">
+        <section className="min-h-screen bg-green-50 " id="contact">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-10">
                 <div className="mb-4">
                     <div className="mb-6 max-w-3xl text-center sm:text-center md:mx-auto md:mb-12">
@@ -14,7 +14,7 @@ const ContactSection = () => {
                             Get in Touch
                         </h2>
                         <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 ">
-                            In hac habitasse platea dictumst
+                            Feel Free To Reach Us
                         </p>
                     </div>
                 </div>
@@ -22,7 +22,7 @@ const ContactSection = () => {
                     <div className="grid md:grid-cols-2">
                         <div className="h-full pr-6">
                             <p className="mt-3 mb-12 text-lg text-gray-600 ">
-                                Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis nec ipsum orci. Ut scelerisque sagittis ante, ac tincidunt sem venenatis ut.
+                            We'd love to hear from you! Whether you have questions, suggestions, or need more information, our team is here to help. Reach out to us, and together let's build a sustainable future
                             </p>
                             <ul className="mb-6 md:mb-0">
                                 <li className="flex">

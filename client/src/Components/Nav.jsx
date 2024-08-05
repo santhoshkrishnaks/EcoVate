@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
+<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
@@ -9,6 +10,16 @@ const Nav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
   const navigate = useNavigate();
+=======
+import Create from "./Context";
+
+const Nav = () => {
+  const { isSignedIn } = useAuth();
+  const login=isSignedIn;
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [productMenuOpen, setProductMenuOpen] = useState(false);
+
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -24,8 +35,7 @@ const Nav = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 lg:-ml-10 ">
-            <span className="sr-only">Your Company</span>
+          <a href="/" className="-m-1.5 lg:-ml-10 ">
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </a>
         </div>
@@ -55,6 +65,7 @@ const Nav = () => {
           </button>
         </div>
 
+<<<<<<< HEAD
         <div className="hidden lg:flex lg:gap-x-12">
           <a
             href="/#connect"
@@ -75,6 +86,30 @@ const Nav = () => {
             EcoCorp
           </a>
 
+=======
+        <div className="hidden lg:flex lg:gap-x-12" >
+        <span className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer" onClick={()=>{ if (isSignedIn) {
+      window.location.href = '/Ecoconnect';
+    } else {
+      window.location.href = '/signin';
+    }}}>
+          EcoConnect
+        </span>
+        <span onClick={()=>{ if (isSignedIn) {
+          window.location.href = '/Ecofund';
+        } else {
+          window.location.href = '/signin';
+        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
+          EcoFund
+        </span>
+        <span onClick={()=>{ if (isSignedIn) {
+          window.location.href = '/EcoCorp';
+        } else {
+          window.location.href = '/signin';
+        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
+          EcoCorp
+        </span>
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
           <div className="relative">
             <button
               type="button"
@@ -82,7 +117,7 @@ const Nav = () => {
               aria-expanded={productMenuOpen}
               onClick={toggleProductMenu}
             >
-              Products
+              Services
               <svg
                 className="h-5 w-5 flex-none text-gray-400"
                 viewBox="0 0 20 20"
@@ -98,6 +133,7 @@ const Nav = () => {
             </button>
 
             {productMenuOpen && (
+<<<<<<< HEAD
               <div className="absolute -left-8 top-full z-10 mt-3 w-auto max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {[
@@ -107,24 +143,24 @@ const Nav = () => {
                     <div
                       key={item.path} // or item.name if it's guaranteed to be unique
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-green-100"
+=======
+              <div className="absolute -left-8 top-full z-10 mt-3 w-44 max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                <div className="p-4">
+                  {[
+                    {
+                      name:"EcoVision",
+                      path:"/Ecovision",
+                    },
+                    {
+                      name:"EcoCalc",
+                      path:"/Ecocalc",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.path}
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
                     >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                        <svg
-                          className={`h-6 w-6 text-gray-600 group-hover:text-indigo-600`}
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          aria-hidden="true"
-                        >
-                          {/* Placeholder for different icons */}
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"
-                          />
-                        </svg>
-                      </div>
                       <div className="flex-auto">
                         <a
                           href={item.path}
@@ -140,6 +176,10 @@ const Nav = () => {
               </div>
             )}
           </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -158,8 +198,7 @@ const Nav = () => {
           <div className="fixed inset-0 z-10"></div>
           <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-green-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
+              <a href="/" className="-m-1.5 p-1.5">
                 <img className="h-8 w-auto" src={logo} alt="" />
               </a>
               <button
@@ -188,30 +227,37 @@ const Nav = () => {
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
                   <a
-                    href="#"
+                    href="/Ecoconnect"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Product
+                    EcoConnect
                   </a>
                   <a
-                    href="#"
+                    href="/Ecofund"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Features
+                    EcoFund
                   </a>
                   <a
-                    href="#"
+                    href="/Ecocorp"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Marketplace
+                    EcoCorp
                   </a>
                   <a
-                    href="#"
+                    href="/Ecovision"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Company
+                    EcoVision
+                  </a>
+                  <a
+                    href="/Ecocalc"
+                    className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
+                  >
+                    EcoCalc
                   </a>
                 </div>
+<<<<<<< HEAD
                 {isSignedIn ? (
                   <div></div>
                 ) : (
@@ -221,6 +267,13 @@ const Nav = () => {
                     </span>
                   </div>
                 )}
+=======
+                {isSignedIn?(<div></div>):(<div className="py-6">
+                  <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                  <SignInButton>Log in </SignInButton>
+                  </span>
+                </div>)}
+>>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
               </div>
             </div>
           </div>
