@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import Footer from "../Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "../Volunteer"; // Import the JoinVolunteerForm component
+import { useAuth } from "@clerk/clerk-react";
 
 const users = [
   {
@@ -83,9 +84,9 @@ const initialPosts = [
     organization: "Solar Solutions",
     status: "Ongoing",
     callToAction:
-      "Learn how you can install solar panels at a discounted rate by contacting us.",
+    "Learn how you can install solar panels at a discounted rate by contacting us.",
     donationLink: "https://example.com/donate-solar",
-  }
+  },
 ];
 
 const Feed = () => {
@@ -167,13 +168,11 @@ const Feed = () => {
   const handleJoinNowClick = () => {
     setShowVolunteerForm(true);
   };
-
   const filteredPosts = posts
     .filter((post) =>
       post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
     )
     .filter((post) => (selectedUserId ? post.userId === selectedUserId : true));
-
   return (
     <div>
       <EcoNav
@@ -321,12 +320,12 @@ const Feed = () => {
         formData={newPost}
         onChange={handleFormChange}
       />
-      
+
       {showVolunteerForm && (
         <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
       )}
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

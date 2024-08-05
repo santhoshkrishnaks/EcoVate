@@ -15,12 +15,16 @@ export const EcoCorpHero = () => {
             and innovative solutions to help corporate organization reduce their
             environmental footprint.
           </p>
-          <a
-            href="https://www.ecoconnect.com"
+          <span
+          onClick={()=>{ if (isSignedIn) {
+            window.location.href = '/Ecocrop';
+          } else {
+            window.location.href = '/signin';
+          }}}
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
           >
             Visit Now !!
-          </a>
+          </span>
         </div>
 
         {/* Animated SVG */}
@@ -61,7 +65,7 @@ export const EcoCorpHero = () => {
             sustainability with precise and actionable data.
           </p>
           <a
-            href="https://www.ecoconnect.com"
+            href="/Ecocalc"
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
           >
             Try Now !!
@@ -71,3 +75,4 @@ export const EcoCorpHero = () => {
     </div>
   );
 };
+ 

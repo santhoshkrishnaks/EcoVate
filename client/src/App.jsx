@@ -17,12 +17,6 @@ import { Page1 } from "./Components/EcoCsrp/Page1.jsx";
 import { ProjectPop } from "./Components/ProjectPop.jsx";
 import Create from "./Components/Context.jsx";
 const App = () => {
-  const { login } = useAuth();
-  useEffect(() => {
-    if (login) {
-      window.location.href = "/";
-    }
-  }, []);
   const [showForm, setShowForm] = useState(false);
   return (
     <div>
