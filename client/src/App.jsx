@@ -9,6 +9,13 @@ import {
 import SignInPage from "./Components/SignInPage.jsx";
 import SignUpPage from "./Components/SignUpPage.jsx";
 import Home from "./Components/Home.jsx";
+import EcoConnect from "./Components/EcoConnect/Feed.jsx";
+import Nav from "./Components/Nav.jsx";
+import EcoNav from "./Components/EcoConnect/EcoNav.jsx";
+import { Page1 } from "./Components/EcoCsrp/Page1.jsx";
+import { ProjectPop } from "./Components/ProjectPop.jsx";
+import About from "./Components/About.jsx";
+import Feed from "./Components/EcoConnect/Feed.jsx";
 const App = () => {
   const { login } = useAuth();
   useEffect(() => {
@@ -19,7 +26,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route exact path="/home" element={<Home />} />
+        <Route path="/Eco" element={<Feed />} />
+
         <Route
           path="/signin"
           element={

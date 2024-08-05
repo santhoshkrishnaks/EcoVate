@@ -1,5 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/logo.png";
+import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const EcoNav = ({
   searchTerm,
@@ -7,6 +9,8 @@ const EcoNav = ({
   onSearchChange,
   onSearchSubmit,
 }) => {
+  const { isSignedIn } = useAuth();
+  const login = isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
   const [inputWidth, setInputWidth] = useState("w-12");
@@ -34,57 +38,28 @@ const EcoNav = ({
   };
 
   return (
-    <header className="bg-green-100 sticky top-0">
+    <header className="bg-green-100">
       <nav
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
         aria-label="Global"
       >
-        {/* logo */}
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 lg:-ml-10">
+          <a href="#" className="-m-1.5 lg:-ml-10 ">
+            <span className="sr-only">Your Company</span>
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </a>
         </div>
 
-        <div className="flex lg:hidden items-center justify-between mr-2 gap-3">
-          {/* Mobilemenu */}
-
-          {/* searchbar */}
-          <div className="relative ml-4">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="   Search..."
-              className={`bg-green-100 h-8 px-4 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${inputWidth} border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500`}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-            <button
-              type="submit"
-              className="absolute right-0 top-0 mt-2 mr-2"
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            >
-              <svg
-                className="h-4 w-4 fill-current text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-              </svg>
-            </button>
-          </div>
-
+        <div className="flex lg:hidden">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             onClick={toggleMobileMenu}
           >
             <span className="sr-only">Open main menu</span>
+            <UserButton />
             <svg
-              className="h-6 w-6"
+              className="h-6 w-6 ml-2 "
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
@@ -101,32 +76,18 @@ const EcoNav = ({
         </div>
 
         <div className="hidden lg:flex lg:gap-x-12">
-          <div className="relative">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="    Search by hashtag..."
-              className={`bg-green-100 h-8 px-4 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${inputWidth} border border-gray-300 shadow-md focus:ring-2 focus:ring-green-500`}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            />
-            <button
-              type="submit"
-              className="absolute right-0 top-0 mt-2 mr-2"
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-            >
-              <svg
-                className="h-4 w-4 fill-current text-gray-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
-              </svg>
-            </button>
-          </div>
+          <Link
+            to={{ pathname: "/home", hash: "#connect" }}
+            className="text-lg font-semibold leading-6 text-gray-900"
+          >
+            EcoConnect
+          </Link>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            EcoFund
+          </a>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            EcoCorp
+          </a>
           <div className="relative">
             <button
               type="button"
@@ -134,7 +95,7 @@ const EcoNav = ({
               aria-expanded={productMenuOpen}
               onClick={toggleProductMenu}
             >
-              Product
+              Products
               <svg
                 className="h-5 w-5 flex-none text-gray-400"
                 viewBox="0 0 20 20"
@@ -148,16 +109,11 @@ const EcoNav = ({
                 />
               </svg>
             </button>
+
             {productMenuOpen && (
               <div className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
-                  {[
-                    "Analytics",
-                    "Engagement",
-                    "Security",
-                    "Integrations",
-                    "Automations",
-                  ].map((item) => (
+                  {["EcoVision", "EcoCalc"].map((item) => (
                     <div
                       key={item}
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
@@ -171,6 +127,7 @@ const EcoNav = ({
                           stroke="currentColor"
                           aria-hidden="true"
                         >
+                          {/* Placeholder for different icons */}
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -234,23 +191,17 @@ const EcoNav = ({
               </div>
             )}
           </div>
-          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
-            Features
-          </a>
-          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
-            Company
-          </a>
         </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a
-            href="#"
-            className="text-lg font-semibold leading-6 text-gray-900 mb-3"
-          >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          {login ? (
+            <UserButton />
+          ) : (
+            <span className="text-lg font-semibold leading-6 text-gray-900">
+              <SignInButton>Log in </SignInButton>
+              <span aria-hidden="true">&rarr;</span>
+            </span>
+          )}
         </div>
       </nav>
       {mobileMenuOpen && (
@@ -284,8 +235,7 @@ const EcoNav = ({
                 </svg>
               </button>
             </div>
-            <div className="mt-6">
-             
+            <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
                   <a
@@ -313,14 +263,15 @@ const EcoNav = ({
                     Company
                   </a>
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                  >
-                    Log in
-                  </a>
-                </div>
+                {isSignedIn ? (
+                  <div></div>
+                ) : (
+                  <div className="py-6">
+                    <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                      Log in
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -16,7 +16,7 @@ export const EcoCorpHero = () => {
             environmental footprint.
           </p>
           <a
-            href="https://www.ecoconnect.com"
+            href="/Ecocorp"
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
           >
             Visit Now !!
@@ -61,7 +61,7 @@ export const EcoCorpHero = () => {
             sustainability with precise and actionable data.
           </p>
           <a
-            href="https://www.ecoconnect.com"
+            href="/Ecocalc"
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
           >
             Try Now !!

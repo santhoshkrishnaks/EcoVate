@@ -4,12 +4,14 @@ import Feature from "./Feature.jsx";
 import Footer from "./Footer.jsx";
 import ContactSection from "./Contact.jsx";
 import Hero from "./Hero.jsx";
+import { EcoCorpHero } from "./EcoCorpHero.jsx";
 const Home = () => {
   return (
     <div>
       <Nav />
       <Hero />
       <Feature />
+      <EcoCorpHero/>
       <ContactSection />
       <Footer />
     </div>
