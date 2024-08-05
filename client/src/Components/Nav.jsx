@@ -28,6 +28,7 @@ const Nav = () => {
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </a>
         </div>
+
         <div className="flex lg:hidden">
         <button
         type="button"
@@ -52,7 +53,18 @@ const Nav = () => {
             </svg>
           </button>
         </div>
+
         <div className="hidden lg:flex lg:gap-x-12">
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            EcoConnect
+          </a>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            EcoFund
+          </a>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            EcoCorp
+          </a>
+
           <div className="relative">
             <button
               type="button"
@@ -60,7 +72,7 @@ const Nav = () => {
               aria-expanded={productMenuOpen}
               onClick={toggleProductMenu}
             >
-              Product
+              Products
               <svg
                 className="h-5 w-5 flex-none text-gray-400"
                 viewBox="0 0 20 20"
@@ -79,11 +91,8 @@ const Nav = () => {
               <div className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {[
-                    "Analytics",
-                    "Engagement",
-                    "Security",
-                    "Integrations",
-                    "Automations",
+                    "EcoVision",
+                    "EcoCalc",
                   ].map((item) => (
                     <div
                       key={item}
@@ -173,6 +182,7 @@ const Nav = () => {
             Company
           </a>
         </div>
+
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
         {login ? (
           <UserButton />
