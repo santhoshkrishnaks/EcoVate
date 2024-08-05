@@ -10,7 +10,7 @@ const Footer = () => {
                 <img className="w-30 h-16 sm:" src={logo} alt="logo" />
                 </div>
 
-                <p className="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
+                <p className="text-base leading-relaxed text-gray-600 mt-7">Welcome to Ecovate, the premier platform for environmental activists dedicated to making a positive impact on our planet. </p>
 
                 <ul className="flex items-center space-x-3 mt-9">
                     <li>
