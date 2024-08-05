@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sen:wght@400..800&display=swap');
+.signup{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:#dcfce7;
+  font-family: "Hanken Grotesk", sans-serif;
+}
+.sign{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+.signup .cl-cardBox{
+    border-radius: 5%;
+    width: 410px;
+    max-width: 450px;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;     
+}
+.photo2 img{
+    height: 100%;
+    width: 100%;
+}
+.photo2{
+    height: 50px;
+    width: 100px;
+    z-index: 99;
+    margin-top: 1px;
+    overflow: hidden;
+    position: absolute;
+}
+.cl-formButtonPrimary{
+    background-color:#dcfce7;
+    color: black;
+
+}
+.signup .cl-headerTitle{
+    margin-top: 34px;
+  }

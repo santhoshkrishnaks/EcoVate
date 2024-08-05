@@ -1,8 +1,11 @@
 import '@dotlottie/player-component/dist/dotlottie-player.mjs';
+import Footer from '../Footer';
+import Nav from '../Nav';
 
 export const Page1 = () => {
   return (
-    
+    <div>
+    <Nav/>
     <div className=' bg-green-50  min-h-screen'>
 <div className=" pt-[50px]  items-center">
     
@@ -64,9 +67,8 @@ export const Page1 = () => {
 
       
 
-
-
-    </div>
+</div>
+<Footer/></div>
    
   )
 }

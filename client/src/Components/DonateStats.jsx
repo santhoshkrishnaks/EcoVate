@@ -3,9 +3,9 @@
 export const DonateStats = () => {
   return (
     <div>
-        <section className="py-1 bg-green-100 sm:py-1 lg:py-2 mt-[30px]">
+        <section className="py-1 bg-green-50 sm:py-1 lg:py-2 mt-[30px]">
           <div className="max-w-5xl px-4 mx-auto sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 gap-8 mt-0 text-center lg:mt-0 sm:gap-x-6 md:grid-cols-3 bg-green-100">
+            <div className="grid grid-cols-1 gap-8 mt-0 text-center lg:mt-0 sm:gap-x-6 md:grid-cols-3 bg-green-50">
               <div>
                 <h3 className=" text-4xl font-bold lg:text-7xl">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-400">
