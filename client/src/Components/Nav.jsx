@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState } from "react";
 import logo from "../assets/logo.png";
+import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 
 const Nav = () => {
+  const { isSignedIn } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
+  const login = isSignedIn;
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
@@ -27,14 +30,15 @@ const Nav = () => {
         </div>
 
         <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={toggleMobileMenu}
-          >
-            <span className="sr-only">Open main menu</span>
+        <button
+        type="button"
+        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+        onClick={toggleMobileMenu}
+        >
+        <span className="sr-only">Open main menu</span>
+        <UserButton/>
             <svg
-              className="h-6 w-6"
+              className="h-6 w-6 ml-2 "
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
@@ -168,12 +172,23 @@ const Nav = () => {
             )}
           </div>
 
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            Features
+          </a>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            Marketplace
+          </a>
+          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
+            Company
+          </a>
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-lg font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+        {login ? (
+          <UserButton />
+        ) : (
+          <span className="text-lg font-semibold leading-6 text-gray-900"><SignInButton>Log in </SignInButton><span aria-hidden="true">&rarr;</span></span>
+          )}
         </div>
       </nav>
       {mobileMenuOpen && (
@@ -235,14 +250,11 @@ const Nav = () => {
                     Company
                   </a>
                 </div>
-                <div className="py-6">
-                  <a
-                    href="#"
-                    className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
-                  >
+                {isSignedIn?(<div></div>):(<div className="py-6">
+                  <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
                     Log in
-                  </a>
-                </div>
+                  </span>
+                </div>)}
               </div>
             </div>
           </div>
