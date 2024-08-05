@@ -26,6 +26,23 @@ const App = () => {
   const [showForm, setShowForm] = useState(false);
   return (
     <div>
+      <Create.Provider value={{ showForm,setShowForm }}>
+        <Router>
+          <Routes>
+            <Route path="/Ecoconnect" element={<Feed />} />
+            <Route path="/Ecovision" element={<ProjectPop />} />
+            <Route path="/Ecoconnect" element={<Feed />} />
+            <Route path="/Ecocorp" element={<Page1 />} />
+            <Route path="/Ecocalc" element={<Ecocalc />} />
+            <Route path="/result" element={<Results />} />
+            <Route path="/Ecofund" element={<Donate />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignedOut><SignInPage /></SignedOut>}/>
+            <Route path="/signup" element={ <SignedOut><SignUpPage /> </SignedOut>}/>
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </Router>
+      </Create.Provider>
     </div>
   );
 };

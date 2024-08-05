@@ -9,7 +9,7 @@ const Hero = () => {
         <div className="mb-10 mx-auto max-w-7xl px-4 sm:-mt-[24px] sm:px-6 lg:mt-20 lg:px-3 xl:mt-28 flex gap-3 flex-col lg:flex-row">
           <div className="text-left lg:py-14 sm:py-8 sm:mt-10">
             <h1 className="text-4xl tracking-tight font-extrabold text-neutral-700 sm:text-5xl md:text-6xl lg:text-7xl">
-              <span className="block xl:inline text-green-900">Hello </span>
+              <span className="block xl:inline text-neutral-700">Redifining</span>
               <span className="block text-neutral-700 xl:inline">The Perfect Platform for Environment </span>
               <span className="block xl:inline text-green-900">Sustainability</span>
             </h1>

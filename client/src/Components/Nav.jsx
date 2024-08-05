@@ -1,9 +1,19 @@
 import { useState } from "react";
 import logo from "../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
+import { useUser } from "@clerk/clerk-react";
 
 const Nav = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn } = useUser();
+
+  const handleButtonClick = () => {
+    if (isSignedIn) {
+      window.location.href = '/Ecoconnect';
+    } else {
+      window.location.href = '/SignUp';
+    }
+  };
+  
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
   const login = isSignedIn;
@@ -54,9 +64,12 @@ const Nav = () => {
         </div>
 
         <div className="hidden lg:flex lg:gap-x-12">
-        <a href="/Ecoconnect" className="text-lg font-semibold leading-6 text-gray-900">
-          EcoConnect
-        </a>
+        <button
+      onClick={handleButtonClick}
+      className="text-lg font-semibold leading-6 text-gray-900 bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 rounded"
+    >
+      Ecoconnect
+      </button>
         <a href="/Ecofund" className="text-lg font-semibold leading-6 text-gray-900">
           EcoFund
         </a>
