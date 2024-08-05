@@ -9,15 +9,6 @@ import {
 import SignInPage from "./Components/SignInPage.jsx";
 import SignUpPage from "./Components/SignUpPage.jsx";
 import Home from "./Components/Home.jsx";
-<<<<<<< HEAD
-import EcoConnect from "./Components/EcoConnect/Feed.jsx";
-import Nav from "./Components/Nav.jsx";
-import EcoNav from "./Components/EcoConnect/EcoNav.jsx";
-import { Page1 } from "./Components/EcoCsrp/Page1.jsx";
-import { ProjectPop } from "./Components/ProjectPop.jsx";
-import About from "./Components/About.jsx";
-import Feed from "./Components/EcoConnect/Feed.jsx";
-=======
 import Ecocalc from "./Components/Ecocalc/Ecocalc.jsx";
 import Results from "./Components/Ecocalc/Results.jsx";
 import Feed from "./Components/EcoConnect/Feed.jsx";
@@ -26,36 +17,9 @@ import { Page1 } from "./Components/EcoCsrp/Page1.jsx";
 import { ProjectPop } from "./Components/ProjectPop.jsx";
 import Create from "./Components/Context.jsx";
 import Form from './Components/EcoCsrp/EcoCorpForm.jsx'
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   return (
-<<<<<<< HEAD
-    <Router>
-      <Routes>
-        <Route exact path="/home" element={<Home />} />
-        <Route path="/Eco" element={<Feed />} />
-
-        <Route
-          path="/signin"
-          element={
-            <SignedOut>
-              <SignInPage />
-            </SignedOut>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <SignedOut>
-              <SignUpPage />
-            </SignedOut>
-          }
-        />
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
-=======
     <div>
       <Create.Provider value={{ showForm,setShowForm }}>
         <Router>
@@ -76,7 +40,6 @@ const App = () => {
         </Router>
       </Create.Provider>
     </div>
->>>>>>> c9be7c39595b6650e5fe651403e8ccdfd26d057f
   );
 };
 
