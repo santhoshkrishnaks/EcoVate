@@ -66,14 +66,14 @@ const Nav = () => {
           window.location.href = '/Ecofund';
         } else {
           window.location.href = '/signin';
-        }}} className="text-lg font-semibold leading-6 text-gray-900">
+        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
           EcoFund
         </span>
         <span onClick={()=>{ if (isSignedIn) {
           window.location.href = '/EcoCorp';
         } else {
           window.location.href = '/signin';
-        }}} className="text-lg font-semibold leading-6 text-gray-900">
+        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
           EcoCorp
         </span>
           <div className="relative">

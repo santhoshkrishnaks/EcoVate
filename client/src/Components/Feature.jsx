@@ -1,7 +1,9 @@
 import React from 'react';
 import StatsSection from './Counter';
+import { useAuth } from '@clerk/clerk-react';
 
 const Feature = () => {
+  const { isSignedIn } = useAuth();
   return (
     <div className='min-h-screen flex flex-col'>
       <div className='flex-1 bg-slate-50' >
@@ -22,7 +24,7 @@ onClick={()=>{ if (isSignedIn) {
   window.location.href = '/Ecoconnect';
 } else {
   window.location.href = '/signin';
-}}}    className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
+}}}    className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"
   >
     Join Now !!
   </span>
