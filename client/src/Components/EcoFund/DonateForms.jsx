@@ -178,7 +178,7 @@ const DonateForms = () => {
         // Add setTimeout here
         setTimeout(() => {
           setStep(3);
-        }, 10000); // Delay step transition by 1000ms (1 second)
+        }, 1000); // Delay step transition by 1000ms (1 second)
       }
     }
   };

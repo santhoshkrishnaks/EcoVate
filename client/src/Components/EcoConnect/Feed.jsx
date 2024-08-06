@@ -325,7 +325,9 @@ const Feed = () => {
       />
 
       {showVolunteerForm && (
-        <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
+        <div className="">
+          <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
+        </div>
       )}
 
       <Footer />
