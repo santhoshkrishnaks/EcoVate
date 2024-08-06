@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { DonateStats } from "./DonateStats";
 import DonateForms from "./DonateForms";
 import DonateActivities from "./DonateActivities";
-import Nav from "./Nav";
-import Footer from "./Footer";
+import Nav from "../Header_Footer/Nav";
+import Footer from "../Header_Footer/Footer";
 
 export const Donate = () => {
   const [showPopup, setShowPopup] = useState(false);

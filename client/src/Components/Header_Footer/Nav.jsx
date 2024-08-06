@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import logo from "../assets/logo.png";
+import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
-import Create from "./Context";
+import Create from "../Context";
 
 const Nav = () => {
   const { isSignedIn } = useAuth();
-  const login=isSignedIn;
+  const login = isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
 
@@ -30,13 +30,13 @@ const Nav = () => {
         </div>
 
         <div className="flex lg:hidden">
-        <button
-        type="button"
-        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-        onClick={toggleMobileMenu}
-        >
-        <span className="sr-only">Open main menu</span>
-        <UserButton/>
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            onClick={toggleMobileMenu}
+          >
+            <span className="sr-only">Open main menu</span>
+            <UserButton />
             <svg
               className="h-6 w-6 ml-2 "
               fill="none"
@@ -54,28 +54,43 @@ const Nav = () => {
           </button>
         </div>
 
-        <div className="hidden lg:flex lg:gap-x-12" >
-        <span className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer" onClick={()=>{ if (isSignedIn) {
-      window.location.href = '/Ecoconnect';
-    } else {
-      window.location.href = '/signin';
-    }}}>
-          EcoConnect
-        </span>
-        <span onClick={()=>{ if (isSignedIn) {
-          window.location.href = '/Ecofund';
-        } else {
-          window.location.href = '/signin';
-        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
-          EcoFund
-        </span>
-        <span onClick={()=>{ if (isSignedIn) {
-          window.location.href = '/EcoCorp';
-        } else {
-          window.location.href = '/signin';
-        }}} className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer">
-          EcoCorp
-        </span>
+        <div className="hidden lg:flex lg:gap-x-12">
+          <span
+            className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer"
+            onClick={() => {
+              if (isSignedIn) {
+                window.location.href = "/Ecoconnect";
+              } else {
+                window.location.href = "/signin";
+              }
+            }}
+          >
+            EcoConnect
+          </span>
+          <span
+            onClick={() => {
+              if (isSignedIn) {
+                window.location.href = "/Ecofund";
+              } else {
+                window.location.href = "/signin";
+              }
+            }}
+            className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer"
+          >
+            EcoFund
+          </span>
+          <span
+            onClick={() => {
+              if (isSignedIn) {
+                window.location.href = "/EcoCorp";
+              } else {
+                window.location.href = "/signin";
+              }
+            }}
+            className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer"
+          >
+            EcoCorp
+          </span>
           <div className="relative">
             <button
               type="button"
@@ -103,12 +118,12 @@ const Nav = () => {
                 <div className="p-4">
                   {[
                     {
-                      name:"EcoVision",
-                      path:"/Ecovision",
+                      name: "EcoVision",
+                      path: "/Ecovision",
                     },
                     {
-                      name:"EcoCalc",
-                      path:"/Ecocalc",
+                      name: "EcoCalc",
+                      path: "/Ecocalc",
                     },
                   ].map((item) => (
                     <div
@@ -130,14 +145,16 @@ const Nav = () => {
               </div>
             )}
           </div>
-
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-        {login ? (
-          <UserButton />
-        ) : (
-          <span className="text-lg font-semibold leading-6 text-gray-900"><SignInButton>Log in </SignInButton><span aria-hidden="true">&rarr;</span></span>
+          {login ? (
+            <UserButton />
+          ) : (
+            <span className="text-lg font-semibold leading-6 text-gray-900">
+              <SignInButton>Log in </SignInButton>
+              <span aria-hidden="true">&rarr;</span>
+            </span>
           )}
         </div>
       </nav>
@@ -205,11 +222,15 @@ const Nav = () => {
                     EcoCalc
                   </a>
                 </div>
-                {isSignedIn?(<div></div>):(<div className="py-6">
-                  <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
-                  <SignInButton>Log in </SignInButton>
-                  </span>
-                </div>)}
+                {isSignedIn ? (
+                  <div></div>
+                ) : (
+                  <div className="py-6">
+                    <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                      <SignInButton>Log in </SignInButton>
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </div>

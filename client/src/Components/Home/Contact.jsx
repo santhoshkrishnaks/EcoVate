@@ -34,8 +34,8 @@ const ContactSection = () => {
                                     </div>
                                     <div className="ml-4 mb-4">
                                         <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">Our Address</h3>
-                                        <p className="text-gray-600 ">1230 Maecenas Street Donec Road</p>
-                                        <p className="text-gray-600 ">New York, EEUU</p>
+                                        <p className="text-gray-600 ">Sri Krishna College of Technology,Kovaipudur-641042</p>
+                                        <p className="text-gray-600 ">TamilNadu,India</p>
                                     </div>
                                 </li>
                                 <li className="flex">
@@ -48,8 +48,8 @@ const ContactSection = () => {
                                     </div>
                                     <div className="ml-4 mb-4">
                                         <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">Contact</h3>
-                                        <p className="text-gray-600 ">Mobile: +1 (123) 456-7890</p>
-                                        <p className="text-gray-600 ">Mail: tailnext@gmail.com</p>
+                                        <p className="text-gray-600 ">Mobile: +91 8521476935</p>
+                                        <p className="text-gray-600 ">Mail: info.ecovate@gmail.com</p>
                                     </div>
                                 </li>
                                 <li className="flex">
