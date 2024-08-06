@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 const DonateForms = () => {
   const [step, setStep] = useState(1);
   const [paymentType, setPaymentType] = useState('one-time');
   const [selectedAmount, setSelectedAmount] = useState('');
   const [customAmount, setCustomAmount] = useState('');
-  const [showNote, setShowNote] = useState(false);
   const [note, setNote] = useState('');
   const [cardType, setCardType] = useState('debit');
   const [cardNumber, setCardNumber] = useState('');
@@ -13,35 +14,71 @@ const DonateForms = () => {
   const [cvv, setCvv] = useState('');
   const [paymentOption, setPaymentOption] = useState('');
   const [upiId, setUpiId] = useState('');
-  const [netBankingDetails, setNetBankingDetails] = useState('');
+  const [accountHolderName, setAccountHolderName] = useState('');
+  const [accountNumber, setAccountNumber] = useState('');
+  const [accountType, setAccountType] = useState('Savings');
+  const [ifscCode, setIfscCode] = useState('');
+  const [branch, setBranch] = useState('');
   const [errors, setErrors] = useState({
     amount: '',
     cardNumber: '',
     expiryDate: '',
     cvv: '',
-    paymentOption: ''
+    paymentOption: '',
+    accountHolderName: '',
+    accountNumber: '',
+    accountType: '',
+    ifscCode: ''
   });
+  const [transactionId, setTransactionId] = useState('');
 
   const amountsOneTime = [1000, 5000, 1500, 2000];
   const amountsMonthly = [25, 50, 100, 250, 500];
+
+  const generateTransactionId = () => {
+    const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+
+    let transactionId = '';
+
+    // Generate 5 random alphabets
+    for (let i = 0; i < 5; i++) {
+      transactionId += alphabets.charAt(Math.floor(Math.random() * alphabets.length));
+    }
+
+    // Generate 10 random numbers
+    for (let i = 0; i < 10; i++) {
+      transactionId += numbers.charAt(Math.floor(Math.random() * numbers.length));
+    }
+
+    return transactionId;
+  };
 
   const handlePaymentTypeChange = (type) => {
     setPaymentType(type);
     setSelectedAmount('');
     setCustomAmount('');
     setErrors((prevErrors) => ({ ...prevErrors, amount: '' }));
+
+    // Clear other payment options
+    if (type === 'card') {
+      setPaymentOption('');
+      setUpiId('');
+      setAccountHolderName('');
+      setAccountNumber('');
+      setAccountType('Savings');
+      setIfscCode('');
+      setBranch('');
+    }
   };
 
   const handleAmountChange = (amount) => {
-    // Deselect amount if already selected
     setSelectedAmount(prevAmount => prevAmount === amount ? '' : amount);
-    // Clear custom amount if a predefined amount is selected
     if (amount) setCustomAmount('');
   };
 
   const handleCustomAmountChange = (e) => {
     setCustomAmount(e.target.value);
-    // Clear selected amount if a custom amount is entered
     if (e.target.value) setSelectedAmount('');
   };
 
@@ -63,7 +100,11 @@ const DonateForms = () => {
   const handlePaymentOptionChange = (option) => {
     setPaymentOption(option);
     setUpiId('');
-    setNetBankingDetails('');
+    setAccountHolderName('');
+    setAccountNumber('');
+    setAccountType('Savings');
+    setIfscCode('');
+    setBranch('');
     setErrors((prevErrors) => ({ ...prevErrors, paymentOption: '' }));
   };
 
@@ -72,7 +113,12 @@ const DonateForms = () => {
   };
 
   const handleNetBankingDetailsChange = (e) => {
-    setNetBankingDetails(e.target.value);
+    const { name, value } = e.target;
+    if (name === 'accountHolderName') setAccountHolderName(value);
+    if (name === 'accountNumber') setAccountNumber(value);
+    if (name === 'accountType') setAccountType(value);
+    if (name === 'ifscCode') setIfscCode(value);
+    if (name === 'branch') setBranch(value);
   };
 
   const validateCardDetails = () => {
@@ -85,6 +131,39 @@ const DonateForms = () => {
     return !errors.cardNumber && !errors.expiryDate && !errors.cvv;
   };
 
+  const validateStep2 = () => {
+    let valid = true;
+    const newErrors = {
+      amount: selectedAmount || customAmount ? '' : 'Please select or enter an amount',
+      paymentOption: paymentOption ? '' : 'Please select a payment option'
+    };
+
+    if (paymentOption === 'card') {
+      if (!cardNumber || !expiryDate || !cvv) {
+        valid = false;
+        newErrors.cardNumber = cardNumber ? '' : 'Card number is required';
+        newErrors.expiryDate = expiryDate ? '' : 'Expiry date is required';
+        newErrors.cvv = cvv ? '' : 'CVV is required';
+      } else if (!validateCardDetails()) {
+        valid = false;
+      }
+    } else if (paymentOption === 'upi' && !upiId) {
+      valid = false;
+      newErrors.upiId = 'UPI ID is required';
+    } else if (paymentOption === 'netbanking') {
+      if (!accountHolderName || !accountNumber || !accountType || !ifscCode) {
+        valid = false;
+        newErrors.accountHolderName = accountHolderName ? '' : 'Account Holder Name is required';
+        newErrors.accountNumber = accountNumber ? '' : 'Account Number is required';
+        newErrors.accountType = accountType ? '' : 'Account Type is required';
+        newErrors.ifscCode = ifscCode ? '' : 'IFSC Code is required';
+      }
+    }
+
+    setErrors((prevErrors) => ({ ...prevErrors, ...newErrors }));
+    return valid;
+  };
+
   const handleNextStep = () => {
     if (step === 1) {
       if (!selectedAmount && !customAmount) {
@@ -94,17 +173,81 @@ const DonateForms = () => {
       setErrors((prevErrors) => ({ ...prevErrors, amount: '' }));
       setStep(2);
     } else if (step === 2) {
-      if (validateCardDetails()) {
-        setStep(3);
+      if (validateStep2()) {
+        setTransactionId(generateTransactionId());
+        // Add setTimeout here
+        setTimeout(() => {
+          setStep(3);
+        }, 10000); // Delay step transition by 1000ms (1 second)
       }
     }
   };
 
+  const handlePrint = async () => {
+    try {
+      const pdfDoc = await PDFDocument.create();
+      const page = pdfDoc.addPage([600, 850]);
+      const { width, height } = page.getSize();
+      const fontSize = 12;
+  
+      // Embed fonts
+      const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+      const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+  
+      // Add company logo and details
+      page.drawText('EcoFund', { x: 50, y: height - 50, size: 24, font: fontBold, color: rgb(0, 0.5, 0) });
+      page.drawText('Sri Krishna College of Technology', { x: 50, y: height - 70, size: fontSize, font: fontRegular });
+      page.drawText('Phone:+91 70101 32134', { x: 50, y: height - 85, size: fontSize, font: fontRegular });
+      page.drawText('Email: info.ecovate@gmail.com', { x: 50, y: height - 100, size: fontSize, font: fontRegular });
+      page.drawText('Website: www.ecovate.com', { x: 50, y: height - 115, size: fontSize, font: fontRegular });
+  
+      // Add transaction details
+      page.drawText('Transaction ID: ' + transactionId, { x: 50, y: height - 150, size: fontSize, font: fontRegular });
+      page.drawText('Amount: ' + (selectedAmount || customAmount), { x: 50, y: height - 165, size: fontSize, font: fontRegular });
+      page.drawText('Payment Method: ' + paymentOption, { x: 50, y: height - 180, size: fontSize, font: fontRegular });
+  
+      // Add additional details based on payment option
+      if (paymentOption === 'card') {
+        page.drawText('Card Type: ' + cardType, { x: 50, y: height - 195, size: fontSize, font: fontRegular });
+        page.drawText('Card Number: ' + cardNumber, { x: 50, y: height - 210, size: fontSize, font: fontRegular });
+        page.drawText('Expiry Date: ' + expiryDate, { x: 50, y: height - 225, size: fontSize, font: fontRegular });
+        page.drawText('CVV: ' + cvv, { x: 50, y: height - 240, size: fontSize, font: fontRegular });
+      } else if (paymentOption === 'upi') {
+        page.drawText('UPI ID: ' + upiId, { x: 50, y: height - 195, size: fontSize, font: fontRegular });
+      } else if (paymentOption === 'netbanking') {
+        page.drawText('Account Holder Name: ' + accountHolderName, { x: 50, y: height - 195, size: fontSize, font: fontRegular });
+        page.drawText('Account Number: ' + accountNumber, { x: 50, y: height - 210, size: fontSize, font: fontRegular });
+        page.drawText('Account Type: ' + accountType, { x: 50, y: height - 225, size: fontSize, font: fontRegular });
+        page.drawText('IFSC Code: ' + ifscCode, { x: 50, y: height - 240, size: fontSize, font: fontRegular });
+      }
+  
+      // Add donor note
+      if (note) {
+        page.drawText('Note: ' + note, { x: 50, y: height - 270, size: fontSize, font: fontRegular });
+      }
+  
+      const pdfBytes = await pdfDoc.save();
+  
+      // Create a blob and download the PDF
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+  
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'transaction_receipt.pdf';
+      document.body.appendChild(link); // Append the link to the body
+      link.click();
+      document.body.removeChild(link); // Remove the link from the body
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  };
+
   return (
-    <div className="bg-green-100">
-      <div className="lg:max-w-md mb-[50px] lg:mx-20 p-6 bg-slate-100 shadow-lg rounded-lg mt-[50px]">
-        {/* Step Navigation */}
-        <div className="flex items-center mb-6">
+    <div className="p-4">
+      <div className="max-w-md mx-auto">
+        <div className="flex items-center mb-4">
           <div className={`w-8 h-8 flex items-center justify-center rounded-full ${step >= 1 ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-500'}`}>1</div>
           <div className={`flex-1 h-0.5 ${step >= 2 ? 'bg-green-500' : 'bg-gray-300'}`}></div>
           <div className={`w-8 h-8 flex items-center justify-center rounded-full ${step >= 2 ? 'bg-green-500 text-white' : 'bg-gray-300 text-gray-500'}`}>2</div>
@@ -154,151 +297,171 @@ const DonateForms = () => {
                       ${amount}
                     </button>
                   ))}
+                  <input
+                    type="number"
+                    placeholder="Custom Amount"
+                    value={customAmount}
+                    onChange={handleCustomAmountChange}
+                    className="border border-gray-300 p-2 rounded w-full"
+                  />
                 </div>
               )}
-              <input
-                type="number"
-                placeholder="Custom Amount"
-                value={customAmount}
-                onChange={handleCustomAmountChange}
-                disabled={selectedAmount !== ''}
-                className="border border-gray-300 p-2 rounded w-full"
-              />
+              {errors.amount && <p className="text-red-500">{errors.amount}</p>}
             </div>
-            {errors.amount && <p className="text-red-500 mb-4">{errors.amount}</p>}
-            <div className="mb-4 flex items-center">
-              <input
-                type="checkbox"
-                checked={showNote}
-                onChange={() => setShowNote(!showNote)}
-                id="note-checkbox"
-                className="mr-2"
-              />
-              <label htmlFor="note-checkbox" className="text-gray-800">Add a note</label>
-            </div>
-            {showNote && (
-              <textarea
-                placeholder="Your note"
-                value={note}
-                onChange={handleNoteChange}
-                className="border border-gray-300 p-2 rounded w-full mt-2"
-              />
-            )}
+            <button
+              onClick={handleNextStep}
+              className="bg-green-500 text-white px-4 py-2 rounded w-full"
+            >
+              Next
+            </button>
           </div>
         )}
 
         {step === 2 && (
           <div>
-            <h1 className="text-2xl font-bold mb-4">Card Details</h1>
+            <h1 className="text-2xl font-bold mb-4">Enter Payment Details</h1>
             <div className="mb-4">
-              <div className="flex mb-4">
-                <button
-                  onClick={() => handleCardTypeChange('debit')}
-                  className={`flex-1 px-4 py-2 rounded ${cardType === 'debit' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
-                >
-                  Debit Card
-                </button>
-                <button
-                  onClick={() => handleCardTypeChange('credit')}
-                  className={`flex-1 px-4 py-2 rounded ${cardType === 'credit' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
-                >
-                  Credit Card
-                </button>
-              </div>
-              <input
-                type="text"
-                name="cardNumber"
-                placeholder="Card Number"
-                value={cardNumber}
-                onChange={handleCardDetailsChange}
-                className={`border border-gray-300 p-2 rounded w-full mb-2 ${errors.cardNumber ? 'border-red-500' : ''}`}
-              />
-              <input
-                type="text"
-                name="expiryDate"
-                placeholder="Expiry Date (MM/YY)"
-                value={expiryDate}
-                onChange={handleCardDetailsChange}
-                className={`border border-gray-300 p-2 rounded w-full mb-2 ${errors.expiryDate ? 'border-red-500' : ''}`}
-              />
-              <input
-                type="text"
-                name="cvv"
-                placeholder="CVV"
-                value={cvv}
-                onChange={handleCardDetailsChange}
-                className={`border border-gray-300 p-2 rounded w-full ${errors.cvv ? 'border-red-500' : ''}`}
-              />
-              {errors.cardNumber && <p className="text-red-500 mb-2">{errors.cardNumber}</p>}
-              {errors.expiryDate && <p className="text-red-500 mb-2">{errors.expiryDate}</p>}
-              {errors.cvv && <p className="text-red-500 mb-2">{errors.cvv}</p>}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-800 mb-2">Select Payment Option</label>
-              <select
-                value={paymentOption}
-                onChange={(e) => handlePaymentOptionChange(e.target.value)}
-                className="border border-gray-300 p-2 rounded w-full"
+              <button
+                onClick={() => handlePaymentOptionChange('card')}
+                className={`px-4 py-2 rounded ${paymentOption === 'card' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
               >
-                <option value="">Select an option</option>
-                <option value="upi">UPI ID</option>
-                <option value="netbanking">Net Banking</option>
-              </select>
-              {paymentOption === 'upi' && (
+                Card Payment
+              </button>
+              <button
+                onClick={() => handlePaymentOptionChange('upi')}
+                className={`px-4 py-2 rounded ${paymentOption === 'upi' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                UPI Payment
+              </button>
+              <button
+                onClick={() => handlePaymentOptionChange('netbanking')}
+                className={`px-4 py-2 rounded ${paymentOption === 'netbanking' ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-800'}`}
+              >
+                Net Banking
+              </button>
+            </div>
+            {errors.paymentOption && <p className="text-red-500 mb-4">{errors.paymentOption}</p>}
+            {paymentOption === 'card' && (
+              <div>
                 <input
                   type="text"
-                  placeholder="UPI ID"
-                  value={upiId}
-                  onChange={handleUpiIdChange}
-                  className="border border-gray-300 p-2 rounded w-full mt-2"
+                  name="cardNumber"
+                  placeholder="Card Number"
+                  value={cardNumber}
+                  onChange={handleCardDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
                 />
-              )}
-              {paymentOption === 'netbanking' && (
-                <textarea
-                  placeholder="Net Banking Details"
-                  value={netBankingDetails}
+                {errors.cardNumber && <p className="text-red-500 mb-4">{errors.cardNumber}</p>}
+                <input
+                  type="text"
+                  name="expiryDate"
+                  placeholder="Expiry Date (MM/YY)"
+                  value={expiryDate}
+                  onChange={handleCardDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                />
+                {errors.expiryDate && <p className="text-red-500 mb-4">{errors.expiryDate}</p>}
+                <input
+                  type="text"
+                  name="cvv"
+                  placeholder="CVV"
+                  value={cvv}
+                  onChange={handleCardDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                />
+                {errors.cvv && <p className="text-red-500 mb-4">{errors.cvv}</p>}
+              </div>
+            )}
+            {paymentOption === 'upi' && (
+              <input
+                type="text"
+                placeholder="UPI ID"
+                value={upiId}
+                onChange={handleUpiIdChange}
+                className="border border-gray-300 p-2 rounded w-full mb-4"
+              />
+            )}
+            {errors.upiId && <p className="text-red-500 mb-4">{errors.upiId}</p>}
+            {paymentOption === 'netbanking' && (
+              <div>
+                <input
+                  type="text"
+                  name="accountHolderName"
+                  placeholder="Account Holder Name"
+                  value={accountHolderName}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mt-2"
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  required
                 />
-              )}
-              {errors.paymentOption && <p className="text-red-500 mb-2">{errors.paymentOption}</p>}
-            </div>
+                {errors.accountHolderName && <p className="text-red-500 mb-4">{errors.accountHolderName}</p>}
+                <input
+                  type="text"
+                  name="accountNumber"
+                  placeholder="Account Number"
+                  value={accountNumber}
+                  onChange={handleNetBankingDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  required
+                />
+                {errors.accountNumber && <p className="text-red-500 mb-4">{errors.accountNumber}</p>}
+                <select
+                  name="accountType"
+                  value={accountType}
+                  onChange={handleNetBankingDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  required
+                >
+                  <option value="Savings">Savings</option>
+                  <option value="Current">Current</option>
+                  <option value="NRI">NRI</option>
+                </select>
+                {errors.accountType && <p className="text-red-500 mb-4">{errors.accountType}</p>}
+                <input
+                  type="text"
+                  name="ifscCode"
+                  placeholder="IFSC Code"
+                  value={ifscCode}
+                  onChange={handleNetBankingDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  required
+                />
+                {errors.ifscCode && <p className="text-red-500 mb-4">{errors.ifscCode}</p>}
+                <input
+                  type="text"
+                  name="branch"
+                  placeholder="Branch (optional)"
+                  value={branch}
+                  onChange={handleNetBankingDetailsChange}
+                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                />
+              </div>
+            )}
+            <button
+              onClick={handleNextStep}
+              className="bg-green-500 text-white px-4 py-2 rounded w-full"
+            >
+              Confirm Payment
+            </button>
           </div>
         )}
 
         {step === 3 && (
           <div>
-            <h1 className="text-2xl font-bold mb-4">Payment Confirmation</h1>
-            <p className="mb-4">Selected Amount: ${selectedAmount || customAmount}</p>
-            <p className="mb-4">Card Type: {cardType === 'debit' ? 'Debit Card' : 'Credit Card'}</p>
-            <p className="mb-4">Card Number: {cardNumber}</p>
-            <p className="mb-4">Expiry Date: {expiryDate}</p>
-            <p className="mb-4">CVV: {cvv}</p>
-            {paymentOption && (
-              <div>
-                <p className="mb-4">Payment Option: {paymentOption === 'upi' ? `UPI ID: ${upiId}` : `Net Banking Details: ${netBankingDetails}`}</p>
-              </div>
-            )}
-            <p className="text-green-500 font-bold mb-4">Thank you for backing Ecovate. Together, we’re building a sustainable future!</p>
+            <div className="flex items-center mb-4">
+              <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-4xl mr-2" />
+              <h1 className="text-2xl font-bold">Payment Successful</h1>
+            </div>
+            <p className='text-2xl font-bold text-green-700' >Thank you for your donation! Your payment was successful.</p>
+            <p className='text-1xl font-bold'>Transaction ID:  
+               <span className='text-slate-800'>{transactionId}</span></p>
+            <button
+              onClick={handlePrint}
+              className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+            >
+              Print Receipt
+            </button>
           </div>
         )}
-
-        <div className="flex justify-between">
-          {step > 1 && (
-            <button
-              onClick={() => setStep(step - 1)}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded"
-            >
-              Back
-            </button>
-          )}
-          <button
-            onClick={handleNextStep}
-            className="px-4 py-2 bg-green-500 text-white rounded"
-          >
-            {step === 3 ? 'Confirm' : 'Next'}
-          </button>
-        </div>
       </div>
     </div>
   );
