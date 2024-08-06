@@ -4,7 +4,7 @@ import beach from "../../assets/beach.webp";
 import tree from "../../assets/tree.jpg";
 import solar from "../../assets/solar.jpg";
 import Modal from "./Modal";
-import Footer from "../Footer";
+import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer"; // Import the JoinVolunteerForm component
 import { useAuth } from "@clerk/clerk-react";

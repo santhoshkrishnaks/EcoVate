@@ -1,8 +1,8 @@
 import "@dotlottie/player-component/dist/dotlottie-player.mjs";
-import Footer from "../Footer";
+import Footer from "../Header_Footer/Footer";
 import { Page2 } from "./Page2";
 import { Page3 } from "./Page3";
-import Nav from "../Nav";
+import Nav from "../Header_Footer/Nav";
 
 export const Page1 = () => {
   return (
