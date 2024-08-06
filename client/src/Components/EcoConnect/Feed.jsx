@@ -182,7 +182,7 @@ const Feed = () => {
         setSearchTerm={setSearchTerm}
       />
 
-      <div className="feed-container flex justify-center bg-green-100 px-6">
+      <div className="feed-container flex justify-center bg-green-50 px-6">
         <div className="left-sidebar hidden lg:block w-1/4 p-4 h-screen sticky top-20">
           <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
           <ul>

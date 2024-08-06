@@ -50,7 +50,7 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
   };
 
   return (
-    <div className="post bg-gray-100 rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
+    <div className="post bg-white rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
       <div className="post-header flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
         <div className="post-header flex items-start sm:items-center mb-4 sm:mb-0">
           <img
