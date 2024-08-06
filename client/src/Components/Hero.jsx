@@ -12,7 +12,7 @@ const Hero = () => {
               <span className="block text-neutral-700 xl:inline">Redefining <span className="block xl:inline text-green-900">Sustainability</span> with Every Choice</span>
             </h1>
             <p className="mt-3 text-base text-neutral-700 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
-              Innovate Sustainably
+            EcoVate provides innovative solutions for environmental sustainability, with EcoConnect for environmentalist communities, EcoCorp for corporate green credits, and much more.
             </p>
             
             <div className="mt-5 sm:mt-8 sm:flex lg:justify-start">
@@ -21,7 +21,7 @@ const Hero = () => {
                   href='#connect'
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 md:py-4 md:text-lg md:px-10"
                 >
-                  Get started
+                  Explore Now !!
                 </a>
               </div>
               <div className="mt-3 sm:mt-0 sm:ml-3">
