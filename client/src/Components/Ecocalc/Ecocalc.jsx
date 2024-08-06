@@ -440,11 +440,11 @@ const Ecocalc = () => {
     <div>
       <Nav />
       <div className="bg-green-50 min-h-screen p-6">
-        <div className="pt-[50px] items-center">
+        <div className=" items-center">
           <h1 className='lg:text-5xl font-bold text-center items-center text-neutral-700'>
             <span className='lg:text-5xl text-green-700 font-bold'>Eco</span>Calc
           </h1>
-          <h2 className='lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9'>
+          <h2 className='lg:text-3xl lg:mt-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9'>
             Greening Corporate Practices
           </h2>
         </div>

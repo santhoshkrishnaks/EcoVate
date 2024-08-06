@@ -84,7 +84,7 @@ const initialPosts = [
     organization: "Solar Solutions",
     status: "Ongoing",
     callToAction:
-    "Learn how you can install solar panels at a discounted rate by contacting us.",
+      "Learn how you can install solar panels at a discounted rate by contacting us.",
     donationLink: "https://example.com/donate-solar",
   },
 ];
@@ -95,7 +95,6 @@ const Feed = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [posts, setPosts] = useState(initialPosts);
   const [newPost, setNewPost] = useState({
-    initiativeType: "",
     title: "",
     description: "",
     image: "",
@@ -153,13 +152,17 @@ const Feed = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    
+
     const postWithId = {
       ...newPost,
       id: posts.length + 1,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(), // Format time without seconds
       userId: 1,
       user: users[0],
     };
+
     setPosts([postWithId, ...posts]);
     alert("New initiative submitted!");
     setIsModalVisible(false);
@@ -230,7 +233,7 @@ const Feed = () => {
             </p>
             <button
               onClick={handleJoinNowClick}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+              className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
             >
               Join Us
             </button>

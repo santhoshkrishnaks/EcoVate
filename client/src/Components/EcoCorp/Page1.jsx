@@ -9,7 +9,7 @@ export const Page1 = () => {
     <div>
       <Nav />
       <div className="bg-green-50 min-h-screen">
-        <div className="pt-12 text-center">
+        <div className="text-center">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-700">
             <span className="text-green-700">Eco</span> Corp
           </h1>
