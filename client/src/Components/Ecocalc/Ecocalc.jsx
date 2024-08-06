@@ -353,6 +353,33 @@ const OffsetsForm = ({ formData, handleChange }) => (
   </form>
 );
 
+const calculateCarbonFootprint = (formData) => {
+  // Implement your calculation logic here
+  // Example calculation logic:
+  const energyScore = formData.electricityConsumption * 0.5; // Simplified example
+  const transportationScore = formData.annualMileage * 0.1; // Simplified example
+  const housingScore = formData.residenceSize * 0.3; // Simplified example
+  const dietScore = formData.meatDairyConsumption * 0.2; // Simplified example
+  const wasteScore = formData.householdWaste * 0.1; // Simplified example
+  const waterScore = formData.waterUsage * 0.05; // Simplified example
+  const goodsScore = formData.goodsSpending * 0.4; // Simplified example
+  const lifestyleScore = formData.lifestyleHabits * 0.3; // Simplified example
+  const offsetsScore = formData.offsetsSpent * -0.2; // Simplified example
+
+  return {
+    energy: energyScore,
+    transportation: transportationScore,
+    housing: housingScore,
+    diet: dietScore,
+    waste: wasteScore,
+    water: waterScore,
+    goods: goodsScore,
+    lifestyle: lifestyleScore,
+    offsets: offsetsScore
+  };
+};
+
+
 // Main Ecocalc Component
 const Ecocalc = () => {
   const [activeTab, setActiveTab] = useState('energy');
@@ -386,7 +413,7 @@ const Ecocalc = () => {
     offsetsSpent: '',
     offsetsType: ''
   });
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -395,118 +422,65 @@ const Ecocalc = () => {
     });
   };
 
-  const calculateCarbonFootprint = () => {
-    // Sample calculation: This should be replaced with actual formulas based on input
-    // Calculation logic...
-    return 0; // Replace with actual calculation
-  };
-
   const handleSubmit = () => {
-    // Set calculated scores
-    const scores = {
-      energy: calculateCarbonFootprint(),
-      transportation: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      housing: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      diet: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      waste: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      water: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      goods: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      lifestyle: calculateCarbonFootprint(), // This should be updated based on actual calculations
-      offsets: calculateCarbonFootprint() // This should be updated based on actual calculations
-    };
+    // Calculate scores based on formData
+    const scores = calculateCarbonFootprint(formData);
 
-    // Navigate to results page and pass scores via state
-    navigate('/result', { state: { scores, user: { name: "John Doe", email: "john.doe@example.com" } } });
+    // Navigate to results page and pass both formData and scores via state
+    navigate('/result', {
+      state: {
+        scores,
+        user: { name: "John Doe", email: "john.doe@example.com" }, // You can update this with actual user data
+        formData // Pass the form data to the results page
+      }
+    });
   };
 
   return (
     <div>
-    <Nav/>
-    <div className="bg-green-50 min-h-screen p-6">
-    <div className=" pt-[50px]  items-center">
-    
-    <h1 className='lg:text-5xl font-bold text-center items-center text-neutral-700'><span className='lg:text-5xl text-green-700 font-bold'>Eco</span>Calc</h1>
- 
-    <h2 className='lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300  mb-9'>Greening Corporate Practices</h2>
+      <Nav />
+      <div className="bg-green-50 min-h-screen p-6">
+        <div className="pt-[50px] items-center">
+          <h1 className='lg:text-5xl font-bold text-center items-center text-neutral-700'>
+            <span className='lg:text-5xl text-green-700 font-bold'>Eco</span>Calc
+          </h1>
+          <h2 className='lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9'>
+            Greening Corporate Practices
+          </h2>
+        </div>
+        <div className="flex space-x-4 mb-6">
+          {['energy', 'transportation', 'housing', 'diet', 'waste', 'water', 'goods', 'lifestyle', 'offsets'].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`py-2 px-4 rounded ${activeTab === tab ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="mb-6">
+          {activeTab === 'energy' && <EnergyForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'transportation' && <TransportationForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'housing' && <HousingForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'diet' && <DietForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'waste' && <WasteForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'water' && <WaterForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'goods' && <GoodsForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'lifestyle' && <LifestyleForm formData={formData} handleChange={handleChange} />}
+          {activeTab === 'offsets' && <OffsetsForm formData={formData} handleChange={handleChange} />}
+        </div>
+
+        <button
+          onClick={handleSubmit}
+          className="py-2 px-4 bg-green-600 text-white rounded"
+        >
+          Submit
+        </button>
+      </div>
+      <Footer />
     </div>
-      <div className="flex space-x-4 mb-6">
-        <button
-          onClick={() => setActiveTab('energy')}
-          className={`py-2 px-4 rounded ${activeTab === 'energy' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Energy
-        </button>
-        <button
-          onClick={() => setActiveTab('transportation')}
-          className={`py-2 px-4 rounded ${activeTab === 'transportation' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Transportation
-        </button>
-        <button
-          onClick={() => setActiveTab('housing')}
-          className={`py-2 px-4 rounded ${activeTab === 'housing' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Housing
-        </button>
-        <button
-          onClick={() => setActiveTab('diet')}
-          className={`py-2 px-4 rounded ${activeTab === 'diet' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Diet
-        </button>
-        <button
-          onClick={() => setActiveTab('waste')}
-          className={`py-2 px-4 rounded ${activeTab === 'waste' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Waste
-        </button>
-        <button
-          onClick={() => setActiveTab('water')}
-          className={`py-2 px-4 rounded ${activeTab === 'water' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Water
-        </button>
-        <button
-          onClick={() => setActiveTab('goods')}
-          className={`py-2 px-4 rounded ${activeTab === 'goods' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Goods
-        </button>
-        <button
-          onClick={() => setActiveTab('lifestyle')}
-          className={`py-2 px-4 rounded ${activeTab === 'lifestyle' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Lifestyle
-        </button>
-        <button
-          onClick={() => setActiveTab('offsets')}
-          className={`py-2 px-4 rounded ${activeTab === 'offsets' ? 'bg-green-700 text-white' : 'bg-white text-gray-700 border'}`}
-        >
-          Offsets
-        </button>
-      </div>
-
-      <div className="mb-6">
-        {activeTab === 'energy' && <EnergyForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'transportation' && <TransportationForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'housing' && <HousingForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'diet' && <DietForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'waste' && <WasteForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'water' && <WaterForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'goods' && <GoodsForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'lifestyle' && <LifestyleForm formData={formData} handleChange={handleChange} />}
-        {activeTab === 'offsets' && <OffsetsForm formData={formData} handleChange={handleChange} />}
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        className="py-2 px-4 bg-green-600 text-white rounded"
-      >
-        Submit
-      </button>
-      </div>
-      <Footer/>
-      </div>
   );
 };
 

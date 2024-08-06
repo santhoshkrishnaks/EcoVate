@@ -26,7 +26,7 @@ export const Donate = () => {
     <>
     <Nav/>
       <div className=" overflow-hidden bg-green-50  lg:min-h-screen flex flex-col">
-        <h1 className="text-center lg:text-6xl font-bold  mt-[100px] text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
+        <h1 className="text-center lg:text-6xl font-bold  mt-4 text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
           EcoFund
         </h1>
         <div className="mt-[10px]">

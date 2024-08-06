@@ -10,15 +10,32 @@ const StatsSection = () => {
   const initialSpeciesPercent = 27.78;
   const speciesRatePerSecond = 0.00001; // Temporarily increased rate for demonstration
 
-  const [forestHectares, setForestHectares] = useState(initialForestHectares);
-  const [wildForestPercent, setWildForestPercent] = useState(initialWildForestPercent);
-  const [speciesPercent, setSpeciesPercent] = useState(initialSpeciesPercent);
+  const getInitialValue = (key, initialValue) => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? parseFloat(storedValue) : initialValue;
+  };
+
+  const [forestHectares, setForestHectares] = useState(getInitialValue('forestHectares', initialForestHectares));
+  const [wildForestPercent, setWildForestPercent] = useState(getInitialValue('wildForestPercent', initialWildForestPercent));
+  const [speciesPercent, setSpeciesPercent] = useState(getInitialValue('speciesPercent', initialSpeciesPercent));
 
   useEffect(() => {
     const updateCounters = () => {
-      setForestHectares(prev => prev + forestRatePerSecond);
-      setWildForestPercent(prev => prev - wildForestRatePerSecond);
-      setSpeciesPercent(prev => prev + speciesRatePerSecond);
+      setForestHectares(prev => {
+        const newValue = prev + forestRatePerSecond;
+        localStorage.setItem('forestHectares', newValue);
+        return newValue;
+      });
+      setWildForestPercent(prev => {
+        const newValue = prev - wildForestRatePerSecond;
+        localStorage.setItem('wildForestPercent', newValue);
+        return newValue;
+      });
+      setSpeciesPercent(prev => {
+        const newValue = prev + speciesRatePerSecond;
+        localStorage.setItem('speciesPercent', newValue);
+        return newValue;
+      });
     };
 
     const interval = setInterval(updateCounters, 1000);
@@ -30,10 +47,10 @@ const StatsSection = () => {
       <div className="max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-2xl font-extrabold leading-8 text-slate-700 sm:text-3xl sm:leading-9 lg:text-4xl lg:leading-10">
-          Earth Health Metrics
+            Earth Health Metrics
           </h2>
-          <p className="mt-3 text-lg leading-7 text-slate-700  sm:text-xl sm:mt-4">
-          Current data on environmental destruction, species extinction, and forest loss.
+          <p className="mt-3 text-lg leading-7 text-slate-700 sm:text-xl sm:mt-4">
+            Current data on environmental destruction, species extinction, and forest loss.
           </p>
         </div>
       </div>
