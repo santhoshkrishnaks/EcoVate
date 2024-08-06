@@ -45,7 +45,12 @@ const JoinVolunteerForm = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4">Join Our Volunteer Program</h2>
+        <div className="flex justify-between flex-row">
+          <h2 className="text-2xl font-bold mb-4">
+            Join Our Volunteer Program
+          </h2>
+          
+        </div>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
