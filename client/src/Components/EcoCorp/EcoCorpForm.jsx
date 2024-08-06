@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Footer from '../Footer';
-import Nav from '../Nav';
+import Footer from '../Header_Footer/Footer';
+import Nav from '../Header_Footer/Nav';
 
 const Form = () => {
   // State to store form data
