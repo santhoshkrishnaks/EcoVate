@@ -42,7 +42,6 @@ const EcoNav = ({
         className="mx-auto flex max-w-7xl items-center justify-between p-4 lg:px-8"
         aria-label="Global"
       >
-        {/* logo */}
         <div className="flex lg:flex-1">
           <a href="/" className="-m-1.5 lg:-ml-10">
             <img className="h-[68px] w-auto" src={logo} alt="" />
@@ -86,8 +85,9 @@ const EcoNav = ({
             onClick={toggleMobileMenu}
           >
             <span className="sr-only">Open main menu</span>
+            <UserButton />
             <svg
-              className="h-6 w-6"
+              className="h-6 w-6 ml-2 "
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
@@ -234,8 +234,7 @@ const EcoNav = ({
                 </svg>
               </button>
             </div>
-            <div className="mt-6">
-             
+            <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
                   <a

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import im1 from "../assets/treeplanting.jpg";
+import im1 from "../../assets/treeplanting.jpg";
 const activities = [
   {
     image: im1,

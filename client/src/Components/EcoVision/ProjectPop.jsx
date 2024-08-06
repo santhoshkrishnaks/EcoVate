@@ -1,8 +1,8 @@
-import Create from "./Context";
-import Footer from "./Footer";
+import Create from "../Context";
+import Footer from "../Footer";
 import Form from "./Form";
 import { useContext, useState } from "react";
-import Nav from "./Nav";
+import Nav from "../Nav";
 export const ProjectPop = () => {
   const {showForm,setShowForm}=useContext(Create);
 const handleFormClick = () => {

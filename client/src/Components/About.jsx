@@ -2,6 +2,7 @@ import Stats from "./Stats";
 import img from "../assets/about1.png";
 import { useEffect } from "react";
 import ScrollReveal from "scrollreveal";
+import "@dotlottie/player-component";
 
 const About = () => {
   useEffect(() => {
@@ -36,18 +37,20 @@ const About = () => {
             </div>
 
             <div className="mt-12 md:mt-0">
-              <img
-                src={img}
-                alt="A group of people involved in environmental activities"
-                className="object-cover rounded-lg shadow-md w-full h-auto"
-                height={500}
-              />
+              <dotlottie-player
+                src="https://lottie.host/52467f1c-00ef-41a5-942c-6ce9f174d2d2/QHQxoZSTse.json"
+                background="transparent"
+                speed="1"
+                style={{ width: "300px", height: "300px" }}
+                loop
+                autoplay
+              ></dotlottie-player>
             </div>
           </div>
         </div>
       </section>
       <Stats />
-      
+
       <section className="py-12 bg-green-50 relative min-h-screen">
         <div className="container mx-auto flex flex-col lg:flex-row items-center px-4 sm:px-6 lg:px-8 gap-5 mt-10">
           <div className="lg:w-1/2 mb-8 lg:mb-0 lg:mr-8">

@@ -1,5 +1,5 @@
-import logo from "../assets/logow.png";
-import "../Components/SignInPage.css";
+import logo from "../../assets/logow.png";
+import "./SignInPage.css"
 import { SignIn } from "@clerk/clerk-react";
 
 const SignInPage = () => {

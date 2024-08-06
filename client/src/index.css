@@ -84,7 +84,7 @@ button:focus-visible {
   scroll-behavior: smooth;
 }
 
-media (max-width:550px) {
+@media (max-width:550px) {
   .image-footer{
     width: 100%;
     display: flex;

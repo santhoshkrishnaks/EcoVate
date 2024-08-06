@@ -30,13 +30,13 @@ const Nav = () => {
         </div>
 
         <div className="flex lg:hidden">
-        <button
-        type="button"
-        className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-        onClick={toggleMobileMenu}
-        >
-        <span className="sr-only">Open main menu</span>
-        <UserButton/>
+          <button
+            type="button"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            onClick={toggleMobileMenu}
+          >
+            <span className="sr-only">Open main menu</span>
+            <UserButton />
             <svg
               className="h-6 w-6 ml-2 "
               fill="none"
@@ -130,14 +130,16 @@ const Nav = () => {
               </div>
             )}
           </div>
-
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-        {login ? (
-          <UserButton />
-        ) : (
-          <span className="text-lg font-semibold leading-6 text-gray-900"><SignInButton>Log in </SignInButton><span aria-hidden="true">&rarr;</span></span>
+          {login ? (
+            <UserButton />
+          ) : (
+            <span className="text-lg font-semibold leading-6 text-gray-900">
+              <SignInButton>Log in </SignInButton>
+              <span aria-hidden="true">&rarr;</span>
+            </span>
           )}
         </div>
       </nav>
