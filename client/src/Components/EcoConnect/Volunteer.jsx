@@ -299,24 +299,18 @@ const JoinVolunteerForm = ({ onClose }) => {
           </div>
           <div className="mb-4">
             <label className="inline-flex items-center">
-              <input
-                type="checkbox"
-                checked={showMotivation}
-                onChange={() => setShowMotivation(!showMotivation)}
-                className="form-checkbox"
-              />
-              <span className="ml-2">Why do you want to join us?</span>
+              <span className="">
+                Why do you want to join us? <span className="text-slate-400">(Optional)</span>
+              </span>
             </label>
-            {showMotivation && (
-              <textarea
-                id="motivation"
-                value={motivation}
-                onChange={(e) => setMotivation(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                rows="4"
-                placeholder="Share your motivation"
-              ></textarea>
-            )}
+
+            <textarea
+              id="motivation"
+              onChange={(e) => setMotivation(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              rows="4"
+              placeholder="Share your motivation"
+            ></textarea>
           </div>
           <div className="flex justify-end">
             <button
