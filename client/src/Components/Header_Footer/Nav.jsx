@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 import Create from "../Context";
+import {Link} from "react-router-dom"
 
 const Nav = () => {
   const { isSignedIn } = useAuth();
@@ -131,13 +132,13 @@ const Nav = () => {
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                     >
                       <div className="flex-auto">
-                        <a
-                          href={item.path}
+                        <Link
+                          to={item.path}
                           className="block font-semibold text-gray-900 text-lg"
                         >
                           {item.name}
                           <span className="absolute inset-0"></span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}
@@ -209,12 +210,12 @@ const Nav = () => {
                   >
                     EcoCorp
                   </a>
-                  <a
-                    href="/Ecovision"
+                  <Link
+                    to="/Ecovision"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
                     EcoVision
-                  </a>
+                  </Link>
                   <a
                     href="/Ecocalc"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
