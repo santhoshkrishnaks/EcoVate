@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'; 
+
 
 const DonateForms = () => {
   const [step, setStep] = useState(1);
@@ -196,10 +198,10 @@ const DonateForms = () => {
   
       // Add company logo and details
       page.drawText('EcoFund', { x: 50, y: height - 50, size: 24, font: fontBold, color: rgb(0, 0.5, 0) });
-      page.drawText('Sri Krishna College of Technology', { x: 50, y: height - 70, size: fontSize, font: fontRegular });
-      page.drawText('Phone:+91 70101 32134', { x: 50, y: height - 85, size: fontSize, font: fontRegular });
-      page.drawText('Email: info.ecovate@gmail.com', { x: 50, y: height - 100, size: fontSize, font: fontRegular });
-      page.drawText('Website: www.ecovate.com', { x: 50, y: height - 115, size: fontSize, font: fontRegular });
+      page.drawText('123 Eco Lane, Green City, GC 12345', { x: 50, y: height - 70, size: fontSize, font: fontRegular });
+      page.drawText('Phone: (123) 456-7890', { x: 50, y: height - 85, size: fontSize, font: fontRegular });
+      page.drawText('Email: contact@ecofund.org', { x: 50, y: height - 100, size: fontSize, font: fontRegular });
+      page.drawText('Website: www.ecofund.org', { x: 50, y: height - 115, size: fontSize, font: fontRegular });
   
       // Add transaction details
       page.drawText('Transaction ID: ' + transactionId, { x: 50, y: height - 150, size: fontSize, font: fontRegular });
@@ -243,7 +245,6 @@ const DonateForms = () => {
       console.error('Error generating PDF:', error);
     }
   };
-
   return (
     <div className="p-4">
       <div className="max-w-md mx-auto">
