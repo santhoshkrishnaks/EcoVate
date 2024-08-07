@@ -1,10 +1,12 @@
 import { useContext, useState } from "react";
 import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
+import { Link, useNavigate } from "react-router-dom";
 import Create from "../Context";
 
 const Nav = () => {
   const { isSignedIn } = useAuth();
+  const navi=useNavigate();
   const login = isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
@@ -70,7 +72,7 @@ const Nav = () => {
           <span
             onClick={() => {
               if (isSignedIn) {
-                window.location.href = "/Ecofund";
+                navi('/Ecofund');
               } else {
                 window.location.href = "/signin";
               }
@@ -131,13 +133,13 @@ const Nav = () => {
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                     >
                       <div className="flex-auto">
-                        <a
-                          href={item.path}
+                        <Link
+                          to={item.path}
                           className="block font-semibold text-gray-900 text-lg"
                         >
                           {item.name}
                           <span className="absolute inset-0"></span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}
