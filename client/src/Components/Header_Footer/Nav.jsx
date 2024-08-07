@@ -2,14 +2,14 @@ import { useContext, useState } from "react";
 import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 import Create from "../Context";
-import {Link} from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const Nav = () => {
   const { isSignedIn } = useAuth();
   const login = isSignedIn;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
-
+  const navi=useNavigate();
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -60,9 +60,9 @@ const Nav = () => {
             className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer"
             onClick={() => {
               if (isSignedIn) {
-                window.location.href = "/Ecoconnect";
+                navi("/Ecoconnect");
               } else {
-                window.location.href = "/signin";
+                navi("/signin");
               }
             }}
           >
