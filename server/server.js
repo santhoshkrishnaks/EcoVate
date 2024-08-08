@@ -1,10 +1,10 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const { Webhook } = require('svix');
-const bodyParser = require('body-parser');
-const user = require('./model/model.user.js');
-const cors = require('cors');
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const { Webhook } = require("svix");
+const bodyParser = require("body-parser");
+const user = require("./model/model.user.js");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -14,7 +14,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb+srv://admin:Ecovate@ecovate.5mgaa.mongodb.net/Node-API?retryWrites=true&w=majority&appName=Ecovate")
+mongoose
+  .connect(
+    "mongodb+srv://admin:Ecovate@ecovate.5mgaa.mongodb.net/Node-API?retryWrites=true&w=majority&appName=Ecovate"
+  )
   .then(() => {
     console.log("Connected to mongoose");
     app.listen(5000, () => {
@@ -25,12 +28,12 @@ mongoose.connect("mongodb+srv://admin:Ecovate@ecovate.5mgaa.mongodb.net/Node-API
     console.error("Database connection error:", error);
   });
 
-app.get('/api/webhooks', (req, res) => {
+app.get("/api/webhooks", (req, res) => {
   res.send("Hello World");
 });
 app.post(
-  '/api/webhooks',
-  bodyParser.raw({ type: 'application/json' }),
+  "/api/webhooks",
+  bodyParser.raw({ type: "application/json" }),
   async (req, res) => {
     try {
       console.log("Webhook received");
@@ -38,14 +41,14 @@ app.post(
       const payloadString = req.body.toString();
       const svixHeaders = req.headers;
 
-      const wh = new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
+      const wh = await new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
       const evt = wh.verify(payloadString, svixHeaders);
 
       const { id, ...attributes } = evt.data;
 
       const eventType = evt.type;
 
-      if (eventType === 'user.created') {
+      if (eventType === "user.created") {
         const firstName = attributes.first_name;
         const lastName = attributes.last_name;
         const email = attributes.email_addresses[0].email_address;
@@ -57,22 +60,22 @@ app.post(
           first_name: firstName,
           last_name: lastName,
           user_name: username,
-          profile_img_url: profile_img_url
+          profile_img_url: profile_img_url,
         });
-        
+
         await User.save();
-        console.log('User is created');
+        console.log("User is created");
       }
 
       res.status(200).json({
         success: true,
-        message: 'Webhook processed successfully',
+        message: "Webhook processed successfully",
       });
     } catch (err) {
       console.error("Webhook processing error:", err);
       res.status(400).json({
         success: false,
-        message: 'Error processing webhook: ' + err.message,
+        message: "Error processing webhook: " + err.message,
       });
     }
   }
