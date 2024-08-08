@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Link} from "react-router-dom"
 export const Page3 = () => {
   return (
     <div className='bg-green-50'>
@@ -105,9 +105,9 @@ export const Page3 = () => {
       </div>
       <div className="w-full px-1 lg:w-1/2">
         <div className="text-center ">
-          <a className="font-semibold rounded-lg mx-auto inline-flex items-center justify-center bg-white py-4 px-9 hover:bg-opacity-90" href="/form">
+          <Link className="font-semibold rounded-lg mx-auto inline-flex items-center justify-center bg-white py-4 px-9 hover:bg-opacity-90" to="/form">
            Apply Here!
-          </a>
+          </Link>
         </div>
       </div>
     </div>

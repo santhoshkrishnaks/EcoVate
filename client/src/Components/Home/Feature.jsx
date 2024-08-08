@@ -1,9 +1,10 @@
 import React from "react";
 import StatsSection from "./Counter";
 import { useAuth } from "@clerk/clerk-react";
-
+import {Link, useNavigate} from "react-router-dom"
 const Feature = () => {
   const { isSignedIn } = useAuth();
+  const navi=useNavigate();
   return (
     <div className="min-h-screen flex flex-col">
       <div className="flex-1 bg-slate-50">
@@ -28,9 +29,9 @@ const Feature = () => {
           <span
             onClick={() => {
               if (isSignedIn) {
-                window.location.href = "/Ecoconnect";
+                navi("/Ecoconnect");
               } else {
-                window.location.href = "/signin";
+                navi("/signin");
               }
             }}
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"

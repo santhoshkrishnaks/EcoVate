@@ -1,10 +1,11 @@
 import { useAuth } from "@clerk/clerk-react";
 import { DotLottiePlayer } from "@dotlottie/player-component";
 import React from "react";
-
+import {Link, useNavigate} from "react-router-dom"
 export const EcoCorpHero = () => {
   const { isSignedIn } = useAuth();
   const login=isSignedIn;
+  const navi=useNavigate();
   return (
     <div>
       <div className="flex-1 bg-green-50 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
@@ -20,9 +21,9 @@ export const EcoCorpHero = () => {
           </p>
           <span
           onClick={()=>{ if (isSignedIn) {
-            window.location.href = '/Ecocrop';
+            navi('/Ecocrop');
           } else {
-            window.location.href = '/signin';
+            navi('/signin');
           }}}
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"
           >
@@ -67,12 +68,12 @@ export const EcoCorpHero = () => {
             for a more sustainable future.Start your journey towards
             sustainability with precise and actionable data.
           </p>
-          <a
-            href="/Ecocalc"
+          <Link
+            to="/Ecocalc"
             className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
           >
             Try Now !!
-          </a>
+          </Link>
         </div>
       </div>
     </div>
