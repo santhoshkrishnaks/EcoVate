@@ -1,6 +1,6 @@
 import React from 'react'
 import '@dotlottie/player-component/dist/dotlottie-player.mjs';
-
+import {Link} from "react-router-dom"
 const Hero = () => {
     const lottiePlayerSrc="https://lottie.host/575d36dd-4d87-421f-ae2f-4600b6e9215f/JJWwJ87e6Z.json"
   return (
@@ -17,12 +17,12 @@ const Hero = () => {
             
             <div className="mt-5 sm:mt-8 sm:flex lg:justify-start">
               <div className="rounded-md shadow">
-                <a
-                  href='#connect'
+                <Link
+                  to='#connect'
                   className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 md:py-4 md:text-lg md:px-10"
                 >
                   Explore Now !!
-                </a>
+                </Link>
               </div>
               <div className="mt-3 sm:mt-0 sm:ml-3">
               </div>

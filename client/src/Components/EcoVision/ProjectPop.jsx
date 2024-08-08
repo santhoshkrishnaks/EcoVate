@@ -36,12 +36,12 @@ const handleFormClick = () => {
   <p className="text-lg lg:text-2xl mb-6">
   We're on the lookout for innovative eco-friendly projects! Share your ideas with us and collaborate on initiatives that can transform our world. Together, let's drive sustainable change and protect our planet.
   </p>
-  <a onClick={handleFormClick} 
-    href="#form"
+  <Link onClick={handleFormClick} 
+    to="#form"
     className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
   >
     Share Yours
-  </a>
+  </Link>
 </div>
 
 
