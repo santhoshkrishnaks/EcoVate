@@ -6,7 +6,6 @@ const bodyParser=require('body-parser');
 const user=require('./model/model.user.js');
 dotenv.config();
 const cors=require('cors');
-const userSchema = require('./model/model.user.js');
 mongoose.connect("mongodb+srv://admin:Ecovate@ecovate.5mgaa.mongodb.net/Node-API?retryWrites=true&w=majority&appName=Ecovate").then(() => {
     console.log("Connected to mongoose");
     app.listen(5000, () => {
