@@ -11,6 +11,9 @@ const Nav = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
 
+  const clicklog = () =>{
+    navi('/signin')
+  }
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -154,7 +157,7 @@ const Nav = () => {
             <UserButton />
           ) : (
             <span className="text-lg font-semibold leading-6 text-gray-900">
-              <SignInButton>Log in </SignInButton>
+              <button onClick={clicklog}>Log in</button>
               <span aria-hidden="true">&rarr;</span>
             </span>
           )}
