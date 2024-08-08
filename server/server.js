@@ -31,57 +31,71 @@ mongoose
 app.get("/api/webhooks", (req, res) => {
   res.send("Hello World");
 });
+
 app.post(
   "/api/webhooks",
+  // This is a generic method to parse the contents of the payload.
+  // Depending on the framework, packages, and configuration, this may be
+  // different or not required.
   bodyParser.raw({ type: "application/json" }),
-  async (req, res) => {
-    try {
-      console.log("Webhook received");
+  async function (req, res) {
+    // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
+    const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+    if (!WEBHOOK_SECRET) {
+      throw new Error("You need a WEBHOOK_SECRET in your .env");
+    }
 
-      const payloadString = req.body.toString();
-      const svixHeaders = req.headers;
-      console.log("payload", payloadString);
+    // Get the headers and body
+    const headers = req.headers;
+    const payload = req.body;
 
-      const wh = new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
-      const evt = wh.verify(payloadString, svixHeaders);
+    // Get the Svix headers for verification
+    const svix_id = headers["svix-id"];
+    const svix_timestamp = headers["svix-timestamp"];
+    const svix_signature = headers["svix-signature"];
 
-      const { id, ...attributes } = evt.data;
-
-      const eventType = evt.type;
-
-      if (eventType === "user.created") {
-        const firstName = attributes.first_name;
-        const lastName = attributes.last_name;
-        const email = attributes.email_addresses[0].email_address;
-        const profile_img_url = attributes.profile_image_url;
-        const username = attributes.username;
-
-        const User = new user({
-          email_address: email,
-          first_name: firstName,
-          last_name: lastName,
-          user_name: username,
-          profile_img_url: profile_img_url,
-        });
-
-        await User.save();
-        console.log("User is created");
-      }
-
-      res.status(200).json({
-        success: true,
-        message: "Webhook processed successfully",
-      });
-    } catch (err) {
-      console.error("Webhook processing error:", err);
-      res.status(400).json({
-        success: false,
-        message: "Error processing webhook: " + err.message,
+    // If there are no Svix headers, error out
+    if (!svix_id || !svix_timestamp || !svix_signature) {
+      return new Response("Error occured -- no svix headers", {
+        status: 400,
       });
     }
+
+    // Create a new Svix instance with your secret.
+    const wh = new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
+
+    let evt;
+
+    // Attempt to verify the incoming webhook
+    // If successful, the payload will be available from 'evt'
+    // If the verification fails, error out and  return error code
+    try {
+      evt = wh.verify(payload, {
+        "svix-id": svix_id,
+        "svix-timestamp": svix_timestamp,
+        "svix-signature": svix_signature,
+      });
+    } catch (err) {
+      console.log("Error verifying webhook:", err.message);
+      return res.status(400).json({
+        success: false,
+        message: err.message,
+      });
+    }
+
+    // Do something with the payload
+    // For this guide, you simply log the payload to the console
+    const { id } = evt.data;
+    const eventType = evt.type;
+    console.log(`Webhook with an ID of ${id} and type of ${eventType}`);
+    console.log("Webhook body:", evt.data);
+
+    return res.status(200).json({
+      success: true,
+      message: "Webhook received",
+    });
   }
 );
-
 // Catch-all for 404 errors
 app.use((req, res) => {
   res.status(404).json({
