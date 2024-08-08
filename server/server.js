@@ -38,7 +38,7 @@ app.post(
       const payloadString = req.body.toString();
       const svixHeaders = req.headers;
 
-      const wh = new Webhook(whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk);
+      const wh = new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
       const evt = wh.verify(payloadString, svixHeaders);
 
       const { id, ...attributes } = evt.data;
