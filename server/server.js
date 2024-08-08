@@ -25,10 +25,9 @@ mongoose.connect(process.env.MONGO_URI)
     console.error("Database connection error:", error);
   });
 
-app.get('/', (req, res) => {
+app.get('/api/webhooks', (req, res) => {
   res.send("Hello World");
 });
-
 app.post(
   '/api/webhooks',
   bodyParser.raw({ type: 'application/json' }),
