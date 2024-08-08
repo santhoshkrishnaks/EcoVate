@@ -4,8 +4,6 @@ import { Webhook } from "svix";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import User from "./model/model.user.js";
-import e from "express";
-
 dotenv.config();
 
 mongoose
