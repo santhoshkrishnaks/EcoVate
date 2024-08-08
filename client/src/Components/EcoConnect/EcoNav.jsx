@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logo from "../../assets/logo.png";
 import { useAuth,UserButton,SignInButton } from "@clerk/clerk-react";
-
+import {Link} from "react-router-dom"
 const EcoNav = ({
   searchTerm,
   setSearchTerm,
@@ -43,9 +43,9 @@ const EcoNav = ({
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 lg:-ml-10">
+          <Link to="/" className="-m-1.5 lg:-ml-10">
             <img className="h-[68px] w-auto" src={logo} alt="" />
-          </a>
+          </Link>
         </div>
 
         <div className="flex lg:hidden items-center justify-between mr-2 gap-3">
@@ -104,15 +104,15 @@ const EcoNav = ({
         </div>
 
         <div className="hidden lg:flex lg:gap-x-12">
-        <a href="/Ecoconnect" className="text-lg font-semibold leading-6 text-gray-900">
+        <Link to="/Ecoconnect" className="text-lg font-semibold leading-6 text-gray-900">
           EcoConnect
-        </a>
-        <a href="/Ecofund" className="text-lg font-semibold leading-6 text-gray-900">
+        </Link>
+        <Link to="/Ecofund" className="text-lg font-semibold leading-6 text-gray-900">
           EcoFund
-        </a>
-        <a href="/Ecocorp" className="text-lg font-semibold leading-6 text-gray-900">
+        </Link>
+        <Link to="/Ecocorp" className="text-lg font-semibold leading-6 text-gray-900">
           EcoCorp
-        </a>
+        </Link>
           <div className="relative">
             <button
               type="button"
@@ -153,13 +153,13 @@ const EcoNav = ({
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
                     >
                       <div className="flex-auto">
-                        <a
-                          href={item.path}
+                        <Link
+                          to={item.path}
                           className="block font-semibold text-gray-900 text-lg"
                         >
                           {item.name}
                           <span className="absolute inset-0"></span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   ))}
@@ -208,10 +208,10 @@ const EcoNav = ({
           <div className="fixed inset-0 z-10"></div>
           <div className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-green-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
+              <Link to="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
                 <img className="h-8 w-auto" src={logo} alt="" />
-              </a>
+              </Link>
               <button
                 type="button"
                 className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -237,30 +237,36 @@ const EcoNav = ({
             <div className="mt-6 flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6 text-lg">
-                  <a
-                    href="#"
+                  <Link
+                    to="/Ecoconnect"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Product
-                  </a>
-                  <a
-                    href="#"
+                    EcoConnect
+                  </Link>
+                  <Link
+                    to="/Ecofund"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Features
-                  </a>
-                  <a
-                    href="#"
+                    Ecofund
+                  </Link>
+                  <Link
+                    to="/Ecocorp"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Marketplace
-                  </a>
-                  <a
-                    href="#"
+                    EcoCorp
+                  </Link>
+                  <Link
+                    to="/Ecovision"
                     className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
                   >
-                    Company
-                  </a>
+                    EcoVision
+                  </Link>
+                  <Link
+                    to="/Ecocalc"
+                    className="-mx-3 block rounded-lg py-2 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
+                  >
+                    EcoCorp
+                  </Link>
                 </div>
                 <div className="py-6">
                 {isSignedIn?(<div></div>):(<div className="py-6">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Footer from '../Header_Footer/Footer';
 import Nav from '../Header_Footer/Nav';
+import {Link} from "react-router-dom"
 
 const Form = () => {
   // State to store form data
@@ -314,7 +315,7 @@ const Form = () => {
             </div>
             <div className="ml-3 text-sm">
               <label htmlFor="terms-and-conditions" className="font-medium text-gray-900">Terms and Conditions</label>
-              <p className="text-gray-600">I agree to the <a href="#" className="font-semibold text-green-600">Terms and Conditions</a>.</p>
+              <p className="text-gray-600">I agree to the <Link to="#" className="font-semibold text-green-600">Terms and Conditions</Link>.</p>
             </div>
           </div>
         </div>
