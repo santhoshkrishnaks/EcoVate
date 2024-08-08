@@ -33,14 +33,14 @@ app.get("/api/webhooks", (req, res) => {
 });
 
 app.post(
-  "/api/webhooks",
+  "/api/webhook",
   // This is a generic method to parse the contents of the payload.
   // Depending on the framework, packages, and configuration, this may be
   // different or not required.
   bodyParser.raw({ type: "application/json" }),
   async function (req, res) {
     // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-    const WEBHOOK_SECRET = "whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk";
+    const WEBHOOK_SECRET = "whsec_2xtZDWf21q29Agoq0HK/5Q+yAHQ3VmjO";
     if (!WEBHOOK_SECRET) {
       throw new Error("You need a WEBHOOK_SECRET in your .env");
     }
@@ -62,7 +62,7 @@ app.post(
     }
 
     // Create a new Svix instance with your secret.
-    const wh = new Webhook("whsec_vDqKKmbRi9fo75tUD3Djnmp992BNdlXk");
+    const wh = new Webhook("whsec_2xtZDWf21q29Agoq0HK/5Q+yAHQ3VmjO");
 
     let evt;
 
