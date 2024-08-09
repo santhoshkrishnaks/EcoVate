@@ -19,16 +19,14 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
     }
   };
 
-  // Handle tags change
   const handleTagsChange = (e) => {
     const { value } = e.target;
-    const tagsArray = value
+    const tagsArray =value
       .split(",")
       .map((tag) => tag.trim())
       .filter((tag) => tag); // Trim and filter out empty values
     onChange({ target: { name: "tags", value: tagsArray } });
   };
-
   // Handle opening the lightbox
   const handleOpenLightbox = () => {
     setShowLightbox(true);
@@ -68,14 +66,6 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
           <div className="grid grid-cols-1 gap-4">
             <input
               type="text"
-              name="initiativeType"
-              value={formData.initiativeType}
-              onChange={onChange}
-              placeholder="Initiative Type"
-              className="p-2 border rounded-lg"
-            />
-            <input
-              type="text"
               name="title"
               value={formData.title}
               onChange={onChange}
@@ -109,15 +99,14 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
             <input
               type="text"
               name="tags"
-              value={formData.tags.join(", ")}
               onChange={handleTagsChange}
               placeholder="Tags (comma separated)"
               className="p-2 border rounded-lg"
             />
+
             <input
               type="text"
               name="location"
-              value={formData.location}
               onChange={onChange}
               placeholder="Location"
               className="p-2 border rounded-lg"
@@ -125,14 +114,12 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
             <input
               type="text"
               name="organization"
-              value={formData.organization}
               onChange={onChange}
               placeholder="Organization"
               className="p-2 border rounded-lg"
             />
             <select
               name="status"
-              value={formData.status}
               onChange={onChange}
               className="p-2 border rounded-lg"
             >
@@ -146,7 +133,6 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               <input
                 type="text"
                 name="donationLink"
-                value={formData.donationLink}
                 onChange={onChange}
                 placeholder="Donation Link (optional)"
                 className="p-2 border rounded-lg"
@@ -155,7 +141,6 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
             <input
               type="text"
               name="contactEmail"
-              value={formData.contactEmail}
               onChange={onChange}
               placeholder="Contact Email"
               className="p-2 border rounded-lg"

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
+import {Link, useNavigate} from "react-router-dom"
 
 const Post = ({ post, onProfileClick, handleSearch }) => {
   const [likes, setLikes] = useState(0);
@@ -7,6 +8,7 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
   const [comments, setComments] = useState(post.comments || []);
   const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState(false);
+  const navi=useNavigate();
 
   useEffect(() => {
     if (post.comments) {
@@ -46,7 +48,7 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
       post.contactEmail || ""
     }?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    window.location.href = mailtoLink;
+    window.location.href=mailtoLink;
   };
 
   return (
@@ -108,12 +110,12 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
           Comment
         </button>
         {post.status === "Ongoing" && (
-          <a
-            href={post.donationLink}
+          <Link
+            to={post.donationLink}
             className="donate-button text-blue-500 mt-0"
           >
             Donate
-          </a>
+          </Link>
         )}
       </div>
       {showCommentBox && (

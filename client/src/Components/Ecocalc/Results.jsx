@@ -156,7 +156,7 @@ const Results = () => {
         </section>
         <div className="mt-6 flex justify-center">
           <button
-            onClick={() => generatePDF(scores, recommendations)}
+            onClick={() => pdfgen(scores, recommendations)}
             className="bg-green-700 text-white py-2 px-4 rounded hover:bg-green-800"
           >
             Download PDF Report
