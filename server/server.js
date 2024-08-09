@@ -1,18 +1,12 @@
-const express= require("express");
-const mongoose=require("mongoose");
-const app= express();
-
-const cors=require("cors");
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-mongoose.connect("mongodb+srv://admin:Ecovate@ecovate.5mgaa.mongodb.net/Node-API?retryWrites=true&w=majority&appName=Ecovate").then(() => {
-    console.log("Connected to mongoose");
-    app.listen(5000, () => {
-      console.log("NodeApi app is running on localhost 5000");
-    });
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+import express from "express";
+import bodyParser from "body-parser";
+import login from "./Controllers/userController.js";
+import { connectdb } from "./config/database.js";
+import { landController } from "./Controllers/landController.js";
+const app = express();
+connectdb();
+app.get("/", landController);
+app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), login);
+app.listen(5000, () => {
+  console.log(`listening on port 5000`);
+});

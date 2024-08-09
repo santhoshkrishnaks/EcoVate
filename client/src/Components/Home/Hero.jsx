@@ -1,6 +1,6 @@
 import React from 'react'
 import '@dotlottie/player-component/dist/dotlottie-player.mjs';
-
+import {Link} from "react-router-dom"
 const Hero = () => {
     const lottiePlayerSrc="https://lottie.host/575d36dd-4d87-421f-ae2f-4600b6e9215f/JJWwJ87e6Z.json"
   return (

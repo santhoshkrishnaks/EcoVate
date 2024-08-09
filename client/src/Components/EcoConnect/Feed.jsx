@@ -8,6 +8,7 @@ import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer"; // Import the JoinVolunteerForm component
 import { useAuth } from "@clerk/clerk-react";
+import {Link} from "react-router-dom"
 
 const users = [
   {
@@ -84,7 +85,7 @@ const initialPosts = [
     organization: "Solar Solutions",
     status: "Ongoing",
     callToAction:
-    "Learn how you can install solar panels at a discounted rate by contacting us.",
+      "Learn how you can install solar panels at a discounted rate by contacting us.",
     donationLink: "https://example.com/donate-solar",
   },
 ];
@@ -95,7 +96,6 @@ const Feed = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [posts, setPosts] = useState(initialPosts);
   const [newPost, setNewPost] = useState({
-    initiativeType: "",
     title: "",
     description: "",
     image: "",
@@ -153,13 +153,17 @@ const Feed = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+
+    
+
     const postWithId = {
       ...newPost,
       id: posts.length + 1,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date(), // Format time without seconds
       userId: 1,
       user: users[0],
     };
+
     setPosts([postWithId, ...posts]);
     alert("New initiative submitted!");
     setIsModalVisible(false);
@@ -203,19 +207,19 @@ const Feed = () => {
             <h3 className="text-lg font-bold mb-4">Upcoming Events</h3>
             <ul>
               <li className="mb-2">
-                <a href="#" className="text-blue-500">
+                <Link to="#" className="text-blue-500">
                   Tree Planting Day at Central Park - August 20, 2024
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-blue-500">
+                <Link to="#" className="text-blue-500">
                   Beach Cleanup Drive at Santa Monica - August 25, 2024
-                </a>
+                </Link>
               </li>
               <li className="mb-2">
-                <a href="#" className="text-blue-500">
+                <Link to="#" className="text-blue-500">
                   Solar Panel Installation Workshop - August 30, 2024
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -230,7 +234,7 @@ const Feed = () => {
             </p>
             <button
               onClick={handleJoinNowClick}
-              className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+              className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
             >
               Join Us
             </button>
@@ -274,29 +278,29 @@ const Feed = () => {
           <h2 className="text-xl font-bold mb-4">Recent News</h2>
           <ul>
             <li className="mb-2">
-              <a href="#" className="text-blue-500">
+              <Link to="#" className="text-blue-500">
                 New tree planting record set in Central Park!
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-blue-500">
+              <Link to="#" className="text-blue-500">
                 Volunteers clean up over 500 pounds of trash from local beaches.
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-blue-500">
+              <Link to="#" className="text-blue-500">
                 Community solar energy project reaches new milestone.
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-blue-500">
+              <Link to="#" className="text-blue-500">
                 Community solar energy project reaches new milestone.
-              </a>
+              </Link>
             </li>
             <li className="mb-2">
-              <a href="#" className="text-blue-500">
+              <Link to="#" className="text-blue-500">
                 Community solar energy project reaches new milestone.
-              </a>
+              </Link>
             </li>
             <li className="mb-2 mt-10 ">
               <iframe
@@ -322,7 +326,9 @@ const Feed = () => {
       />
 
       {showVolunteerForm && (
-        <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
+        <div className="">
+          <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
+        </div>
       )}
 
       <Footer />
