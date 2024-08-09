@@ -1,10 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import { Webhook } from "svix";
+import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import User from "./model/model.user.js";
-const app = express();
 dotenv.config();
+const app = express();
 
 mongoose
   .connect(process.env.MONGO_URI)
@@ -17,12 +18,11 @@ mongoose
   .catch((err) => console.log(err.message));
 
 app.get("/", (req, res) => {
-  res.send("Hi This is Santhosh");
+  res.send("Hi THis is Santhosh");
 });
-app.use(express.json());
 app.post(
   "/api/webhook",
-  express.raw({ type: "application/json" }),
+  bodyParser.raw({ type: "application/json" }),
   async function (req, res) {
     try {
       const payloadString = req.body.toString();
@@ -65,7 +65,7 @@ app.post(
       } else if (eventType === "user.deleted") {
         const id1 = await User.findOneAndDelete({ clerkUserId: id });
         if (!id1) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(500).json({ message: "User not found" });
         }
         console.log("delete");
       } else if (eventType === "user.updated") {
@@ -82,7 +82,7 @@ app.post(
           { new: true, runValidators: true }
         );
         if (!id1) {
-          return res.status(404).json({ message: "User not found" });
+          return res.status(500).json({ message: "User not found" });
         }
         console.log("Updated");
       }
