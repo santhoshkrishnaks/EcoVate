@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { generatePDF } from './pdfgen'; // Ensure this function is correctly imported
+import { pdfgen } from './pdfgen'; // Ensure this function is correctly imported
 
 // Dynamic thresholds and recommendations
 const thresholds = {
