@@ -3,10 +3,7 @@
     "builds": [
       {
         "src": "server.js",
-        "use": "@vercel/node",
-        "config": {
-          "outputDirectory": "api"
-        }
+        "use": "@vercel/node"
       }
     ],
     "routes": [
@@ -16,4 +13,3 @@
       }
     ]
   }
-  
