@@ -1,9 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import { Webhook } from "svix";
-import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import User from "./model/model.user.js";
+const app = express();
 dotenv.config();
 
 mongoose
@@ -16,13 +16,13 @@ mongoose
   })
   .catch((err) => console.log(err.message));
 
-const app = express();
 app.get("/", (req, res) => {
-  res.send("Hi THis is Santhosh");
+  res.send("Hi This is Santhosh");
 });
+app.use(express.json());
 app.post(
   "/api/webhook",
-  bodyParser.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }),
   async function (req, res) {
     try {
       const payloadString = req.body.toString();
@@ -62,27 +62,29 @@ app.post(
         } catch (err) {
           console.error("Error saving user:", err.message);
         }
-      }
-      else if (eventType === "user.deleted") {
-      const id1=await User.findOneAndDelete({ clerkUserId: id })
-      if(!id1){
-        return res.status(404).json({message:"User not found"});
-      }
-      console.log("delete")
-      }
-      else if (eventType === "user.updated") {
-      const updateData={
-          firstName:  attributes.first_name,
+      } else if (eventType === "user.deleted") {
+        const id1 = await User.findOneAndDelete({ clerkUserId: id });
+        if (!id1) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        console.log("delete");
+      } else if (eventType === "user.updated") {
+        const updateData = {
+          firstName: attributes.first_name,
           lastName: attributes.last_name,
           userName: attributes.username,
           profileImg: attributes.profile_image_url,
-          emailAddress: attributes.email_addresses[0].email_address,} 
-      const id1=await User.findOneAndUpdate({ clerkUserId: id },updateData,
-        { new: true, runValidators: true })
-      if(!id1){
-        return res.status(404).json({message:"User not found"});
-      }
-      console.log("Updated")
+          emailAddress: attributes.email_addresses[0].email_address,
+        };
+        const id1 = await User.findOneAndUpdate(
+          { clerkUserId: id },
+          updateData,
+          { new: true, runValidators: true }
+        );
+        if (!id1) {
+          return res.status(404).json({ message: "User not found" });
+        }
+        console.log("Updated");
       }
       res.status(200).json({
         success: true,
