@@ -9,11 +9,11 @@ export const Page1 = () => {
     <div>
       <Nav />
       <div className="bg-green-50 min-h-screen">
-        <div className="text-center">
+        <div className="text-center pt-5">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-neutral-700">
-            <span className="text-green-700">Eco</span> Corp
+            <span className="text-green-700">Eco</span>Corp
           </h1>
-          <h2 className="text-xl sm:text-2xl md:text-3xl mt-4 mb-6 font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300">
+          <h2 className="text-xl sm:text-2xl md:text-3xl mt-2  font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300">
             Greening Corporate Practices
           </h2>
         </div>
@@ -25,7 +25,7 @@ export const Page1 = () => {
                 src="https://lottie.host/dd577fb1-4fd6-4ecc-bdbc-2415d99ed9d0/CGhcqAYysw.json"
                 background="transparent"
                 speed="1"
-                style={{ width: "100%", height: "200px" }}
+                style={{ width: "100%", height: "180px" }}
                 loop
                 autoplay
               ></dotlottie-player>
@@ -49,7 +49,7 @@ export const Page1 = () => {
                 src="https://lottie.host/e04db8a9-0ad6-4c20-9693-da4dfa2765d7/ZSu6dtczDH.json"
                 background="transparent"
                 speed="1"
-                style={{ width: "100%", height: "250px" }}
+                style={{ width: "100%", height: "180px" }}
                 loop
                 autoplay
               ></dotlottie-player>
