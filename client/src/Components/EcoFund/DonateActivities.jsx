@@ -56,16 +56,16 @@ const DonateActivities = () => {
             <p className="text-gray-700 mb-2">{activity.description}</p>
             <div className="flex items-center mb-4">
               <button
-                className="bg-yellow-500 text-white px-3 py-2 rounded-md mr-4"
+                className="bg-yellow-500 text-white md:px-3 md:py-2 rounded-md mr-4"
                 onClick={() => openMap(activity.locationUrl)}
               >
                 Location
               </button>
               <div className="flex justify-end space-x-4">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md">
+                <button className="bg-blue-500 text-white md:px-4 md:py-2 rounded-md">
                   Read More
                 </button>
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
+                <button className="bg-green-500 text-white md:px-4 md:py-2 rounded-md">
                   Donate Now
                 </button>
               </div>

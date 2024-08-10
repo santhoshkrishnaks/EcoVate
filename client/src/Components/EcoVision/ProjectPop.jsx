@@ -19,7 +19,7 @@ const handleFormClick = () => {
     <div className="min-h-screen bg-green-50">
 <div className="flex-1  flex flex-col lg:flex-row items-center lg:items-start justify-between p-4" id="form">
         {/* Content */}
-        <div className="flex-shrink-0 lg:w-1/2 flex justify-center  mt-4 lg:mt-0 -ml-[110px] sm:mr-14">
+        <div className="flex-shrink-0 lg:w-1/2 flex justify-center  mt-4 lg:mt-0 md:-ml-[110px] sm:mr-14">
           <dotlottie-player
             src="https://lottie.host/5f5e5c71-77ce-46d7-b038-456deca189cd/qYVIpZWP7X.json"
             background="transparent"
