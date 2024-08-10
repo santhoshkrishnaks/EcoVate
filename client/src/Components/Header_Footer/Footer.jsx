@@ -1,7 +1,10 @@
 import logo from '../../assets/logo.png';
-import {Link, useNavigate} from "react-router-dom"
+import {Link} from "react-router-dom"
+import { useEffect } from 'react';
 const Footer = () => {
-  const navi=useNavigate();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="py-10 bg-green-100 sm:pt-7 lg:pt-11">
       <div className="px-4 mx-auto n sm:px-6 lg:px-8 max-w-7xl">

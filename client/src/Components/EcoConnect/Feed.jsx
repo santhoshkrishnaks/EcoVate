@@ -7,6 +7,7 @@ import Modal from "./Modal";
 import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer"; // Import the JoinVolunteerForm component
+import { useAuth } from "@clerk/clerk-react";
 import { Link } from "react-router-dom";
 
 const users = [
@@ -94,6 +95,7 @@ const Feed = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [posts, setPosts] = useState(initialPosts);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const [newPost, setNewPost] = useState({
     title: "",
     description: "",
@@ -107,30 +109,28 @@ const Feed = () => {
   });
   const [showVolunteerForm, setShowVolunteerForm] = useState(false);
 
-  // Function to get top 5 hashtags
   const getTopHashtags = () => {
     const hashtagCount = {};
-
-    // Count hashtags
     posts.forEach((post) => {
       post.tags.forEach((tag) => {
         hashtagCount[tag] = (hashtagCount[tag] || 0) + 1;
       });
     });
-
-    // Convert object to array and sort by count
-    const sortedHashtags = Object.entries(hashtagCount)
+    return Object.entries(hashtagCount)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([tag]) => tag);
-
-    return sortedHashtags;
   };
 
   const topHashtags = getTopHashtags();
 
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
+    setIsLoading(true); // Start loading
+
+    setTimeout(() => {
+      setSearchTerm(term.toLowerCase());
+      setIsLoading(false); // Stop loading after timeout
+    }, 800);
   };
 
   const handleSearchSubmit = (term) => {
@@ -142,13 +142,26 @@ const Feed = () => {
   };
 
   const handleProfileClick = (userId) => {
-    setSelectedUserId(userId);
+    setIsLoading(true); // Start loading
+
+    setTimeout(() => {
+      setSelectedUserId(userId);
+      setIsLoading(false); // Stop loading after timeout
+    }, 2000); // Set loading time (2 seconds)
   };
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setNewPost((prevPost) => ({ ...prevPost, [name]: value }));
   };
+  const handleback =()=>{
+    setIsLoading(true); 
+
+    setTimeout(() => {
+      setSelectedUserId(0);
+      setIsLoading(false); 
+    }, 2000); 
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -194,7 +207,7 @@ const Feed = () => {
 
       <div className="feed-container flex justify-center bg-green-50 sm:px-6">
         <div className="left-sidebar hidden lg:block w-1/4 p-4 h-screen sticky top-20">
-          <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
+          <h2 className="text-xl font-bold mb-4 ">Popular Initiatives</h2>
           <ul>
             {topHashtags.map((hashtag) => (
               <li key={hashtag} className="mb-2">
@@ -249,8 +262,13 @@ const Feed = () => {
         <div className="feed mx-auto max-w-2xl w-full p-4 min-h-screen">
           <div className="flex flex-col mb-6">
             <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
-              <h1 className="text-2xl md:text-4xl font-bold md:mb-0 mb-6">
+              <h1 className="text-2xl md:text-4xl font-bold md:mb-0 mb-6 cursor-pointer">
+                <a onClick={handleback} >
+
                 <span className="text-green-700">Eco</span>Connect
+                </a>
+              
+              
               </h1>
               <button
                 onClick={handleCreatePost}
@@ -274,8 +292,24 @@ const Feed = () => {
               ))}
             </ul>
           </div>
-          {/* Feed Posts */}
-          {filteredPosts.length > 0 ? (
+          
+
+          {isLoading ? ( // Loading animation
+            <div className="bg-green-50 flex space-x-12 p-12 justify-center items-center">
+              <div className="border border-green-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                <div className="animate-pulse flex space-x-4">
+                  <div className="rounded-full bg-green-400 h-12 w-12"></div>
+                  <div className="flex-1 space-y-4 py-1">
+                    <div className="h-4 bg-green-400 rounded w-3/4"></div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-green-400 rounded"></div>
+                      <div className="h-4 bg-green-400 rounded w-5/6"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <div key={post.id}>
                 <Post
@@ -307,7 +341,6 @@ const Feed = () => {
           </div>
         </div>
 
-        {/* Right side */}
         <div className="right-sidebar hidden lg:block w-1/4 p-4 sticky top-20 h-screen">
           <h2 className="text-xl font-bold mb-4">Recent News</h2>
           <ul>
@@ -319,16 +352,6 @@ const Feed = () => {
             <li className="mb-2">
               <Link to="#" className="text-blue-500">
                 Volunteers clean up over 500 pounds of trash from local beaches.
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="#" className="text-blue-500">
-                Community solar energy project reaches new milestone.
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="#" className="text-blue-500">
-                Community solar energy project reaches new milestone.
               </Link>
             </li>
             <li className="mb-2">

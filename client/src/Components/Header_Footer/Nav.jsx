@@ -3,7 +3,6 @@ import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
 import Create from "../Context";
-
 const Nav = () => {
   const { isSignedIn } = useAuth();
   const navi=useNavigate();

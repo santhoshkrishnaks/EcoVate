@@ -15,7 +15,7 @@ export const Page2 = () => {
               <div className="absolute -inset-1">
                 <div className="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-green-600 via-neutral-600 to-green-900"></div>
               </div>
-              <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-[260px]">
+              <div className="relative overflow-hidden bg-white shadow-md rounded-xl md:h-[260px] w-64 md:w-full ">
                 <div className="p-9">
                   <div className="w-12 h-12 mx-auto bg-green-500 text-gray-100 rounded-full flex items-center justify-center text-xl font-bold">1</div>
                   <h3 className="mt-6 text-xl font-bold text-neutral-700 sm:mt-3">Registration</h3>
@@ -30,7 +30,7 @@ export const Page2 = () => {
               <div className="absolute -inset-1">
               <div className="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-green-600 via-neutral-600 to-green-900"></div>
               </div>
-              <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-[260px]">
+              <div className="relative overflow-hidden bg-white shadow-md rounded-xl md:h-[260px] w-64 md:w-full">
               <div className="p-9">
                   <div className="w-12 h-12 mx-auto bg-green-500 text-gray-100 rounded-full flex items-center justify-center text-xl font-bold">2</div>
                   <h3 className="mt-6 text-xl font-bold text-neutral-700 sm:mt-3">Initial Assessment</h3>
@@ -45,7 +45,7 @@ export const Page2 = () => {
               <div className="absolute -inset-1">
               <div className="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-green-600 via-neutral-600 to-green-900"></div>
               </div>
-              <div className="relative overflow-hidden bg-white shadow-md rounded-xl h-[260px]">
+              <div className="relative overflow-hidden bg-white shadow-md rounded-xl md:h-[260px] w-64 md:w-full">
               <div className="p-9">
                   <div className="w-12 h-12 mx-auto bg-green-500 text-gray-100 rounded-full flex items-center justify-center text-xl font-bold">3</div>
                   <h3 className="mt-6 text-xl font-bold text-neutral-700 sm:mt-3"> Data Assessment</h3>
@@ -62,7 +62,7 @@ export const Page2 = () => {
               <div className="w-full h-full rotate-180 opacity-30 blur-lg filter bg-gradient-to-r from-green-600 via-neutral-600 to-green-900"></div>
               </div>
               
-              <div className="relative  bg-white shadow-md rounded-xl h-[270px] w-[375px]">
+              <div className="relative  bg-white shadow-md rounded-xl md:h-[270px] md:w-[375px] w-64">
               <div className="p-9 ">
                   <div className="w-12 h-12 mx-auto bg-green-500 text-gray-100 rounded-full flex items-center justify-center text-xl font-bold -mt-5">4</div>
                   <h3 className="mt-1 text-xl font-bold text-neutral-700 sm:mt-3"> Sustainability Audit</h3>
@@ -91,7 +91,7 @@ export const Page2 = () => {
                 </div>
             <div className="relative col-span-1 lg:col-span-1 lg:col-start-3 ">
            
-              <div className="   w-[375px] relative bg-white shadow-md rounded-xl h-[270px] ">
+              <div className="   md:w-[375px] relative bg-white shadow-md rounded-xl md:h-[270px] w-64 ">
               <div className="p-9 ">
                   <div className="w-12 h-12 mx-auto bg-green-500 text-gray-100 rounded-full flex items-center justify-center text-xl font-bold -mt-5">5</div>
                   <h3 className="mt-1 text-xl font-bold text-neutral-700 sm:mt-3">Certification and Participation</h3>
