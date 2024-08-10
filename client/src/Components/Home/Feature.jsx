@@ -41,7 +41,7 @@ const Feature = () => {
         </div>
 
         {/* Animated SVG */}
-        <div className="flex-shrink-0 lg:w-1/2 flex justify-center lg:justify-end mt-4 lg:mt-0 sm:mr-14">
+        <div className="flex-shrink-0 w-64 lg:w-1/2 flex justify-center lg:justify-end mt-4 lg:mt-0 sm:mr-14">
           <dotlottie-player
             src="https://lottie.host/17eb718b-3798-4226-bdf3-2546136598e0/iYQALYy1BM.json"
             background="transparent"

@@ -32,7 +32,7 @@ export const EcoCorpHero = () => {
         </div>
 
         {/* Animated SVG */}
-        <div className="flex-shrink-0 lg:w-1/3 flex justify-center lg:justify-end  lg:mt-0 lg:mr-[100px] sm:mr-14">
+        <div className="flex-shrink-0 w-64 lg:w-1/3 flex justify-center lg:justify-end  lg:mt-0 lg:mr-[100px] sm:mr-14">
           <dotlottie-player
             src="https://lottie.host/de37be2f-82b6-426f-9903-483972a46b42/L7ahoLkSO2.json"
             background="transparent"
@@ -47,7 +47,7 @@ export const EcoCorpHero = () => {
       {/* //2nd */}
       <div className="flex-1 bg-green-100 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
         {/* animated */}
-        <div className="flex-shrink-0 lg:w-1/3 flex justify-center lg:justify-end  lg:mt-0 lg:mr-[100px] sm:mr-14">
+        <div className="flex-shrink-0 w-64 lg:w-1/3 flex justify-center lg:justify-end  lg:mt-0 lg:mr-[100px] sm:mr-14">
           <dotlottie-player
             src="https://lottie.host/1e607e9a-fffa-4e38-bfa0-30ee19c44d52/2NE04IrLpu.json"
             background="transparent"

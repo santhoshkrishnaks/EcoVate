@@ -35,7 +35,7 @@ const initialPosts = [
       name: "Jane Doe",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-08-01T10:00Z", // Static timestamp
+    timestamp: "2024-08-01T10:00Z",
     initiativeType: "Tree Planting",
     title: "Green City Initiative",
     description: "We planted 500 new trees in our local park...",
@@ -55,7 +55,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-07-25T15:30", // Static timestamp
+    timestamp: "2024-07-25T15:30",
     initiativeType: "Beach Cleanup",
     title: "Clean Beaches Project",
     description: "Our team cleaned up over 200 pounds of trash...",
@@ -74,7 +74,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-08-02T09:00:00Z", // Static timestamp
+    timestamp: "2024-08-02T09:00:00Z",
     initiativeType: "Solar Energy",
     title: "Solar Energy for All",
     description:
@@ -107,7 +107,7 @@ const Feed = () => {
     donationLink: "",
     contactEmail: "",
   });
-  const [showVolunteerForm, setShowVolunteerForm] = useState(false); // State for managing volunteer form visibility
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false);
 
   const getTopHashtags = () => {
     const hashtagCount = {};
@@ -182,13 +182,19 @@ const Feed = () => {
   const handleJoinNowClick = () => {
     setShowVolunteerForm(true);
   };
-  
 
-  const filteredPosts = posts
-    .filter((post) =>
-      post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
-    )
-    .filter((post) => (selectedUserId ? post.userId === selectedUserId : true));
+  // Get the 5 most recent posts
+  const recentPosts = posts
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    .slice(0, 5);
+
+  // Filter posts based on search term and selected user
+  const filteredPosts = recentPosts.filter(
+    (post) =>
+      (searchTerm
+        ? post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
+        : true) && (selectedUserId ? post.userId === selectedUserId : true)
+  );
 
   return (
     <div>
@@ -199,7 +205,7 @@ const Feed = () => {
         setSearchTerm={setSearchTerm}
       />
 
-      <div className="feed-container flex justify-center bg-green-50 px-6">
+      <div className="feed-container flex justify-center bg-green-50 sm:px-6">
         <div className="left-sidebar hidden lg:block w-1/4 p-4 h-screen sticky top-20">
           <h2 className="text-xl font-bold mb-4 ">Popular Initiatives</h2>
           <ul>
@@ -254,9 +260,9 @@ const Feed = () => {
         </div>
 
         <div className="feed mx-auto max-w-2xl w-full p-4 min-h-screen">
-          <div className="hidden md:flex flex-col mb-6">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-              <h1 className="text-4xl font-bold md:mb-0 mb-6 cursor-pointer">
+          <div className="flex flex-col mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+              <h1 className="text-2xl md:text-4xl font-bold md:mb-0 mb-6 cursor-pointer">
                 <a onClick={handleback} >
 
                 <span className="text-green-700">Eco</span>Connect
@@ -272,6 +278,21 @@ const Feed = () => {
               </button>
             </div>
           </div>
+          <div className="flex lg:hidden mb-4">
+            <ul className="flex flex-row flex-wrap">
+              {topHashtags.map((hashtag) => (
+                <li key={hashtag} className="mb-2">
+                  <button
+                    onClick={() => handleSearch(hashtag)}
+                    className="text-blue-500"
+                  >
+                    #{hashtag}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
 
           {isLoading ? ( // Loading animation
             <div className="bg-green-50 flex space-x-12 p-12 justify-center items-center">
@@ -290,18 +311,34 @@ const Feed = () => {
             </div>
           ) : filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-                onProfileClick={handleProfileClick}
-                handleSearch={handleSearch}
-              />
+              <div key={post.id}>
+                <Post
+                  post={post}
+                  onProfileClick={handleProfileClick}
+                  handleSearch={handleSearch}
+                />
+              </div>
             ))
           ) : (
             <div className="text-center text-gray-500 py-10">
               <p>No initiatives found for your search.</p>
             </div>
           )}
+          <div className="mt-6 flex-col lg:hidden">
+            <h3 className="text-lg font-bold mb-4">
+              Join Our Volunteer Program
+            </h3>
+            <p className="mb-4">
+              Interested in making a difference? Join our volunteer program and
+              be part of our impactful initiatives!
+            </p>
+            <button
+              onClick={handleJoinNowClick}
+              className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+            >
+              Join Us
+            </button>
+          </div>
         </div>
 
         <div className="right-sidebar hidden lg:block w-1/4 p-4 sticky top-20 h-screen">
@@ -336,7 +373,6 @@ const Feed = () => {
           </ul>
         </div>
       </div>
-
       <Modal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
@@ -344,13 +380,11 @@ const Feed = () => {
         formData={newPost}
         onChange={handleFormChange}
       />
-
       {showVolunteerForm && (
         <div className="">
           <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
         </div>
       )}
-
       <Footer />
     </div>
   );

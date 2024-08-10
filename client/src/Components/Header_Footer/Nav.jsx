@@ -34,13 +34,13 @@ const Nav = () => {
         </div>
 
         <div className="flex lg:hidden">
+          <UserButton />
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             onClick={toggleMobileMenu}
           >
             <span className="sr-only">Open main menu</span>
-            <UserButton />
             <svg
               className="h-6 w-6 ml-2 "
               fill="none"
