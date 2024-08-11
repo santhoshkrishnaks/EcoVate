@@ -8,12 +8,20 @@ import cors from "cors";
 import router from "./Routes/route.ecoconnect.js";
 import fundrouter from "./Routes/route.ecofund.js";
 import calcRouter from "./Routes/route.ecocalc.js"
+import ecovisionrouter from "./Routes/route.ecovision.js";
+import volunteerrouter from "./Routes/route.volunteer.js";
+
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 connectdb();
 app.use(cors());
-app.use('/',router)
+
+
+app.use('/',router);
+app.use('/',ecovisionrouter);
+app.use('/',volunteerrouter);
 app.get("/", landController);
 app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), login);
 app.use("/",corprouter);
