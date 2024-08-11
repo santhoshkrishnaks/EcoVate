@@ -60,6 +60,7 @@ const Form = () => {
                   autoComplete="name"
                   // value={formData.projectleadname}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="John Doe"
                   required
@@ -77,6 +78,7 @@ const Form = () => {
                   autoComplete="email"
                   // value={formData.contactemail}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="email@example.com"
                   required
@@ -94,6 +96,7 @@ const Form = () => {
                   autoComplete="tel"
                   // value={formData.contactphone}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="(123) 456-7890"
                   required
@@ -135,6 +138,7 @@ const Form = () => {
                   rows="4"
                   // value={formData.problemstatement}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="What environmental issue does the project address?"
                   required
@@ -152,6 +156,7 @@ const Form = () => {
                   autoComplete="title"
                   // value={formData.projecttitle}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Project Title"
                   required
@@ -168,6 +173,7 @@ const Form = () => {
                   rows="4"
                   // value={formData.projectdescription}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Describe your project in detail"
                   required
@@ -184,6 +190,7 @@ const Form = () => {
                   id="detailed-project-plan"
                   // value={formData.drivelink}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="https://drive.google.com/your-file-link"
                   required
