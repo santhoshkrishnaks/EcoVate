@@ -66,12 +66,12 @@ const StatsSection = () => {
           <div className="absolute inset-0 h-1/2 bg-slate-50"></div>
           <div className="relative max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
             <div className="max-w-8xl mx-auto">
-              <dl className="bg-slate-50 rounded-lg shadow-lg sm:grid md:grid-cols-3">
+              <dl className="bg-slate-50 rounded-lg shadow-lg sm:grid sm:grid-cols-3">
                 <div className="flex flex-col p-4 sm:p-6 text-center border-b border-slate-800 sm:border-0 sm:border-r">
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Percent of Species at Critical Risk
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
                     {speciesPercent.toFixed(6)}%
                   </dd>
                 </div>
@@ -79,15 +79,15 @@ const StatsSection = () => {
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Hectares of Forest Destroyed
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
-                    {forestHectares.toFixed(0).toLocaleString()}
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
+                    {forestHectares.toFixed(0).toLocaleString()}%
                   </dd>
                 </div>
                 <div className="flex flex-col p-4 sm:p-6 text-center border-t border-slate-800 sm:border-0 sm:border-l">
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Percent of Wild Forests Left
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
                     {wildForestPercent.toFixed(5)}%
                   </dd>
                 </div>

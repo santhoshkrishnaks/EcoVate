@@ -7,16 +7,26 @@ const JoinVolunteerForm = ({ onClose }) => {
   const [address, setAddress] = useState("");
   const [age, setAge] = useState("");
   const [preferredActivities, setPreferredActivities] = useState([]);
-  const [availability, setAvailability] = useState([]);
+  const [availability, setAvailability] = useState("");
   const [motivation, setMotivation] = useState("");
-  const [showMotivation, setShowMotivation] = useState(false);
+  const [otherActivity, setOtherActivity] = useState(""); // State for "Other" activity
+  const [showOtherInput, setShowOtherInput] = useState(false); // State to toggle input visibility
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [activityError, setActivityError] = useState(false); // New state for activity error
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    setActivityError(false); // Reset activity error
+
+    // Check if at least one preferred activity is selected
+    if (preferredActivities.length === 0 && !showOtherInput) {
+      setActivityError(true);
+      setLoading(false);
+      return;
+    }
 
     try {
       // Replace with your backend API URL
@@ -31,7 +41,9 @@ const JoinVolunteerForm = ({ onClose }) => {
           phone,
           address,
           age,
-          preferredActivities,
+          preferredActivities: showOtherInput
+            ? [...preferredActivities, otherActivity]
+            : preferredActivities,
           availability,
           motivation,
         }),
@@ -48,8 +60,10 @@ const JoinVolunteerForm = ({ onClose }) => {
       setAddress("");
       setAge("");
       setPreferredActivities([]);
-      setAvailability([]);
+      setAvailability("");
       setMotivation("");
+      setOtherActivity("");
+      setShowOtherInput(false); // Hide "Other" input on successful submission
 
       alert("Thank you for joining our volunteer program!");
       onClose(); // Close the form if provided
@@ -62,16 +76,44 @@ const JoinVolunteerForm = ({ onClose }) => {
 
   const handleActivityChange = (e) => {
     const { value, checked } = e.target;
-    setPreferredActivities((prev) =>
-      checked ? [...prev, value] : prev.filter((activity) => activity !== value)
-    );
+
+    if (value === "Other") {
+      setShowOtherInput(checked);
+      if (checked) {
+        setPreferredActivities((prev) => [...prev, "Other"]);
+      } else {
+        setPreferredActivities((prev) =>
+          prev.filter((activity) => activity !== "Other")
+        );
+        setOtherActivity(""); // Clear "Other" input if unchecked
+      }
+    } else {
+      setPreferredActivities((prev) =>
+        checked
+          ? [...prev, value]
+          : prev.filter((activity) => activity !== value)
+      );
+    }
   };
 
+  const handleOtherInputChange = (e) => {
+    const newActivity = e.target.value;
+    setOtherActivity(newActivity);
+    if (newActivity && !preferredActivities.includes("Other")) {
+      setPreferredActivities((prev) => [...prev, "Other"]);
+    } else if (!newActivity) {
+      setPreferredActivities((prev) =>
+        prev.filter((activity) => activity !== "Other")
+      );
+    }
+  };
+
+  // Check if "Other" should be shown based on preferredActivities
+  const isOtherChecked = preferredActivities.includes("Other");
+
   const handleAvailabilityChange = (e) => {
-    const { value, checked } = e.target;
-    setAvailability((prev) =>
-      checked ? [...prev, value] : prev.filter((time) => time !== value)
-    );
+    const { value } = e.target;
+    setAvailability(value);
   };
 
   return (
@@ -146,6 +188,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="mb-4">
@@ -186,126 +229,73 @@ const JoinVolunteerForm = ({ onClose }) => {
               Preferred Volunteer Activities
             </label>
             <div className="mt-1 flex flex-col">
-              <label className="inline-flex items-center ml-4">
+              {[
+                "Beach Clean-Up",
+                "Tree Planting",
+                "Recycling Programs",
+                "Wildlife Conservation",
+                "Other",
+              ].map((activity) => (
+                <label key={activity} className="inline-flex items-center ml-4">
+                  <input
+                    type="checkbox"
+                    value={activity}
+                    checked={
+                      isOtherChecked
+                        ? activity === "Other"
+                        : preferredActivities.includes(activity)
+                    }
+                    onChange={handleActivityChange}
+                    className="form-checkbox"
+                  />
+                  <span className="ml-2">{activity}</span>
+                </label>
+              ))}
+              {showOtherInput && (
                 <input
-                  type="checkbox"
-                  value="Beach Clean-Up"
-                  checked={preferredActivities.includes("Beach Clean-Up")}
-                  onChange={handleActivityChange}
-                  className="form-checkbox"
+                  type="text"
+                  value={otherActivity}
+                  onChange={handleOtherInputChange}
+                  placeholder="Please specify"
+                  className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <span className="ml-2">Beach Clean-Up</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Tree Planting"
-                  checked={preferredActivities.includes("Tree Planting")}
-                  onChange={handleActivityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Tree Planting</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Recycling Programs"
-                  checked={preferredActivities.includes("Recycling Programs")}
-                  onChange={handleActivityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Recycling Programs</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Wildlife Conservation"
-                  checked={preferredActivities.includes(
-                    "Wildlife Conservation"
-                  )}
-                  onChange={handleActivityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Wildlife Conservation</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Other"
-                  checked={preferredActivities.includes("Other")}
-                  onChange={handleActivityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Other (please specify)</span>
-              </label>
+              )}
+              {activityError && (
+                <div className="text-red-500 mt-2">This field is required.</div>
+              )}
             </div>
           </div>
+
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700">
+            <label
+              htmlFor="availability"
+              className="block text-sm font-medium text-gray-700"
+            >
               Availability
             </label>
-            <div className="mt-1">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  value="Weekdays"
-                  checked={availability.includes("Weekdays")}
-                  onChange={handleAvailabilityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Weekdays</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Weekends"
-                  checked={availability.includes("Weekends")}
-                  onChange={handleAvailabilityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Weekends</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Mornings"
-                  checked={availability.includes("Mornings")}
-                  onChange={handleAvailabilityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Mornings</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Afternoons"
-                  checked={availability.includes("Afternoons")}
-                  onChange={handleAvailabilityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Afternoons</span>
-              </label>
-              <label className="inline-flex items-center ml-4">
-                <input
-                  type="checkbox"
-                  value="Evenings"
-                  checked={availability.includes("Evenings")}
-                  onChange={handleAvailabilityChange}
-                  className="form-checkbox"
-                />
-                <span className="ml-2">Evenings</span>
-              </label>
-            </div>
+            <select
+              id="availability"
+              value={availability}
+              onChange={handleAvailabilityChange}
+              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            >
+              <option value="">Select availability</option>
+              <option value="Weekdays">Weekdays</option>
+              <option value="Weekends">Weekends</option>
+            </select>
           </div>
+
           <div className="mb-4">
             <label className="inline-flex items-center">
               <span className="">
-                Why do you want to join us? <span className="text-slate-400">(Optional)</span>
+                Why do you want to join us?{" "}
+                <span className="text-slate-400">(Optional)</span>
               </span>
             </label>
-
             <textarea
               id="motivation"
+              value={motivation}
               onChange={(e) => setMotivation(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"

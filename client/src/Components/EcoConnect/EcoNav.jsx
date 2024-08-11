@@ -43,7 +43,7 @@ const EcoNav = ({
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 lg:-ml-10">
+          <Link to="/" className="-m-1.5 ">
             <img className="h-[50px] sm:h-[68px] w-auto" src={logo} alt="" />
           </Link>
         </div>
