@@ -1,9 +1,16 @@
 import mongoose from "mongoose";
 
 const ecoconnectSchema=mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User',
+    post_title:{
+        type:String,
+        require:true
+    },
+    username:{
+        type:String,
+        required:true,
+    },
+    image_url:{
+        type:String,
         required:true,
     },
     title:{
