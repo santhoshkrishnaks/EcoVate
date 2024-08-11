@@ -7,6 +7,7 @@ const app = express();
 connectdb();
 app.get("/", landController);
 app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), login);
+
 app.listen(5000, () => {
   console.log(`listening on port 5000`);
 });

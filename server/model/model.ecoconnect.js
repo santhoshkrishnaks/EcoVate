@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const ecoconnectSchema=mongoose.Schema({
     user:{
-        type:mongoose.Schema.Types.ObjectId,
+        type:mongoose.Schema.Types.String,
         ref:'User',
         required:true,
     },

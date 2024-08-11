@@ -6,13 +6,8 @@ const commentSchema=new mongoose.Schema({
         ref:"ecoconnect",
         required:true
     },
-    user_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"user",
-        required:true
-    },
     comment:{
-        type:Array,
+        type:[String],
         required:false
     },
     likes:{
