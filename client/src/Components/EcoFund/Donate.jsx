@@ -26,11 +26,11 @@ export const Donate = () => {
     <>
     <Nav/>
       <div className="  bg-green-50  lg:min-h-screen flex flex-col ">
-        <h1 className="text-center lg:text-6xl font-bold  mt-4 text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
+        <h1 className="text-center text-5xl md:text-6xl font-bold  mt-4 text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
           EcoFund
         </h1>
         <div className="mt-[10px]">
-          <p className="mb-8 text-center text-3xl font-bold text-slate-600">
+          <p className="mb-8 text-center md:text-3xl font-bold text-slate-600">
             Donate-Impact-Sustain
           </p>
         </div>
@@ -46,7 +46,7 @@ export const Donate = () => {
               Donate to <span className="text-green-700">Eco</span>vate
             </h2>
 
-            <p className="px-20 ">
+            <p className="px-20 text-xl ">
             Your contribution helps us drive sustainable initiatives and
               spread environmental awareness through our company, Ecovate.
               Together, we can make a significant impact on preserving our
@@ -68,7 +68,7 @@ export const Donate = () => {
       <h2 className=" mt-5 text-2xl lg:text-center lg:text-4xl font-bold mb-4 text-neutral-700">
               Donate to <span className="text-green-700">Eco</span>Activities
             </h2>
-            <p className="px-16">
+            <p className="px-16 text-xl md:text-xl">
             Support our hands-on environmental projects and voluntary
               activities. Your donation will directly fund initiatives that aim
               to create a greener and more sustainable future.
