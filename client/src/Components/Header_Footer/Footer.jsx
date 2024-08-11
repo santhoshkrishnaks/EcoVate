@@ -150,7 +150,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="Ecovision"
+                  to="/Ecovision"
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >

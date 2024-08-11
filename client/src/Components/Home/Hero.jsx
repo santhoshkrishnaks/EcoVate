@@ -31,7 +31,7 @@ const Hero = () => {
           </div>
          
           <div className="lg:inset-y-0 lg:right-0 lg:w-1/2 lg:py-12 sm:mt-8  ">
-            <div className="hidden sm:block w-64">
+            <div className="hidden sm:block">
               <dotlottie-player
                 src={lottiePlayerSrc}
                 background="transparent"

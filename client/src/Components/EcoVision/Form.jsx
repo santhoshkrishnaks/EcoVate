@@ -58,10 +58,11 @@ const Form = () => {
                   name="projectLeadName"
                   id="project-lead-name"
                   autoComplete="name"
-                  value={formData.projectleadname}
+                  // value={formData.projectleadname}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="John Doe"
+                  required
                 />
               </div>
             </div>
@@ -74,10 +75,11 @@ const Form = () => {
                   name="contactEmail"
                   id="contact-email"
                   autoComplete="email"
-                  value={formData.contactemail}
+                  // value={formData.contactemail}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="email@example.com"
+                  required
                 />
               </div>
             </div>
@@ -86,14 +88,15 @@ const Form = () => {
               <label htmlFor="contact-phone" className="block text-sm font-semibold leading-6 text-gray-900">Contact Phone Number</label>
               <div className="mt-2">
                 <input
-                  type="text"
+                  type="tel"
                   name="contactPhone"
                   id="contact-phone"
                   autoComplete="tel"
-                  value={formData.contactphone}
+                  // value={formData.contactphone}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="(123) 456-7890"
+                  required
                 />
               </div>
             </div>
@@ -106,10 +109,11 @@ const Form = () => {
                   name="organizationName"
                   id="organization-name"
                   autoComplete="organization"
-                  value={formData.organizationname}
+                  // value={formData.organizationname}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Your Organization/Team"
+                  required
                 />
               </div>
             </div>
@@ -129,10 +133,11 @@ const Form = () => {
                   id="problem-statement"
                   name="problemStatement"
                   rows="4"
-                  value={formData.problemstatement}
+                  // value={formData.problemstatement}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="What environmental issue does the project address?"
+                  required
                 />
               </div>
             </div>
@@ -145,10 +150,11 @@ const Form = () => {
                   name="projectTitle"
                   id="project-title"
                   autoComplete="title"
-                  value={formData.projecttitle}
+                  // value={formData.projecttitle}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Project Title"
+                  required
                 />
               </div>
             </div>
@@ -160,10 +166,11 @@ const Form = () => {
                   id="project-description"
                   name="projectDescription"
                   rows="4"
-                  value={formData.projectdescription}
+                  // value={formData.projectdescription}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Describe your project in detail"
+                  required
                 />
               </div>
             </div>
@@ -175,10 +182,11 @@ const Form = () => {
                   type="text"
                   name="detailedProjectPlanLink"
                   id="detailed-project-plan"
-                  value={formData.drivelink}
+                  // value={formData.drivelink}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="https://drive.google.com/your-file-link"
+                  required
                 />
                 <p className="text-xs leading-5 text-gray-600 mt-1">Enter the Google Drive link (PDF, DOC, DOCX, PPT accepted)</p>
               </div>

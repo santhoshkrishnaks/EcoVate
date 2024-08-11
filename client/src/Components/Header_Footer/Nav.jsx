@@ -28,7 +28,7 @@ const Nav = () => {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 lg:-ml-10 ">
+          <Link to="/" className="-m-1.5 xl:-ml-10 ">
             <img className="h-[68px] w-auto" src={logo} alt="" />
           </Link>
         </div>
