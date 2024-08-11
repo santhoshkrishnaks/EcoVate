@@ -2,10 +2,9 @@ import mongoose from "mongoose";
 
 const ecovisionSchema=mongoose.Schema({
     
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'user',
-        required:true
+    username:{
+        type:String,
+        required:true,
     },
 
     project_lead_name:{

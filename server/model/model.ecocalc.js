@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const ecocalcSchema=mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'user',
-        required:true
+    
+     username:{
+        type:String,
+        required: true,
      },
      footprint:{
         type:Number,
