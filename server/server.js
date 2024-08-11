@@ -5,7 +5,9 @@ import { connectdb } from "./config/database.js";
 import { landController } from "./Controllers/landing.controller.js";
 import corprouter from "./Routes/route.ecocorp.js";
 import cors from "cors";
-import router from "./routes/ecoconnect.route.js";
+import router from "./Routes/route.ecoconnect.js";
+import fundrouter from "./Routes/route.ecofund.js";
+import calcRouter from "./Routes/route.ecocalc.js"
 import ecovisionrouter from "./Routes/route.ecovision.js";
 import volunteerrouter from "./Routes/route.volunteer.js";
 
@@ -17,14 +19,14 @@ connectdb();
 app.use(cors());
 
 
-app.use('/ecoconnect',router);
+app.use('/',router);
 app.use('/',ecovisionrouter);
 app.use('/',volunteerrouter);
 app.get("/", landController);
 app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), login);
 app.use("/",corprouter);
-
-
-app.listen(3000, () => {
-  console.log(`listening on port 3000`);
+app.use("/",fundrouter);
+app.use("/",calcRouter)
+app.listen(5000, () => {
+  console.log(`listening on port 5000`);
 });
