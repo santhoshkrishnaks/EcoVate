@@ -1,10 +1,14 @@
 import mongoose from "mongoose";
 
 const ecofundSchema=mongoose.Schema({
-    ecoconnect:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'ecoconnect',
-        required:false
+
+    username:{
+        type:String,
+        required:true,
+    },
+    post_title:{
+        type:String,
+        required:true,
     },
     payment_type:{
         type:String,

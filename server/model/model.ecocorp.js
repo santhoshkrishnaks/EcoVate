@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
 const ecocorpSchema=mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User",
-        required:true,
-    },
     org_name:{
         type:String,
         required:true

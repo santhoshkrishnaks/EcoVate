@@ -2,19 +2,19 @@ import mongoose from "mongoose";
 
 const commentSchema=new mongoose.Schema({
     post_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"ecoconnect",
+        type:String,
         required:true
     },
-    user_id:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"user",
-        required:true
-    },
-    comment:{
-        type:Array,
-        required:false
-    },
+    comment:[{
+        username:{
+            type:String,
+            required:true
+        },
+        content:{
+            type:String,
+            required:true,
+        }
+    }],
     likes:{
         type:Number,
         required:false

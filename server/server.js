@@ -3,13 +3,15 @@ import bodyParser from "body-parser";
 import login from "./Controllers/userController.js";
 import { connectdb } from "./config/database.js";
 import { landController } from "./Controllers/landController.js";
-import ecoconnectroutes from './routes/ecoconnect.route.js';
+import corprouter from "./Routes/route.ecocorp.js";
+import cors from "cors";
 const app = express();
-connectdb();
 app.use(express.json());
-app.use('/api',ecoconnectroutes)
+connectdb();
+app.use(cors());
 app.get("/", landController);
 app.post("/api/webhook", bodyParser.raw({ type: "application/json" }), login);
+app.use("/api",corprouter);
 app.listen(5000, () => {
   console.log(`listening on port 5000`);
 });
