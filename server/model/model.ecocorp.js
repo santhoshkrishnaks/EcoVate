@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const ecocorpSchema=mongoose.Schema({
-    
     org_name:{
         type:String,
         required:true

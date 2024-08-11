@@ -43,8 +43,8 @@ const EcoNav = ({
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <Link to="/" className="-m-1.5 lg:-ml-10">
-            <img className="h-[68px] w-auto" src={logo} alt="" />
+          <Link to="/" className="-m-1.5 ">
+            <img className="h-[50px] sm:h-[68px] w-auto" src={logo} alt="" />
           </Link>
         </div>
 
@@ -79,13 +79,15 @@ const EcoNav = ({
             </button>
           </div>
 
+          <UserButton />
+
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             onClick={toggleMobileMenu}
           >
             <span className="sr-only">Open main menu</span>
-            <UserButton />
+
             <svg
               className="h-6 w-6 ml-2 "
               fill="none"
@@ -104,15 +106,24 @@ const EcoNav = ({
         </div>
 
         <div className="hidden lg:flex lg:gap-x-12">
-        <Link to="/Ecoconnect" className="text-lg font-semibold leading-6 text-gray-900">
-          EcoConnect
-        </Link>
-        <Link to="/Ecofund" className="text-lg font-semibold leading-6 text-gray-900">
-          EcoFund
-        </Link>
-        <Link to="/Ecocorp" className="text-lg font-semibold leading-6 text-gray-900">
-          EcoCorp
-        </Link>
+          <Link
+            to="/Ecoconnect"
+            className="text-lg font-semibold leading-6 text-gray-900"
+          >
+            EcoConnect
+          </Link>
+          <Link
+            to="/Ecofund"
+            className="text-lg font-semibold leading-6 text-gray-900"
+          >
+            EcoFund
+          </Link>
+          <Link
+            to="/Ecocorp"
+            className="text-lg font-semibold leading-6 text-gray-900"
+          >
+            EcoCorp
+          </Link>
           <div className="relative">
             <button
               type="button"
@@ -140,12 +151,12 @@ const EcoNav = ({
                 <div className="p-4">
                   {[
                     {
-                      name:"EcoVision",
-                      path:"/Ecovision",
+                      name: "EcoVision",
+                      path: "/Ecovision",
                     },
                     {
-                      name:"EcoCalc",
-                      path:"/Ecocalc",
+                      name: "EcoCalc",
+                      path: "/Ecocalc",
                     },
                   ].map((item) => (
                     <div
@@ -167,9 +178,34 @@ const EcoNav = ({
               </div>
             )}
           </div>
-
+          <div className="relative ml-auto">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="   Search..."
+              className={`bg-green-100 h-8 px-4 rounded-full text-sm focus:outline-none transition-all duration-300 ease-in-out ${inputWidth} border border-gray-300 shadow-md focus:ring-2 focus:ring-blue-500`}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+            <button
+              type="submit"
+              className="absolute right-0 top-0 mt-2 mr-2"
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            >
+              <svg
+                className="h-4 w-4 fill-current text-gray-500"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
+              </svg>
+            </button>
+          </div>
         </div>
-          <div className="relative">
+        {/* <div className="relative">
             <input
               type="text"
               value={searchTerm}
@@ -194,12 +230,15 @@ const EcoNav = ({
                 <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
               </svg>
             </button>
-          </div>
+          </div> */}
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-        {login ? (
-          <UserButton />
-        ) : (
-          <span className="text-lg font-semibold leading-6 text-gray-900"><SignInButton>Log in </SignInButton><span aria-hidden="true">&rarr;</span></span>
+          {login ? (
+            <UserButton />
+          ) : (
+            <span className="text-lg font-semibold leading-6 text-gray-900">
+              <SignInButton>Log in </SignInButton>
+              <span aria-hidden="true">&rarr;</span>
+            </span>
           )}
         </div>
       </nav>
@@ -269,11 +308,15 @@ const EcoNav = ({
                   </Link>
                 </div>
                 <div className="py-6">
-                {isSignedIn?(<div></div>):(<div className="py-6">
-                  <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
-                    Log in
-                  </span>
-                </div>)}
+                  {isSignedIn ? (
+                    <div></div>
+                  ) : (
+                    <div className="py-6">
+                      <span className="-mx-3 block rounded-lg py-2.5 px-3 text-lg font-semibold leading-7 text-gray-900 hover:bg-gray-400/10">
+                        Log in
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

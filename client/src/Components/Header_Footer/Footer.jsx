@@ -1,6 +1,10 @@
 import logo from '../../assets/logo.png';
 import {Link} from "react-router-dom"
+import { useEffect } from 'react';
 const Footer = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <section className="py-10 bg-green-100 sm:pt-7 lg:pt-11">
       <div className="px-4 mx-auto n sm:px-6 lg:px-8 max-w-7xl">
@@ -114,13 +118,13 @@ const Footer = () => {
               </li>
 
               <li>
-                <a
+                <Link
                   to="/Ecocorp"
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >
                   EcoCorp{" "}
-                </a>
+                </Link>
               </li>
 
               <li>
@@ -146,7 +150,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="Ecovision"
+                  to="/Ecovision"
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >

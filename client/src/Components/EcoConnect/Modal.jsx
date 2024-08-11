@@ -14,8 +14,10 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
       reader.onloadend = () => {
         setImagePreview(reader.result);
         onChange({ target: { name: "image", value: reader.result } });
+        console.log(reader.result);
       };
       reader.readAsDataURL(file);
+      console.log(reader.readAsDataURL(file));
     }
   };
 
@@ -71,6 +73,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={onChange}
               placeholder="Title"
               className="p-2 border rounded-lg"
+              required
             />
             <textarea
               name="description"
@@ -78,6 +81,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={onChange}
               placeholder="Description"
               className="p-2 border rounded-lg"
+              required
             />
             <input
               type="file"
@@ -85,6 +89,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               accept="image/*"
               onChange={handleImageChange}
               className="p-2 border rounded-lg"
+              required
             />
             {imagePreview && (
               <div className="my-4">
@@ -102,6 +107,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={handleTagsChange}
               placeholder="Tags (comma separated)"
               className="p-2 border rounded-lg"
+              required
             />
 
             <input
@@ -110,6 +116,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={onChange}
               placeholder="Location"
               className="p-2 border rounded-lg"
+              required
             />
             <input
               type="text"
@@ -117,11 +124,13 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={onChange}
               placeholder="Organization"
               className="p-2 border rounded-lg"
+              required
             />
             <select
               name="status"
               onChange={onChange}
               className="p-2 border rounded-lg"
+              required
             >
               <option value="">Select Status</option>
               <option value="Ongoing">Ongoing</option>
@@ -136,6 +145,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
                 onChange={onChange}
                 placeholder="Donation Link (optional)"
                 className="p-2 border rounded-lg"
+                // required
               />
             )}
             <input
@@ -144,6 +154,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               onChange={onChange}
               placeholder="Contact Email"
               className="p-2 border rounded-lg"
+              required
             />
           </div>
           <div className="mt-4 flex justify-center">

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { pdfgen } from './pdfgen'; // Ensure this function is correctly imported
-
-// Dynamic thresholds and recommendations
+import { useEffect } from 'react';
+import Nav from '../Header_Footer/Nav';
 const thresholds = {
   energy: { high: 100, moderate: 50 },
   transportation: { high: 50, moderate: 25 },
@@ -14,6 +14,8 @@ const thresholds = {
   lifestyle: { high: 50, moderate: 25 },
   offsets: { high: 0, moderate: 0 }
 };
+
+
 
 const recommendationsMapping = {
   high: {
@@ -98,6 +100,9 @@ const generateRecommendations = (scores) => {
 
 // Recommendations Page Component
 const Results = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   const location = useLocation();
   const { scores, user } = location.state; // Ensure scores and user are passed correctly
 
@@ -119,9 +124,12 @@ const Results = () => {
   const footprintColor = totalScore > 300 ? 'text-red-600' : totalScore > 150 ? 'text-yellow-600' : 'text-green-600';
 
   return (
+    <>
+    <Nav/>
+    
     <div className="min-h-screen p-6 bg-green-50 flex flex-col items-center">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-md p-6">
-        <header className="flex justify-between mb-6">
+        <header className="flex flex-col justify-between mb-6">
           <div className="text-center">
             <h1 className="text-4xl font-bold text-green-700">EcoCalc</h1>
             <p className="text-gray-600">"Your path to a greener future"</p>
@@ -164,6 +172,7 @@ const Results = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

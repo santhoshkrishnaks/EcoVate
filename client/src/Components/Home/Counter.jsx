@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const StatsSection = () => {
   const initialForestHectares = 4523401;
   const forestRatePerSecond = 3.8;
 
-  const initialWildForestPercent = 29.63000;
+  const initialWildForestPercent = 29.63;
   const wildForestRatePerSecond = 0.0002;
 
   const initialSpeciesPercent = 27.78;
@@ -15,25 +15,31 @@ const StatsSection = () => {
     return storedValue ? parseFloat(storedValue) : initialValue;
   };
 
-  const [forestHectares, setForestHectares] = useState(getInitialValue('forestHectares', initialForestHectares));
-  const [wildForestPercent, setWildForestPercent] = useState(getInitialValue('wildForestPercent', initialWildForestPercent));
-  const [speciesPercent, setSpeciesPercent] = useState(getInitialValue('speciesPercent', initialSpeciesPercent));
+  const [forestHectares, setForestHectares] = useState(
+    getInitialValue("forestHectares", initialForestHectares)
+  );
+  const [wildForestPercent, setWildForestPercent] = useState(
+    getInitialValue("wildForestPercent", initialWildForestPercent)
+  );
+  const [speciesPercent, setSpeciesPercent] = useState(
+    getInitialValue("speciesPercent", initialSpeciesPercent)
+  );
 
   useEffect(() => {
     const updateCounters = () => {
-      setForestHectares(prev => {
+      setForestHectares((prev) => {
         const newValue = prev + forestRatePerSecond;
-        localStorage.setItem('forestHectares', newValue);
+        localStorage.setItem("forestHectares", newValue);
         return newValue;
       });
-      setWildForestPercent(prev => {
+      setWildForestPercent((prev) => {
         const newValue = prev - wildForestRatePerSecond;
-        localStorage.setItem('wildForestPercent', newValue);
+        localStorage.setItem("wildForestPercent", newValue);
         return newValue;
       });
-      setSpeciesPercent(prev => {
+      setSpeciesPercent((prev) => {
         const newValue = prev + speciesRatePerSecond;
-        localStorage.setItem('speciesPercent', newValue);
+        localStorage.setItem("speciesPercent", newValue);
         return newValue;
       });
     };
@@ -50,7 +56,8 @@ const StatsSection = () => {
             Earth Health Metrics
           </h2>
           <p className="mt-3 text-lg leading-7 text-slate-700 sm:text-xl sm:mt-4">
-            Current data on environmental destruction, species extinction, and forest loss.
+            Current data on environmental destruction, species extinction, and
+            forest loss.
           </p>
         </div>
       </div>
@@ -64,7 +71,7 @@ const StatsSection = () => {
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Percent of Species at Critical Risk
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
                     {speciesPercent.toFixed(6)}%
                   </dd>
                 </div>
@@ -72,15 +79,15 @@ const StatsSection = () => {
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Hectares of Forest Destroyed
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
-                    {forestHectares.toFixed(0).toLocaleString()}
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
+                    {forestHectares.toFixed(0).toLocaleString()}%
                   </dd>
                 </div>
                 <div className="flex flex-col p-4 sm:p-6 text-center border-t border-slate-800 sm:border-0 sm:border-l">
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Percent of Wild Forests Left
                   </dt>
-                  <dd className="order-1 text-3xl font-extrabold leading-none text-slate-700 sm:text-5xl">
+                  <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
                     {wildForestPercent.toFixed(5)}%
                   </dd>
                 </div>
