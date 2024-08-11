@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Header_Footer/Footer";
 import Nav from "../Header_Footer/Nav";
-
+import { useEffect } from "react";
 // EnergyForm Component
 const EnergyForm = ({ formData, handleChange }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   document.addEventListener("wheel", function (event) {
     if (document.activeElement.type === "number") {
       document.activeElement.blur();
@@ -12,7 +16,7 @@ const EnergyForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Energy Consumption</h2>
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Energy Consumption</h2>
       <div>
         <label className="block text-gray-600">
           Monthly Electricity Consumption (kWh)
@@ -84,7 +88,7 @@ const TransportationForm = ({ formData, handleChange }) =>{
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Transportation</h2>
+    <h2 className=" md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">Transportation</h2>
     <div>
       <label className="block text-gray-600">Vehicle Type and Model</label>
       <input
@@ -153,7 +157,7 @@ const HousingForm = ({ formData, handleChange }) => {
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Housing</h2>
+    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Housing</h2>
     <div>
       <label className="block text-gray-600">
         Size of Residence (Square Feet)
@@ -201,7 +205,7 @@ const DietForm = ({ formData, handleChange }) => {
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Diet and Food Consumption</h2>
+    <h2 className="md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">Diet and Food Consumption</h2>
     <div>
       <label className="block text-gray-600">Dietary Preferences</label>
       <input
@@ -247,7 +251,7 @@ const WasteForm = ({ formData, handleChange }) =>{
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Waste Production</h2>
+    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Waste Production</h2>
     <div>
       <label className="block text-gray-600">
         Amount of Household Waste Generated
@@ -295,7 +299,7 @@ const WaterForm = ({ formData, handleChange }) =>{
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Water Usage</h2>
+    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Water Usage</h2>
     <div>
       <label className="block text-gray-600">
         Monthly Water Usage (Gallons/Liters)
@@ -333,7 +337,7 @@ const GoodsForm = ({ formData, handleChange }) => {
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Goods and Services</h2>
+    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Goods and Services</h2>
     <div>
       <label className="block text-gray-600">Annual Spending on Goods</label>
       <input
@@ -379,7 +383,7 @@ const LifestyleForm = ({ formData, handleChange }) => {
   });
   return(
   <form className="space-y-4">
-    <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Lifestyle Choices</h2>
+    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Lifestyle Choices</h2>
     <div>
       <label className="block text-gray-600">Frequency of Travel</label>
       <input
@@ -413,7 +417,7 @@ const OffsetsForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="text-3xl text-green-500 text-center mb-10 text-bold">Carbon Offsets</h2>
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Carbon Offsets</h2>
       <div>
         <label className="block text-gray-600">Amount Spent on Offsets</label>
         <input

@@ -3,7 +3,6 @@ import logo from "../../assets/logo.png";
 import { SignInButton, useAuth, UserButton } from "@clerk/clerk-react";
 import { Link, useNavigate } from "react-router-dom";
 import Create from "../Context";
-
 const Nav = () => {
   const { isSignedIn } = useAuth();
   const navi=useNavigate();
@@ -35,13 +34,13 @@ const Nav = () => {
         </div>
 
         <div className="flex lg:hidden">
+          <UserButton />
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
             onClick={toggleMobileMenu}
           >
             <span className="sr-only">Open main menu</span>
-            <UserButton />
             <svg
               className="h-6 w-6 ml-2 "
               fill="none"

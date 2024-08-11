@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Post from "./Post";
 import beach from "../../assets/beach.webp";
 import tree from "../../assets/tree.jpg";
@@ -8,7 +8,7 @@ import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer"; // Import the JoinVolunteerForm component
 import { useAuth } from "@clerk/clerk-react";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const users = [
   {
@@ -35,7 +35,7 @@ const initialPosts = [
       name: "Jane Doe",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-08-01T10:00Z", // Static timestamp
+    timestamp: "2024-08-01T10:00Z",
     initiativeType: "Tree Planting",
     title: "Green City Initiative",
     description: "We planted 500 new trees in our local park...",
@@ -55,7 +55,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-07-25T15:30", // Static timestamp
+    timestamp: "2024-07-25T15:30",
     initiativeType: "Beach Cleanup",
     title: "Clean Beaches Project",
     description: "Our team cleaned up over 200 pounds of trash...",
@@ -74,7 +74,7 @@ const initialPosts = [
       name: "John Smith",
       profilePicture: "https://via.placeholder.com/50",
     },
-    timestamp: "2024-08-02T09:00:00Z", // Static timestamp
+    timestamp: "2024-08-02T09:00:00Z",
     initiativeType: "Solar Energy",
     title: "Solar Energy for All",
     description:
@@ -95,6 +95,7 @@ const Feed = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [posts, setPosts] = useState(initialPosts);
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   const [newPost, setNewPost] = useState({
     title: "",
     description: "",
@@ -106,32 +107,30 @@ const Feed = () => {
     donationLink: "",
     contactEmail: "",
   });
-  const [showVolunteerForm, setShowVolunteerForm] = useState(false); // State for managing volunteer form visibility
+  const [showVolunteerForm, setShowVolunteerForm] = useState(false);
 
-  // Function to get top 5 hashtags
   const getTopHashtags = () => {
     const hashtagCount = {};
-
-    // Count hashtags
     posts.forEach((post) => {
       post.tags.forEach((tag) => {
         hashtagCount[tag] = (hashtagCount[tag] || 0) + 1;
       });
     });
-
-    // Convert object to array and sort by count
-    const sortedHashtags = Object.entries(hashtagCount)
+    return Object.entries(hashtagCount)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
       .map(([tag]) => tag);
-
-    return sortedHashtags;
   };
 
   const topHashtags = getTopHashtags();
 
   const handleSearch = (term) => {
-    setSearchTerm(term.toLowerCase());
+    setIsLoading(true); // Start loading
+
+    setTimeout(() => {
+      setSearchTerm(term.toLowerCase());
+      setIsLoading(false); // Stop loading after timeout
+    }, 800);
   };
 
   const handleSearchSubmit = (term) => {
@@ -143,23 +142,34 @@ const Feed = () => {
   };
 
   const handleProfileClick = (userId) => {
-    setSelectedUserId(userId);
+    setIsLoading(true); // Start loading
+
+    setTimeout(() => {
+      setSelectedUserId(userId);
+      setIsLoading(false); // Stop loading after timeout
+    }, 2000); // Set loading time (2 seconds)
   };
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setNewPost((prevPost) => ({ ...prevPost, [name]: value }));
   };
+  const handleback =()=>{
+    setIsLoading(true); 
+
+    setTimeout(() => {
+      setSelectedUserId(0);
+      setIsLoading(false); 
+    }, 2000); 
+  }
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    
-
     const postWithId = {
       ...newPost,
       id: posts.length + 1,
-      timestamp: new Date(), // Format time without seconds
+      timestamp: new Date(),
       userId: 1,
       user: users[0],
     };
@@ -172,11 +182,20 @@ const Feed = () => {
   const handleJoinNowClick = () => {
     setShowVolunteerForm(true);
   };
-  const filteredPosts = posts
-    .filter((post) =>
-      post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
-    )
-    .filter((post) => (selectedUserId ? post.userId === selectedUserId : true));
+
+  // Get the 5 most recent posts
+  const recentPosts = posts
+    .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+    .slice(0, 5);
+
+  // Filter posts based on search term and selected user
+  const filteredPosts = recentPosts.filter(
+    (post) =>
+      (searchTerm
+        ? post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
+        : true) && (selectedUserId ? post.userId === selectedUserId : true)
+  );
+
   return (
     <div>
       <EcoNav
@@ -186,9 +205,9 @@ const Feed = () => {
         setSearchTerm={setSearchTerm}
       />
 
-      <div className="feed-container flex justify-center bg-green-50 px-6">
+      <div className="feed-container flex justify-center bg-green-50 sm:px-6">
         <div className="left-sidebar hidden lg:block w-1/4 p-4 h-screen sticky top-20">
-          <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
+          <h2 className="text-xl font-bold mb-4 ">Popular Initiatives</h2>
           <ul>
             {topHashtags.map((hashtag) => (
               <li key={hashtag} className="mb-2">
@@ -202,7 +221,6 @@ const Feed = () => {
             ))}
           </ul>
 
-          {/* New Section: Upcoming Events */}
           <div className="mt-6">
             <h3 className="text-lg font-bold mb-4">Upcoming Events</h3>
             <ul>
@@ -242,10 +260,15 @@ const Feed = () => {
         </div>
 
         <div className="feed mx-auto max-w-2xl w-full p-4 min-h-screen">
-          <div className="hidden md:flex flex-col mb-6">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-              <h1 className="text-4xl font-bold md:mb-0 mb-6">
+          <div className="flex flex-col mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+              <h1 className="text-2xl md:text-4xl font-bold md:mb-0 mb-6 cursor-pointer">
+                <a onClick={handleback} >
+
                 <span className="text-green-700">Eco</span>Connect
+                </a>
+              
+              
               </h1>
               <button
                 onClick={handleCreatePost}
@@ -255,25 +278,69 @@ const Feed = () => {
               </button>
             </div>
           </div>
+          <div className="flex lg:hidden mb-4">
+            <ul className="flex flex-row flex-wrap">
+              {topHashtags.map((hashtag) => (
+                <li key={hashtag} className="mb-2">
+                  <button
+                    onClick={() => handleSearch(hashtag)}
+                    className="text-blue-500"
+                  >
+                    #{hashtag}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
 
-          {/* Feed Posts */}
-          {filteredPosts.length > 0 ? (
+          {isLoading ? ( // Loading animation
+            <div className="bg-green-50 flex space-x-12 p-12 justify-center items-center">
+              <div className="border border-green-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                <div className="animate-pulse flex space-x-4">
+                  <div className="rounded-full bg-green-400 h-12 w-12"></div>
+                  <div className="flex-1 space-y-4 py-1">
+                    <div className="h-4 bg-green-400 rounded w-3/4"></div>
+                    <div className="space-y-2">
+                      <div className="h-4 bg-green-400 rounded"></div>
+                      <div className="h-4 bg-green-400 rounded w-5/6"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-                onProfileClick={handleProfileClick}
-                handleSearch={handleSearch}
-              />
+              <div key={post.id}>
+                <Post
+                  post={post}
+                  onProfileClick={handleProfileClick}
+                  handleSearch={handleSearch}
+                />
+              </div>
             ))
           ) : (
             <div className="text-center text-gray-500 py-10">
               <p>No initiatives found for your search.</p>
             </div>
           )}
+          <div className="mt-6 flex-col lg:hidden">
+            <h3 className="text-lg font-bold mb-4">
+              Join Our Volunteer Program
+            </h3>
+            <p className="mb-4">
+              Interested in making a difference? Join our volunteer program and
+              be part of our impactful initiatives!
+            </p>
+            <button
+              onClick={handleJoinNowClick}
+              className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+            >
+              Join Us
+            </button>
+          </div>
         </div>
 
-        {/* Right side */}
         <div className="right-sidebar hidden lg:block w-1/4 p-4 sticky top-20 h-screen">
           <h2 className="text-xl font-bold mb-4">Recent News</h2>
           <ul>
@@ -285,16 +352,6 @@ const Feed = () => {
             <li className="mb-2">
               <Link to="#" className="text-blue-500">
                 Volunteers clean up over 500 pounds of trash from local beaches.
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="#" className="text-blue-500">
-                Community solar energy project reaches new milestone.
-              </Link>
-            </li>
-            <li className="mb-2">
-              <Link to="#" className="text-blue-500">
-                Community solar energy project reaches new milestone.
               </Link>
             </li>
             <li className="mb-2">
@@ -316,7 +373,6 @@ const Feed = () => {
           </ul>
         </div>
       </div>
-
       <Modal
         isVisible={isModalVisible}
         onClose={() => setIsModalVisible(false)}
@@ -324,13 +380,11 @@ const Feed = () => {
         formData={newPost}
         onChange={handleFormChange}
       />
-
       {showVolunteerForm && (
         <div className="">
           <JoinVolunteerForm onClose={() => setShowVolunteerForm(false)} />
         </div>
       )}
-
       <Footer />
     </div>
   );

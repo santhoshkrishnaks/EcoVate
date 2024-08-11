@@ -1,11 +1,10 @@
 import mongoose from "mongoose";
 
 const volunteerSchema=mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'user',
-        required:true
-     },
+     username:{
+      type:String,
+      required:true,
+  },
      phone:{
          type:String,
          required:true

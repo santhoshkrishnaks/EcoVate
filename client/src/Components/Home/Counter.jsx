@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const StatsSection = () => {
   const initialForestHectares = 4523401;
   const forestRatePerSecond = 3.8;
 
-  const initialWildForestPercent = 29.63000;
+  const initialWildForestPercent = 29.63;
   const wildForestRatePerSecond = 0.0002;
 
   const initialSpeciesPercent = 27.78;
@@ -15,25 +15,31 @@ const StatsSection = () => {
     return storedValue ? parseFloat(storedValue) : initialValue;
   };
 
-  const [forestHectares, setForestHectares] = useState(getInitialValue('forestHectares', initialForestHectares));
-  const [wildForestPercent, setWildForestPercent] = useState(getInitialValue('wildForestPercent', initialWildForestPercent));
-  const [speciesPercent, setSpeciesPercent] = useState(getInitialValue('speciesPercent', initialSpeciesPercent));
+  const [forestHectares, setForestHectares] = useState(
+    getInitialValue("forestHectares", initialForestHectares)
+  );
+  const [wildForestPercent, setWildForestPercent] = useState(
+    getInitialValue("wildForestPercent", initialWildForestPercent)
+  );
+  const [speciesPercent, setSpeciesPercent] = useState(
+    getInitialValue("speciesPercent", initialSpeciesPercent)
+  );
 
   useEffect(() => {
     const updateCounters = () => {
-      setForestHectares(prev => {
+      setForestHectares((prev) => {
         const newValue = prev + forestRatePerSecond;
-        localStorage.setItem('forestHectares', newValue);
+        localStorage.setItem("forestHectares", newValue);
         return newValue;
       });
-      setWildForestPercent(prev => {
+      setWildForestPercent((prev) => {
         const newValue = prev - wildForestRatePerSecond;
-        localStorage.setItem('wildForestPercent', newValue);
+        localStorage.setItem("wildForestPercent", newValue);
         return newValue;
       });
-      setSpeciesPercent(prev => {
+      setSpeciesPercent((prev) => {
         const newValue = prev + speciesRatePerSecond;
-        localStorage.setItem('speciesPercent', newValue);
+        localStorage.setItem("speciesPercent", newValue);
         return newValue;
       });
     };
@@ -50,7 +56,8 @@ const StatsSection = () => {
             Earth Health Metrics
           </h2>
           <p className="mt-3 text-lg leading-7 text-slate-700 sm:text-xl sm:mt-4">
-            Current data on environmental destruction, species extinction, and forest loss.
+            Current data on environmental destruction, species extinction, and
+            forest loss.
           </p>
         </div>
       </div>
@@ -59,7 +66,7 @@ const StatsSection = () => {
           <div className="absolute inset-0 h-1/2 bg-slate-50"></div>
           <div className="relative max-w-screen-xl px-4 mx-auto sm:px-6 lg:px-8">
             <div className="max-w-8xl mx-auto">
-              <dl className="bg-slate-50 rounded-lg shadow-lg sm:grid sm:grid-cols-3">
+              <dl className="bg-slate-50 rounded-lg shadow-lg sm:grid md:grid-cols-3">
                 <div className="flex flex-col p-4 sm:p-6 text-center border-b border-slate-800 sm:border-0 sm:border-r">
                   <dt className="order-2 mt-2 text-base font-medium leading-6 text-slate-700 sm:text-lg">
                     Percent of Species at Critical Risk
