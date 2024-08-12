@@ -126,11 +126,11 @@ const JoinVolunteerForm = ({ onClose }) => {
       });
       setShowOtherInput(false);
 
-      onClose(); // Close the form if provided
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+      onClose(); // Close the form if provided
     }
   };
 
