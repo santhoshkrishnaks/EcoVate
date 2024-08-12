@@ -58,14 +58,13 @@ const JoinVolunteerForm = ({ onClose }) => {
       // Handle all other activities
       setFormData((prev) => ({
         ...prev,
-        preferredActivities: checked
+       preferredActivities: checked
           ? [...prev.preferredActivities, value]  // Add the activity if checked
           : prev.preferredActivities.filter((activity) => activity !== value),  // Remove the activity if unchecked
       }));
     }
   };
   
-
   const handleOtherInputChange = (e) => {
     const newActivity = e.target.value;
     setFormData((prev) => ({
