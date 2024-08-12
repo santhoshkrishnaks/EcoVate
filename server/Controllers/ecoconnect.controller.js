@@ -11,9 +11,7 @@ export const createPost = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
-
 //get post all
-
 export const getPostAll = async (req, res) => {
   try {
     const posstAll = await EcoConnect.find({});
