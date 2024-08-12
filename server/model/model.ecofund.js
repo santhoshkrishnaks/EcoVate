@@ -6,16 +6,16 @@ const ecofundSchema=mongoose.Schema({
         type:String,
         required:true,
     },
-    post_title:{
+    post_id:{
         type:String,
-        required:true,
+        required:false,
     },
     payment_type:{
         type:String,
         required:true
     },
     amount:{
-        type:String,
+        type:Number,
         required:true
     },
     payment_method:{
