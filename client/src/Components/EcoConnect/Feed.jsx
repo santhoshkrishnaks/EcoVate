@@ -8,7 +8,7 @@ import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer";
 import { Link } from "react-router-dom";
-import newpost from "../../assets/new.svg"
+import newpost from "../../assets/newpost.svg"
 const users = [
   {
     id: 1,
@@ -194,7 +194,7 @@ const Feed = () => {
   );
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-green-100">
       <EcoNav
         searchTerm={searchTerm}
         onSearchChange={handleSearch}
@@ -204,7 +204,7 @@ const Feed = () => {
 
       <div className="flex flex-col md:flex-row flex-grow">
         {/* Left Sidebar */}
-        <div className="md:w-1/4 p-4 hidden md:block sticky top-20 h-screen overflow-y-auto bg:green-100">
+        <div className="md:w-1/4 p-4 hidden md:block sticky top-20 h-screen overflow-y-auto">
           <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
           <ul>
             {topHashtags.map((hashtag) => (
@@ -327,7 +327,7 @@ const Feed = () => {
           )}
 
           {/* Volunteer Form */}
-          <div className="mt-6 flex-col lg:hidden">
+          <div className="mt-6 flex-col md:hidden">
             <h3 className="text-lg font-bold mb-4">
               Join Our Volunteer Program
             </h3>
