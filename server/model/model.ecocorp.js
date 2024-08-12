@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ecocorpSchema=mongoose.Schema({
+    email_address:{
+        type:String,
+        required:true,
+    },
     org_name:{
         type:String,
         required:true
