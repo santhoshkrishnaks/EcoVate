@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const volunteerSchema=mongoose.Schema({
+
+   email_address:{
+      type:String,
+      required:true,
+   },
      username:{
       type:String,
       required:true,
