@@ -553,7 +553,7 @@ const Ecocalc = () => {
       // You can add more fields as needed, but ensure they are serializable
     };
     try {
-      await axios.post("http://localhost:3000/ecocalc", {
+      await axios.post("http://localhost:5000/ecocalc", {
         username: user.username,
         footprint: totalFootprint,
       });

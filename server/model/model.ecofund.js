@@ -10,7 +10,7 @@ const ecofundSchema=mongoose.Schema({
         type:String,
         required:false,
     },
-    payment_type:{
+    paymentType:{
         type:String,
         required:true
     },
@@ -22,7 +22,7 @@ const ecofundSchema=mongoose.Schema({
         type:String,
         required:true
     },
-    transaction_id:{
+    transactionId:{
         type:String,
         required:true
     },

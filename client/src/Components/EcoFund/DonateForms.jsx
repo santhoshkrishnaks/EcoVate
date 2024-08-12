@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'; 
+import { useUser } from '@clerk/clerk-react';
 
 
 const DonateForms = () => {
+  const { user } = useUser();
   const [step, setStep] = useState(1);
   const [paymentType, setPaymentType] = useState('one-time');
   const [selectedAmount, setSelectedAmount] = useState('');
@@ -36,6 +38,18 @@ const DonateForms = () => {
 
   const amountsOneTime = [1000, 5000, 1500, 2000];
   const amountsMonthly = [25, 50, 100, 250, 500];
+    
+    const getPaymentDataForPost = () => {
+      
+      const amount = selectedAmount || customAmount;
+      return {
+        username:user.username,
+        paymentType,
+        amount,
+        payment_method:paymentOption,
+        transactionId,
+      };
+    };
 
   const generateTransactionId = () => {
     const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -177,7 +191,7 @@ const DonateForms = () => {
     } else if (step === 2) {
       if (validateStep2()) {
         setTransactionId(generateTransactionId());
-        // Add setTimeout here
+        
         setTimeout(() => {
           setStep(3);
         }, 1000); // Delay step transition by 1000ms (1 second)
