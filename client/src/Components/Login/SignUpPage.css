@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Sen:wght@400..800&display=swap');
 .signup{
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,15 +8,13 @@
   font-family: "Hanken Grotesk", sans-serif;
 }
 .sign{
+    margin: 7%;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
 }
 .signup .cl-cardBox{
-    border-radius: 5%;
-    width: 410px;
-    max-width: 450px;
     box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;     
 }
 .photo2 img{

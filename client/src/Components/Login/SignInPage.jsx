@@ -5,10 +5,12 @@ import { SignIn } from "@clerk/clerk-react";
 const SignInPage = () => {
   return (
     <div className="signin">
+    <div className="sign">
       <div className="photo">
         <img src={logo} alt="" />
       </div>
       <SignIn />
+      </div>
     </div>
   );
 };
