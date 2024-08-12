@@ -86,14 +86,14 @@ const Nav = () => {
           <span
             onClick={() => {
               if (isSignedIn) {
-                navi("/EcoCorp");
+                navi("/Ecovision");
               } else {
                 navi("/signin");
               }
             }}
             className="text-lg font-semibold leading-6 text-gray-900 cursor-pointer"
           >
-            EcoCorp
+            Ecovision
           </span>
           <div className="relative">
             <button
@@ -122,8 +122,8 @@ const Nav = () => {
                 <div className="p-4">
                   {[
                     {
-                      name: "EcoVision",
-                      path: "/Ecovision",
+                      name: "EcoCorp",
+                      path: "/Ecocorp",
                     },
                     {
                       name: "EcoCalc",
