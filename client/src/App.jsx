@@ -20,9 +20,10 @@ import Form from "./Components/EcoCorp/EcoCorpForm.jsx";
 // import ProfilePage from "./Components/EcoConnect/Profile.jsx";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
+  const [load,setLoad]=useState(false);
   return (
     <div>
-      <Create.Provider value={{ showForm, setShowForm }}>
+      <Create.Provider value={{ showForm, setShowForm,load,setLoad }}>
         <Router>
           <Routes>
             <Route path="/Ecoconnect" element={<Feed />} />
