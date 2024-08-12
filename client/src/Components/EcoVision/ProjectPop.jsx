@@ -2,8 +2,9 @@ import Create from "../Context";
 import Footer from "../Header_Footer/Footer";
 import Form from "./Form";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext,useEffect} from "react";
 import Nav from "../Header_Footer/Nav";
+import Loader from "../Loader/Loader";
 export const ProjectPop = () => {
   const {showForm,setShowForm}=useContext(Create);
 const handleFormClick = () => {
@@ -12,9 +13,16 @@ const handleFormClick = () => {
   const handleCloseForm = () => {
     setShowForm(false);
   }
-  
+  const {load,setLoad}=useContext(Create);
+  useEffect(() => {
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
+  }, [])
   return (
-    <div>
+    <div>{load?(<Loader/>):
+    (<div>
       <Nav />
       <div className="min-h-screen bg-green-50">
         <div
@@ -190,6 +198,6 @@ const handleFormClick = () => {
         )}
       </div>
       <Footer />
-    </div>
+    </div>)}</div>
   );
 }

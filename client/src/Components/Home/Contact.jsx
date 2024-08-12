@@ -1,7 +1,32 @@
-import React from 'react'
-
+import React, { useState } from 'react';
 
 const ContactSection = () => {
+    const [result, setResult] = useState("");
+
+    const onSubmit = async (event) => {
+        event.preventDefault();
+        setResult("Sending....");
+        const formData = new FormData(event.target);
+
+        // Using your Web3 Forms access key
+        formData.append("access_key", "e6f3bbf1-402a-4657-b034-f12e2f305805");
+
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            setResult("Your request has been received , We will get back to you soon !!");
+            event.target.reset();
+        } else {
+            console.log("Error", data);
+            setResult(data.message);
+        }
+    };
+
     return (
         <section className="min-h-screen bg-green-50 " id="contact">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-10">
@@ -10,7 +35,7 @@ const ContactSection = () => {
                         <p className="text-3xl font-semibold uppercase tracking-wide text-green-700 ">
                             Contact
                         </p>
-                        <h2 className="font-heading mb-4 font-bold tracking-tight text-neutral-800  text-3xl sm:text-5xl">
+                        <h2 className="font-heading mb-4 font-bold tracking-tight text-neutral-800 text-3xl sm:text-5xl">
                             Get in Touch
                         </h2>
                         <p className="mx-auto mt-4 max-w-3xl text-xl text-gray-600 ">
@@ -22,7 +47,7 @@ const ContactSection = () => {
                     <div className="grid md:grid-cols-2">
                         <div className="h-full pr-6">
                             <p className="mt-3 mb-12 text-lg text-gray-600 ">
-                            We'd love to hear from you! Whether you have questions, suggestions, or need more information, our team is here to help. Reach out to us, and together let's build a sustainable future
+                                We'd love to hear from you! Whether you have questions, suggestions, or need more information, our team is here to help. Reach out to us, and together let's build a sustainable future
                             </p>
                             <ul className="mb-6 md:mb-0">
                                 <li className="flex">
@@ -34,8 +59,8 @@ const ContactSection = () => {
                                     </div>
                                     <div className="ml-4 mb-4">
                                         <h3 className="mb-2 text-lg font-medium leading-6 text-gray-900 ">Our Address</h3>
-                                        <p className="text-gray-600 ">Sri Krishna College of Technology,Kovaipudur-641042</p>
-                                        <p className="text-gray-600 ">TamilNadu,India</p>
+                                        <p className="text-gray-600 ">Sri Krishna College of Technology, Kovaipudur-641042</p>
+                                        <p className="text-gray-600 ">TamilNadu, India</p>
                                     </div>
                                 </li>
                                 <li className="flex">
@@ -68,26 +93,28 @@ const ContactSection = () => {
                             </ul>
                         </div>
                         <div className="card h-fit max-w-6xl p-5 md:p-12" id="form">
-                            
-                            <form id="contactForm">
+                            <form id="contactForm" onSubmit={onSubmit}>
                                 <div className="mb-6">
                                     <div className="mx-0 mb-1 sm:mb-4">
                                         <div className="mx-0 mb-1 sm:mb-4">
                                             <label htmlFor="name" className="pb-1 text-xs uppercase tracking-wider"></label>
-                                            <input type="text" id="name" autoComplete="given-name" placeholder="Your name" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-300 sm:mb-0" name="name" />
+                                            <input type="text" id="name" autoComplete="given-name" placeholder="Your name" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-900 sm:mb-0" name="name" required />
                                         </div>
                                         <div className="mx-0 mb-1 sm:mb-4">
                                             <label htmlFor="email" className="pb-1 text-xs uppercase tracking-wider"></label>
-                                            <input type="email" id="email" autoComplete="email" placeholder="Your email address" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-300 sm:mb-0" name="email" />
+                                            <input type="email" id="email" autoComplete="email" placeholder="Your email address" className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-900 sm:mb-0" name="email" required />
                                         </div>
                                     </div>
                                     <div className="mx-0 mb-1 sm:mb-4">
                                         <label htmlFor="textarea" className="pb-1 text-xs uppercase tracking-wider"></label>
-                                        <textarea id="textarea" name="textarea" cols="30" rows="5" placeholder="Write your message..." className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-300 sm:mb-0"></textarea>
+                                        <textarea id="textarea" name="message" cols="30" rows="5" placeholder="Write your message..." className="mb-2 w-full rounded-md border border-gray-400 py-2 pl-2 pr-4 shadow-md text-gray-900 sm:mb-0" required></textarea>
                                     </div>
                                 </div>
                                 <div className="text-center">
                                     <button type="submit" className="w-full bg-green-700 hover:bg-green-900 text-white px-6 py-3 font-xl rounded-md sm:mb-0">Send Message</button>
+                                </div>
+                                <div className="mt-4 text-center">
+                                    <span>{result}</span>
                                 </div>
                             </form>
                         </div>

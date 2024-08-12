@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { DonateStats } from "./DonateStats";
 import DonateForms from "./DonateForms";
 import DonateActivities from "./DonateActivities";
 import Nav from "../Header_Footer/Nav";
 import Footer from "../Header_Footer/Footer";
+import Create from "../Context";
+import Loader from "../Loader/Loader.jsx";
 
 export const Donate = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showActivity, setShowActivity] = useState(false);
-
-  const [buffering, setBuffering] = useState(false);
   const handleDonateNowClick = () => {
     setShowPopup(true);
   };
@@ -21,9 +21,18 @@ export const Donate = () => {
     setShowPopup(false);
     setShowActivity(false);
   };
+  const {load,setLoad}=useContext(Create);
+  useEffect(() => {
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
+  }, [])
 
   return (
-    <>
+    <div>{
+      load?(<Loader/>):(
+    <div>
     <Nav/>
       <div className="  bg-green-50  lg:min-h-screen flex flex-col ">
         <h1 className="text-center text-5xl md:text-6xl font-bold  mt-4 text-transparent bg-clip-text bg-gradient-to-r from-slate-950 to-green-300  text-[20px]   ">
@@ -144,7 +153,9 @@ export const Donate = () => {
         )}
       </div>
       <Footer/>
-    </>
+    </div>)
+  }
+    </div>
   );
 };
 export default Donate;

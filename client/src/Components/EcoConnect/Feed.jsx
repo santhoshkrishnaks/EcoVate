@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Post from "./Post";
 import beach from "../../assets/beach.webp";
 import tree from "../../assets/tree.jpg";
@@ -9,6 +9,8 @@ import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer";
 import { Link } from "react-router-dom";
 import newpost from "../../assets/newpost.svg"
+import Loader from "../Loader/Loader.jsx";
+import Create from "../Context";
 const users = [
   {
     id: 1,
@@ -194,9 +196,16 @@ const Feed = () => {
         ? post.tags.some((tag) => tag.toLowerCase().includes(searchTerm))
         : true) && (selectedUserId ? post.userId === selectedUserId : true)
   );
-
+  const {load,setLoad}=useContext(Create);
+  useEffect(() => {
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
+  }, [])
   return (
-    <div className="flex flex-col min-h-screen bg-green-100">
+    <div>{load?(<Loader/>):
+    (<div className="flex flex-col min-h-screen bg-green-100">
       <EcoNav
         searchTerm={searchTerm}
         onSearchChange={handleSearch}
@@ -441,6 +450,7 @@ const Feed = () => {
       )}
 
       <Footer />
+    </div>)}
     </div>
   );
 };

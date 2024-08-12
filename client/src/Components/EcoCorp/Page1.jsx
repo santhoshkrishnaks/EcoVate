@@ -3,10 +3,21 @@ import Footer from "../Header_Footer/Footer";
 import { Page2 } from "./Page2";
 import { Page3 } from "./Page3";
 import Nav from "../Header_Footer/Nav";
+import Create from "../Context";
+import { useContext, useEffect } from "react";
+import Loader from "../Loader/Loader.jsx";
 
 export const Page1 = () => {
+  const {load,setLoad}=useContext(Create);
+  useEffect(() => {
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
+  }, [])
   return (
     <div>
+    {load?(<Loader/>):(<div>
       <Nav />
       <div className="bg-green-50 min-h-screen">
         <div className="text-center pt-5">
@@ -71,6 +82,6 @@ export const Page1 = () => {
       <Page2 />
       <Page3 />
       <Footer />
-    </div>
+    </div>)}</div>
   );
 };
