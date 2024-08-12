@@ -58,8 +58,9 @@ const Form = () => {
                   name="projectLeadName"
                   id="project-lead-name"
                   autoComplete="name"
-                  value={formData.projectleadname}
+                  // value={formData.projectleadname}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="John Doe"
                 />
@@ -74,8 +75,9 @@ const Form = () => {
                   name="contactEmail"
                   id="contact-email"
                   autoComplete="email"
-                  value={formData.contactemail}
+                  // value={formData.contactemail}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="email@example.com"
                 />
@@ -86,12 +88,13 @@ const Form = () => {
               <label htmlFor="contact-phone" className="block text-sm font-semibold leading-6 text-gray-900">Contact Phone Number</label>
               <div className="mt-2">
                 <input
-                  type="text"
+                  type="tel"
                   name="contactPhone"
                   id="contact-phone"
                   autoComplete="tel"
-                  value={formData.contactphone}
+                  // value={formData.contactphone}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="(123) 456-7890"
                 />
@@ -106,10 +109,11 @@ const Form = () => {
                   name="organizationName"
                   id="organization-name"
                   autoComplete="organization"
-                  value={formData.organizationname}
+                  // value={formData.organizationname}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Your Organization/Team"
+                  required
                 />
               </div>
             </div>
@@ -129,8 +133,9 @@ const Form = () => {
                   id="problem-statement"
                   name="problemStatement"
                   rows="4"
-                  value={formData.problemstatement}
+                  // value={formData.problemstatement}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="What environmental issue does the project address?"
                 />
@@ -145,8 +150,9 @@ const Form = () => {
                   name="projectTitle"
                   id="project-title"
                   autoComplete="title"
-                  value={formData.projecttitle}
+                  // value={formData.projecttitle}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Project Title"
                 />
@@ -160,8 +166,9 @@ const Form = () => {
                   id="project-description"
                   name="projectDescription"
                   rows="4"
-                  value={formData.projectdescription}
+                  // value={formData.projectdescription}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Describe your project in detail"
                 />
@@ -175,8 +182,9 @@ const Form = () => {
                   type="text"
                   name="detailedProjectPlanLink"
                   id="detailed-project-plan"
-                  value={formData.drivelink}
+                  // value={formData.drivelink}
                   onChange={handleFormChange}
+                  required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="https://drive.google.com/your-file-link"
                 />

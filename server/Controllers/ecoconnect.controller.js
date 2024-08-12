@@ -55,3 +55,30 @@ export const deletebyId = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const DeleteLike=async(req,res)=>{
+  try{
+    const {id1}=req.params;
+    const comment=await Comment.findOneAndUpdate({ id: new RegExp(`^${id}$`, "i")},{ $inc: { likes: -1 } },{new:true,runValidators:true})
+    if(!comment){
+      res.status(400).send('Not Found');
+    }
+    res.status(200).json(comment);
+  }
+  catch(error){
+    res.status(500).send('Server error');
+  }
+}
+export const UpdateLike=async(req,res)=>{
+  try{
+      const {id}=req.params;
+      const comment =await Comment.findOneAndUpdate({ id: new RegExp(`^${id}$`, "i")},{ $inc: { likes: 1 } },{new: true});
+      if(!comment){
+        res.status(400).send('Not Found');
+      }
+      res.status(200).json(comment);
+  }
+  catch(error){
+    res.status(500).send('Server error');
+  }
+}

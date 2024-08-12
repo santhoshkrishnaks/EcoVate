@@ -1,4 +1,4 @@
-import {postcorp, getcorp} from "../Controllers/ecocorpController.js";
+import {postcorp, getcorp} from "../Controllers/ecocorp.controller.js";
 import express from "express";
 
 const router=express.Router();

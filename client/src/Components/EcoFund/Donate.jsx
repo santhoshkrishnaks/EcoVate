@@ -42,11 +42,11 @@ export const Donate = () => {
 
       <div className="flex flex-col justify-center items-center gap-5 rounded transition-all duration-500 transform md:hover:scale-105 md:hover:border-2 border-slate-400 md:ml-10">
         
-      <h2 className=" text-2xl mt-5  lg:text-center lg:text-4xl font-bold mb-4 text-neutral-700">
+      <h2 className=" text-2xl mt-5 lg:text-center lg:text-4xl font-bold mb-4 text-neutral-700">
               Donate to <span className="text-green-700">Eco</span>vate
             </h2>
 
-            <p className="px-20 text-xl">
+            <p className="px-20 text-xl ">
             Your contribution helps us drive sustainable initiatives and
               spread environmental awareness through our company, Ecovate.
               Together, we can make a significant impact on preserving our
@@ -55,7 +55,7 @@ export const Donate = () => {
             </p>
             <button
               onClick={handleDonateNowClick}
-              className=" mb-10 ml-0 lg:ml-9 px-4 py-4 bg-green-700 text-white lg:px-6 lg:py-3 rounded hover:bg-green-800"
+              className=" my-7 ml-0 px-4 py-4 bg-green-700 text-white lg:px-6 lg:py-3 rounded hover:bg-green-800"
             >
               Donate Now
             </button>
@@ -76,7 +76,7 @@ export const Donate = () => {
             </p>
             <button
               onClick={handleDonateActivityClick}
-              className=" mb-10 ml-0 md:ml-9 px-4 bg-green-700 text-white lg:px-6 py-4 lg:py-3 rounded hover:bg-green-800"
+              className="my-7 ml-0 px-4 bg-green-700 text-white lg:px-6 py-4 lg:py-3 rounded hover:bg-green-800"
             >
               Donate Now
             </button>
