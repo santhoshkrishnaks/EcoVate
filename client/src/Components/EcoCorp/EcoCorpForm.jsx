@@ -1,62 +1,60 @@
 import React, { useState } from "react";
+import axios from "axios";
 import Footer from "../Header_Footer/Footer";
 import Nav from "../Header_Footer/Nav";
-import { Link } from "react-router-dom";
 
 const Form = () => {
   // State to store form data
   const [formData, setFormData] = useState({
-    organizationName: "",
-    industrySector: "",
-    numberOfEmployees: "",
-    headquartersAddress: "",
-    websiteURL: "",
-    fullName: "",
-    jobTitle: "",
-    emailAddress: "",
-    phoneNumber: "",
-    currentEnvironmentalInitiatives: "",
-    primarySustainabilityGoals: "",
-    whyJoinEcoCorp: "",
-    expectationsFromEcoCorp: "",
-    authorization: false,
-    termsAndConditions: false,
+    email_address: "",
+    org_name: "",
+    no_of_employees: "",
+    sector: "",
+    headquarters: "",
+    website_url: "",
+    full_name: "",
+    job_title: "",
+    phone_number: "",
+    current_initiative: "",
+    goals: "",
+    why_join: "",
+    expectations: "",
   });
 
   // Handle changes in the input fields
   const handleFormChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
   // Handle form submission
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Store or submit the form data here
-    console.log("Form data submitted:", formData);
-    // Example: Send data to an API or a backend service here
-
-    // Optionally reset form after submission
-    setFormData({
-      organizationName: "",
-      industrySector: "",
-      numberOfEmployees: "",
-      headquartersAddress: "",
-      websiteURL: "",
-      fullName: "",
-      jobTitle: "",
-      emailAddress: "",
-      phoneNumber: "",
-      currentEnvironmentalInitiatives: "",
-      primarySustainabilityGoals: "",
-      whyJoinEcoCorp: "",
-      expectationsFromEcoCorp: "",
-      authorization: false,
-      termsAndConditions: false,
-    });
+    try {
+      await axios.post("http://localhost:5000/ecocorp", formData);
+      console.log("Form data submitted successfully.");
+      // Optionally reset form after submission
+      setFormData({
+        email_address: "",
+        org_name: "",
+        no_of_employees: "",
+        sector: "",
+        headquarters: "",
+        website_url: "",
+        full_name: "",
+        job_title: "",
+        phone_number: "",
+        current_initiative: "",
+        goals: "",
+        why_join: "",
+        expectations: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+    }
   };
 
   return (
@@ -79,7 +77,7 @@ const Form = () => {
             <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="organization-name"
+                  htmlFor="org_name"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Organization Name
@@ -87,9 +85,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="organizationName"
-                    id="organization-name"
-                    value={formData.organizationName}
+                    name="org_name"
+                    id="org_name"
+                    value={formData.org_name}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Your Organization"
@@ -100,17 +98,17 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="industry-sector"
+                  htmlFor="sector"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
-                  Industry/Sector
+                  Sector
                 </label>
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="industrySector"
-                    id="industry-sector"
-                    value={formData.industrySector}
+                    name="sector"
+                    id="sector"
+                    value={formData.sector}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Industry/Sector"
@@ -121,7 +119,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="number-of-employees"
+                  htmlFor="no_of_employees"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Number of Employees
@@ -129,9 +127,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="number"
-                    name="numberOfEmployees"
-                    id="number-of-employees"
-                    value={formData.numberOfEmployees}
+                    name="no_of_employees"
+                    id="no_of_employees"
+                    value={formData.no_of_employees}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Number of Employees"
@@ -142,7 +140,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="headquarters-address"
+                  htmlFor="headquarters"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Headquarters Address
@@ -150,9 +148,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="headquartersAddress"
-                    id="headquarters-address"
-                    value={formData.headquartersAddress}
+                    name="headquarters"
+                    id="headquarters"
+                    value={formData.headquarters}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Headquarters Address"
@@ -163,7 +161,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="website-url"
+                  htmlFor="website_url"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Website URL
@@ -171,9 +169,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="url"
-                    name="websiteURL"
-                    id="website-url"
-                    value={formData.websiteURL}
+                    name="website_url"
+                    id="website_url"
+                    value={formData.website_url}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="https://your-website.com"
@@ -197,7 +195,7 @@ const Form = () => {
             <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="full-name"
+                  htmlFor="full_name"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Full Name
@@ -205,9 +203,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="fullName"
-                    id="full-name"
-                    value={formData.fullName}
+                    name="full_name"
+                    id="full_name"
+                    value={formData.full_name}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="John Doe"
@@ -218,7 +216,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="job-title"
+                  htmlFor="job_title"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Job Title/Position
@@ -226,9 +224,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="jobTitle"
-                    id="job-title"
-                    value={formData.jobTitle}
+                    name="job_title"
+                    id="job_title"
+                    value={formData.job_title}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Job Title/Position"
@@ -239,7 +237,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="email-address"
+                  htmlFor="email_address"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Email Address
@@ -247,9 +245,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="email"
-                    name="emailAddress"
-                    id="email-address"
-                    value={formData.emailAddress}
+                    name="email_address"
+                    id="email_address"
+                    value={formData.email_address}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="email@example.com"
@@ -260,7 +258,7 @@ const Form = () => {
 
               <div className="sm:col-span-1">
                 <label
-                  htmlFor="phone-number"
+                  htmlFor="phone_number"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Phone Number
@@ -268,9 +266,9 @@ const Form = () => {
                 <div className="mt-2">
                   <input
                     type="text"
-                    name="phoneNumber"
-                    id="phone-number"
-                    value={formData.phoneNumber}
+                    name="phone_number"
+                    id="phone_number"
+                    value={formData.phone_number}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Phone Number"
@@ -294,16 +292,16 @@ const Form = () => {
             <div className="mt-6 space-y-6">
               <div>
                 <label
-                  htmlFor="current-environmental-initiatives"
+                  htmlFor="current_initiative"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Current Environmental Initiatives
                 </label>
                 <div className="mt-2">
                   <textarea
-                    name="currentEnvironmentalInitiatives"
-                    id="current-environmental-initiatives"
-                    value={formData.currentEnvironmentalInitiatives}
+                    name="current_initiative"
+                    id="current_initiative"
+                    value={formData.current_initiative}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Describe your current environmental initiatives"
@@ -315,16 +313,16 @@ const Form = () => {
 
               <div>
                 <label
-                  htmlFor="primary-sustainability-goals"
+                  htmlFor="goals"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Primary Sustainability Goals
                 </label>
                 <div className="mt-2">
                   <textarea
-                    name="primarySustainabilityGoals"
-                    id="primary-sustainability-goals"
-                    value={formData.primarySustainabilityGoals}
+                    name="goals"
+                    id="goals"
+                    value={formData.goals}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Describe your primary sustainability goals"
@@ -336,16 +334,16 @@ const Form = () => {
 
               <div>
                 <label
-                  htmlFor="why-join-ecocorp"
+                  htmlFor="why_join"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Why Join EcoCorp?
                 </label>
                 <div className="mt-2">
                   <textarea
-                    name="whyJoinEcoCorp"
-                    id="why-join-ecocorp"
-                    value={formData.whyJoinEcoCorp}
+                    name="why_join"
+                    id="why_join"
+                    value={formData.why_join}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="Why are you interested in joining EcoCorp?"
@@ -357,16 +355,16 @@ const Form = () => {
 
               <div>
                 <label
-                  htmlFor="expectations-from-ecocorp"
+                  htmlFor="expectations"
                   className="block text-sm font-semibold leading-6 text-gray-900"
                 >
                   Expectations from EcoCorp
                 </label>
                 <div className="mt-2">
                   <textarea
-                    name="expectationsFromEcoCorp"
-                    id="expectations-from-ecocorp"
-                    value={formData.expectationsFromEcoCorp}
+                    name="expectations"
+                    id="expectations"
+                    value={formData.expectations}
                     onChange={handleFormChange}
                     className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                     placeholder="What are your expectations from EcoCorp?"
@@ -378,12 +376,11 @@ const Form = () => {
             </div>
           </div>
 
-          
-
           {/* Submit Button */}
           <div className="pt-8">
             <button
               type="submit"
+              onClick={handleFormSubmit}
               className="inline-flex justify-center rounded-md border border-transparent bg-green-600 py-2 px-4 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
             >
               Submit Application
