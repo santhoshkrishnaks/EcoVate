@@ -1,22 +1,23 @@
 import React, { useContext, useState } from 'react';
+import axios from 'axios';
 import Create from '../Context';
+import { useUser } from '@clerk/clerk-react';
 
 const Form = () => {
   const { showForm, setShowForm } = useContext(Create);
-
-  // State to store form data
+  const { user } = useUser();
   const [formData, setFormData] = useState({
-    projectleadname: '',
-    contactemail: '',
-    contactphone: '',
-    organizationname: '',
-    projecttitle: '',
-    projectdescription: '',
-    problemstatement: '',
-    drivelink: '',
+    username: user.username || "",
+    projectLeadName: '',
+    contactEmail: '',
+    contactPhone: '',
+    organizationName: '',
+    projectTitle: '',
+    projectDescription: '',
+    problemStatement: '',
+    detailedProjectPlanLink: '',
   });
 
-  // Handle changes in the input fields
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -25,18 +26,31 @@ const Form = () => {
     }));
   };
 
-  // Handle form submission
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    // Store or submit the form data here
-    console.log('Form data submitted:', formData);
-    // Example: Send data to an API or a backend service here
 
-    // Hide the form after submission
-    setShowForm(false);
+    // Mapping form data to match schema field names
+    const mappedData = {
+      username: formData.username, // Include username
+      project_lead_name: formData.projectLeadName,
+      contact_email: formData.contactEmail,
+      contact_phone: formData.contactPhone,
+      organisation_name: formData.organizationName,
+      project_title: formData.projectTitle,
+      project_description: formData.projectDescription,
+      problem_statement: formData.problemStatement,
+      drivelink: formData.detailedProjectPlanLink, // Changed to drivelink
+    };
+
+    try {
+      const response = await axios.post('http://localhost:3000/ecovision', mappedData);
+      console.log('Form data submitted:', response.data);
+      setShowForm(false);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
-  // Handle form cancellation
   const handleFormClick = () => {
     setShowForm(false);
   };
@@ -58,7 +72,7 @@ const Form = () => {
                   name="projectLeadName"
                   id="project-lead-name"
                   autoComplete="name"
-                  // value={formData.projectleadname}
+                  value={formData.projectLeadName}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -75,7 +89,7 @@ const Form = () => {
                   name="contactEmail"
                   id="contact-email"
                   autoComplete="email"
-                  // value={formData.contactemail}
+                  value={formData.contactEmail}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -92,7 +106,7 @@ const Form = () => {
                   name="contactPhone"
                   id="contact-phone"
                   autoComplete="tel"
-                  // value={formData.contactphone}
+                  value={formData.contactPhone}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -109,7 +123,7 @@ const Form = () => {
                   name="organizationName"
                   id="organization-name"
                   autoComplete="organization"
-                  // value={formData.organizationname}
+                  value={formData.organizationName}
                   onChange={handleFormChange}
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Your Organization/Team"
@@ -133,7 +147,7 @@ const Form = () => {
                   id="problem-statement"
                   name="problemStatement"
                   rows="4"
-                  // value={formData.problemstatement}
+                  value={formData.problemStatement}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -150,7 +164,7 @@ const Form = () => {
                   name="projectTitle"
                   id="project-title"
                   autoComplete="title"
-                  // value={formData.projecttitle}
+                  value={formData.projectTitle}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -166,7 +180,7 @@ const Form = () => {
                   id="project-description"
                   name="projectDescription"
                   rows="4"
-                  // value={formData.projectdescription}
+                  value={formData.projectDescription}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -182,7 +196,7 @@ const Form = () => {
                   type="text"
                   name="detailedProjectPlanLink"
                   id="detailed-project-plan"
-                  // value={formData.drivelink}
+                  value={formData.detailedProjectPlanLink}
                   onChange={handleFormChange}
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
@@ -196,8 +210,8 @@ const Form = () => {
       </div>
 
       <div className="mt-8 flex items-center justify-end gap-x-6">
-        <button type="button" onClick={handleFormClick} className="text-sm font-semibold leading-6 text-gray-900 hover:text-green-700">Cancel</button>
-        <button type="submit" className="rounded-lg bg-green-600 px-4 py-2 text-sm font-semibold text-white shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Submit</button>
+        <button type="button" onClick={handleFormClick} className="text-sm font-semibold leading-6 text-gray-900 hover:text-gray-600">Cancel</button>
+        <button type="submit" className="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm ring-1 ring-gray-900/10 hover:bg-green-500 focus:ring-2 focus:ring-green-600">Submit</button>
       </div>
     </form>
   );
