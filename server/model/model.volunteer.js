@@ -18,8 +18,8 @@ const volunteerSchema=mongoose.Schema({
         required:true
      },
      preferred_activities:{
-        type:String,
-        required:true 
+        type:[mongoose.Schema.Types.Mixed],
+        required:false,
      },
      availability:{
         type:String,
