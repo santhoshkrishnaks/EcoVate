@@ -5,10 +5,10 @@ import { connectdb } from "./config/database.js";
 import { landController } from "./Controllers/landing.controller.js";
 import corprouter from "./Routes/route.ecocorp.js";
 import cors from "cors";
-import router from "./routes/route.ecoconnect.js";
+import connectrouter from "./Routes/route.ecoconnect.js";
 import fundrouter from "./Routes/route.ecofund.js";
-import newsrouter from './routes/route.econews.js'
-import calcRouter from "../server/routes/route.ecocalc.js";
+import newsrouter from './Routes/route.econews.js'
+import calcRouter from "./Routes/route.ecocalc.js";
 import ecovisionrouter from "./Routes/route.ecovision.js";
 import volunteerrouter from "./Routes/route.volunteer.js";
 
@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 connectdb();
 app.use(cors());
 
-app.use("/", router);
+app.use("/", connectrouter);
 app.use("/", ecovisionrouter);
 app.use("/", volunteerrouter);
 app.use("/", newsrouter);

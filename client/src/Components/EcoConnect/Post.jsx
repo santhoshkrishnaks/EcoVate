@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
 import {Link, useNavigate} from "react-router-dom"
 
-const Post = ({ post, onProfileClick, handleSearch }) => {
+const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
   const [likes, setLikes] = useState(0);
   const [liked, setLiked] = useState(false);
   const [comments, setComments] = useState(post.comments || []);
   const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState(false);
-  const navi=useNavigate();
+  const navi = useNavigate();
 
   useEffect(() => {
     if (post.comments) {
@@ -20,6 +20,12 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
     setLiked(!liked);
     setLikes((prevLikes) => (liked ? prevLikes - 1 : prevLikes + 1));
   };
+
+  const handleDeletePost = () => {
+    // Logic to delete the post
+    alert("Post deleted!");
+  };
+
 
   const handleAddComment = () => {
     if (commentText.trim()) {
@@ -48,39 +54,71 @@ const Post = ({ post, onProfileClick, handleSearch }) => {
       post.contactEmail || ""
     }?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-    window.location.href=mailtoLink;
+    window.location.href = mailtoLink;
   };
 
   return (
     <div className="post bg-white rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
       <div className="post-header flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
-        <div className="post-header flex items-start sm:items-center mb-4 sm:mb-0">
-          <img
-            src={post.user.profilePicture}
-            alt={post.user.name}
-            className="profile-picture w-12 h-12 rounded-full cursor-pointer"
-            onClick={() => onProfileClick(post.userId)}
-          />
-          <div className="post-user-info ml-4">
-            <div
-              className="user-name font-semibold cursor-pointer"
+        <div className="post-header flex sm:items-center justify-between mb-4 sm:mb-0 delete">
+          {/* Profile */}
+          <div className="flex">
+            <img
+              src={post.user.profilePicture}
+              alt={post.user.name}
+              className="profile-picture w-12 h-12 rounded-full cursor-pointer"
               onClick={() => onProfileClick(post.userId)}
-            >
-              {post.user.name}
+            />
+
+            {/* User details */}
+            <div className="post-user-info ml-4">
+              <div
+                className="user-name font-semibold cursor-pointer"
+                onClick={() => onProfileClick(post.userId)}
+              >
+                {post.user.name}
+              </div>
+
+              <div className="post-location text-gray-700">
+                {post.location && (
+                  <span className="text-slate-700">{post.location}</span>
+                )}
+              </div>
+
+              <div className="post-timestamp text-gray-500 text-sm">
+                {new Date(post.timestamp).toLocaleString()}
+              </div>
             </div>
-            <div className="post-location text-gray-700">
-              {post.location && (
-                <span className="text-slate-700">{post.location}</span>
-              )}
-            </div>
-            <div className="post-timestamp text-gray-500 text-sm">
-              {new Date(post.timestamp).toLocaleString()}
-            </div>
+          </div>
+          <div className="sm:hidden block">
+            {currentUser.id === post.userId && (
+              <button
+                onClick={handleDeletePost}
+                className=" text-white px-4 py-2"
+              >
+                <img src={img} height={30} width={30} />
+              </button>
+            )}
           </div>
         </div>
 
-        <div className="post-status text-green-500 font-semibold sm:mr-4">
-          {post.status}
+        {/* Status */}
+
+        <div className="flex fex-row gap-2">
+          <div className="post-status text-green-500 font-semibold sm:mr-4 mt-3">
+            {post.status}
+          </div>
+
+          <div className="hidden sm:block">
+            {currentUser.id === post.userId && (
+              <button
+                onClick={handleDeletePost}
+                className=" text-white px-4 py-2"
+              >
+                <img src={img} height={30} width={30} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

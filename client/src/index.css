@@ -17,7 +17,14 @@
 * {
   scroll-behavior: smooth;
 }
-
+.delete{
+  width: 30vw;
+}
+@media (max-width:640px) {
+  .delete{
+    width: 82vw;
+  }
+}
 @media (max-width: 550px) {
   .image-footer {
     width: 100%;
