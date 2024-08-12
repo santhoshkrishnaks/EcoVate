@@ -4,11 +4,11 @@ import { Volunteer } from "../config/database.js"
 // post volunteer
 const postvolunteer=async (req,res)=>{
     try {
-        const volunt= await Volunteer(req.body);
-        volunt.save();
-        res.status(200).json(volunt)     ;
+        const volunt=new Volunteer(req.body);
+        await volunt.save();
+        res.status(200).json(volunt);
     } catch (error) {
-        res.status(400).json({error:error.vision});
+        res.status(400).json({error:error.message});
     }
 }
 

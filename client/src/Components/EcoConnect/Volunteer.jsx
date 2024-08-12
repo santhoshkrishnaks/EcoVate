@@ -5,9 +5,9 @@ import { useUser } from "@clerk/clerk-react";
 const JoinVolunteerForm = ({ onClose }) => {
   const { user } = useUser();
   const [formData, setFormData] = useState({
-    username: user.username || "",
+    username: user?.username || "",
     name: "",
-    email: "",
+    email: user?.email || "",
     phone: "",
     address: "",
     age: "",
@@ -31,60 +31,30 @@ const JoinVolunteerForm = ({ onClose }) => {
   };
 
   const handleActivityChange = (e) => {
-    const { value, checked } = e.target;  // Destructuring `checked` from the event object
-  
+    const { value, checked } = e.target;
+    
     if (value === "Other") {
-      setShowOtherInput(checked);  // Update the state to show/hide the "Other" input based on `checked`
-  
-      setFormData((prev) => {
-        if (checked) {
-          // If checked, add "Other" to preferredActivities
-          return {
-            ...prev,
-            preferredActivities: [...prev.preferredActivities, "Other"],
-          };
-        } else {
-          // If unchecked, remove "Other" from preferredActivities and clear otherActivity
-          return {
-            ...prev,
-            preferredActivities: prev.preferredActivities.filter(
-              (activity) => activity !== "Other"
-            ),
-            otherActivity: "",  // Assuming you want to clear the 'otherActivity' field when "Other" is unchecked
-          };
-        }
-      });
-    } else {
-      // Handle all other activities
-      setFormData((prev) => ({
-        ...prev,
-        preferredActivities: checked
-          ? [...prev.preferredActivities, value]  // Add the activity if checked
-          : prev.preferredActivities.filter((activity) => activity !== value),  // Remove the activity if unchecked
-      }));
+      setShowOtherInput(checked); // Show/Hide the 'Other' input based on the checkbox
     }
+
+    setFormData((prev) => ({
+      ...prev,
+      preferredActivities: checked
+        ? [...prev.preferredActivities, value]  // Add the activity if checked
+        : prev.preferredActivities.filter((activity) => activity !== value),  // Remove the activity if unchecked
+    }));
   };
-  
 
   const handleOtherInputChange = (e) => {
     const newActivity = e.target.value;
+
     setFormData((prev) => ({
       ...prev,
       otherActivity: newActivity,
+      preferredActivities: prev.preferredActivities.includes("Other") 
+        ? prev.preferredActivities
+        : [...prev.preferredActivities, "Other"],
     }));
-    if (newActivity && !formData.preferredActivities.includes("Other")) {
-      setFormData((prev) => ({
-        ...prev,
-        preferredActivities: [...prev.preferredActivities, "Other"],
-      }));
-    } else if (!newActivity) {
-      setFormData((prev) => ({
-        ...prev,
-        preferredActivities: prev.preferredActivities.filter(
-          (activity) => activity !== "Other"
-        ),
-      }));
-    }
   };
 
   const handleSubmit = async (event) => {
@@ -102,10 +72,7 @@ const JoinVolunteerForm = ({ onClose }) => {
 
     try {
       // Replace with your backend API URL
-      const response = await axios.post("http://localhost:3000/volunteer", {
-        ...formData,
-      });
-      console.log(formData);
+      const response = await axios.post("http://localhost:3000/volunteer", formData);
 
       if (response.status !== 200) {
         throw new Error("Something went wrong!");
@@ -113,9 +80,9 @@ const JoinVolunteerForm = ({ onClose }) => {
 
       // Reset the form
       setFormData({
-        username: user.username || "",
+        username: user?.username || "",
         name: "",
-        email: "",
+        email: user?.email || "",
         phone: "",
         address: "",
         age: "",
@@ -128,7 +95,7 @@ const JoinVolunteerForm = ({ onClose }) => {
 
       onClose(); // Close the form if provided
     } catch (error) {
-      setError(error.message);
+      setError(error.response?.data?.error || error.message);
     } finally {
       setLoading(false);
     }
@@ -294,26 +261,22 @@ const JoinVolunteerForm = ({ onClose }) => {
             >
               Availability
             </label>
-            <select
+            <input
+              type="text"
               id="availability"
               name="availability"
               value={formData.availability}
               onChange={handleInputChange}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            >
-              <option value="">Select availability</option>
-              <option value="Weekdays">Weekdays</option>
-              <option value="Weekends">Weekends</option>
-            </select>
+            />
           </div>
-
           <div className="mb-4">
-            <label className="inline-flex items-center">
-              <span>
-                Why do you want to join us?{" "}
-                <span className="text-slate-400">(Optional)</span>
-              </span>
+            <label
+              htmlFor="motivation"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Motivation
             </label>
             <textarea
               id="motivation"
@@ -322,21 +285,14 @@ const JoinVolunteerForm = ({ onClose }) => {
               onChange={handleInputChange}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
-              placeholder="Share your motivation"
-            ></textarea>
+              required
+            />
           </div>
           <div className="flex justify-end">
             <button
-              type="button"
-              onClick={onClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow mr-2"
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
               disabled={loading}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300"
             >
               {loading ? "Submitting..." : "Submit"}
             </button>
