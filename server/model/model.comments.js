@@ -5,21 +5,22 @@ const commentSchema=new mongoose.Schema({
         type:String,
         required:true
     },
-    comment:[{
-        username:{
-            type:String,
-            required:true
-        },
-        content:{
-            type:String,
-            required:true,
-        }
-    }],
-    likes:{
+    username:{
+        type:String,
+        required:false,
+     },
+    content:{
+         type:String,
+         required:false,
+    },
+     number:{
         type:Number,
-        required:false
+         required:false,
     }
 },{
     timestamps:true,
 })
+commentSchema.statics.findById=function(id){
+    return this.where({post_id: new RegExp(id, "i") });
+}
 export default commentSchema;

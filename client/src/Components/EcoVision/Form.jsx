@@ -63,7 +63,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="John Doe"
-                  required
                 />
               </div>
             </div>
@@ -81,7 +80,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="email@example.com"
-                  required
                 />
               </div>
             </div>
@@ -99,7 +97,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="(123) 456-7890"
-                  required
                 />
               </div>
             </div>
@@ -141,7 +138,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="What environmental issue does the project address?"
-                  required
                 />
               </div>
             </div>
@@ -159,7 +155,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Project Title"
-                  required
                 />
               </div>
             </div>
@@ -176,7 +171,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="Describe your project in detail"
-                  required
                 />
               </div>
             </div>
@@ -193,7 +187,6 @@ const Form = () => {
                   required
                   className="block w-full rounded-lg border border-gray-300 bg-white py-2 px-3 text-gray-900 shadow-sm placeholder-gray-400 focus:border-green-600 focus:ring-1 focus:ring-green-600"
                   placeholder="https://drive.google.com/your-file-link"
-                  required
                 />
                 <p className="text-xs leading-5 text-gray-600 mt-1">Enter the Google Drive link (PDF, DOC, DOCX, PPT accepted)</p>
               </div>

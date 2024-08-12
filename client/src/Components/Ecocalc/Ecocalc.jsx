@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Header_Footer/Footer";
 import Nav from "../Header_Footer/Nav";
-import { useEffect } from "react";
+import { useEffect ,useContext} from "react";
+import Create from "../Context";
+import Loader from "../Loader/Loader.jsx";
 // EnergyForm Component
 const EnergyForm = ({ formData, handleChange }) => {
   useEffect(() => {
@@ -530,8 +532,17 @@ const Ecocalc = () => {
       },
     });
   };
-
+  const {load,setLoad}=useContext(Create);
+  useEffect(() => {
+    setLoad(true);
+    setTimeout(() => {
+      setLoad(false);
+    }, 500);
+  }, [])
   return (
+    <div>
+{
+  load?(<Loader/>):(
     <div>
       <Nav />
       <div className="bg-green-50 min-h-screen w-screen p-6 ecocal">
@@ -726,6 +737,7 @@ const Ecocalc = () => {
         </div>
       </div>
       <Footer />
+    </div>)}
     </div>
   );
 };

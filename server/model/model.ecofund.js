@@ -30,4 +30,8 @@ const ecofundSchema=mongoose.Schema({
 },{
     timestamps:true,
 })
+
+ecofundSchema.statics.findbyuser = function (name) {
+  return this.where({ username: new RegExp(name, "i") });
+};
 export default ecofundSchema;
