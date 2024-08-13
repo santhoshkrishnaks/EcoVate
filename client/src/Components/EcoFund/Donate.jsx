@@ -6,10 +6,13 @@ import Nav from "../Header_Footer/Nav";
 import Footer from "../Header_Footer/Footer";
 import Create from "../Context";
 import Loader from "../Loader/Loader.jsx";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Donate = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showActivity, setShowActivity] = useState(false);
+  const navi=useNavigate();
   const handleDonateNowClick = () => {
     setShowPopup(true);
   };
@@ -143,7 +146,9 @@ export const Donate = () => {
               <DonateActivities />
 
               <button
-                onClick={handleDonateActivityClick}
+                onClick={()=>{
+                  navi("/Ecoconnect");
+                }}
                 className="ml-[100px] lg:ml-[400px] mt-10 mb-10  px-4 bg-green-700 text-white lg:px-6 lg:py-3 rounded hover:bg-green-800"
               >
                 Explore More

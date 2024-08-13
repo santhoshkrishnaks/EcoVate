@@ -72,13 +72,7 @@ export const pdfgen = async (scores, recommendations) => {
     16,
     rgb(1, 1, 1)
   );
-  page.drawRectangle({
-    x: 45,
-    y: currentY - 5,
-    width: 300,
-    height: 25,
-    color: colorBg,
-  });
+  
 
   const pdfBytes = await pdfDoc.save();
   const blob = new Blob([pdfBytes], { type: "application/pdf" });
