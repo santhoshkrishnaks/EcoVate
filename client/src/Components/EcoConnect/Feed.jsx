@@ -38,7 +38,7 @@ const Feed = () => {
         
         const fetchData = async () => {
           try {
-            const response = await axios.get("http://localhost:3000/gposts");
+            const response = await axios.get("http://localhost:5000/gposts");
             setPosts(response.data);
             console.log("--------------------", response.data);
           } catch (error) {

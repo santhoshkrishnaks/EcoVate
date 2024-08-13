@@ -10,7 +10,11 @@ import newsSchema from "../model/model.news.js";
 import userSchema from "../model/model.user.js";
 import volunteerSchema from "../model/model.volunteer.js";
 import likesSchema from "../model/model.likes.js";
+
+
 dotenv.config();
+
+
 export const connectdb = () => {
   if (!process.env.MONGO_URI) {
     console.error("Mongodb uri is not defined");
@@ -23,6 +27,9 @@ export const connectdb = () => {
     })
     .catch((err) => console.log(err.message));
 };
+
+
+
 export const User = mongoose.model("User", userSchema);
 export const EcoConnect = mongoose.model("EcoConnect", ecoconnectSchema);
 export const EcoFund = mongoose.model("EcoFund", ecofundSchema);
