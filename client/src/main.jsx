@@ -5,6 +5,7 @@ import "./index.css";
 import { ClerkProvider } from "@clerk/clerk-react";
 import NewsPage from "./Components/Admin/NewsPage";
 import VolunteerSubmissions from "./Components/Admin/VolunteerSubmissions";
+import FundPage from "./Components/Admin/FundData";
 // import Home from "./Components/Home";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -15,6 +16,8 @@ if (!PUBLISHABLE_KEY) {
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <VolunteerSubmissions/>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <App />
+    </ClerkProvider>
   </React.StrictMode>
 );
