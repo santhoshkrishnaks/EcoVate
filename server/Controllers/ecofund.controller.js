@@ -1,4 +1,4 @@
-import { EcoFund } from "../config/database.js";
+import { EcoConnect, EcoFund } from "../config/database.js";
 
 export const createPayment = async(req,res) => {
     try {
@@ -28,9 +28,36 @@ export const getPayment = async(req,res) => {
 
 export const getAllFund = async (req, res) => {
   try {
-    const fund = await EcoFund.find({});
+    const fund = await EcoFund.find({})
+      .populate({
+        path: "post_id",
+        select: "title",
+        model: EcoConnect,
+      })
+      .exec();
     res.status(200).json(fund);
   } catch (error) {
     res.status(400).json({ error: error.message });
+  }
+};
+
+export const getTotalPayments = async (req, res) => {
+  try {
+    console.log("Starting aggregation...");
+    const result = await EcoFund.aggregate([
+      { $group: { _id: "$username", totalAmount: { $sum: "$amount" } } },
+    ]);
+
+    console.log("Aggregation result:", result);
+
+    if (result.length > 0) {
+      const totalAmount = result[0].totalAmount;
+      res.status(200).json({ totalAmount });
+    } else {
+      res.status(200).json({ totalAmount: 0 });
+    }
+  } catch (error) {
+    console.error("Error in getTotalPayments:", error.message);
+    res.status(500).json({ error: error.message });
   }
 };
