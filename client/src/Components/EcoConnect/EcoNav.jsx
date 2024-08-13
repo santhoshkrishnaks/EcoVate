@@ -119,10 +119,10 @@ const EcoNav = ({
             EcoFund
           </Link>
           <Link
-            to="/Ecocorp"
+            to="/Ecovision"
             className="text-lg font-semibold leading-6 text-gray-900"
           >
-            EcoCorp
+            EcoVision
           </Link>
           <div className="relative">
             <button
@@ -151,8 +151,8 @@ const EcoNav = ({
                 <div className="p-4">
                   {[
                     {
-                      name: "EcoVision",
-                      path: "/Ecovision",
+                      name: "EcoCorp",
+                      path: "/Ecocorp",
                     },
                     {
                       name: "EcoCalc",
