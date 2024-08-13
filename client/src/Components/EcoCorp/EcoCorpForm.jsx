@@ -34,7 +34,7 @@ const Form = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/ecocorp", formData);
+      await axios.post("https://ecovate-nqq4.onrender.com/ecocorp", formData);
       console.log("Form data submitted successfully.");
       // Optionally reset form after submission
       setFormData({

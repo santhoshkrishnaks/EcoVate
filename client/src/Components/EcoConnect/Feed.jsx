@@ -16,15 +16,16 @@ const Feed = () => {
   const { load, setLoad } = useContext(Create);
   const [posts, setPosts] = useState([]);
   const [username,setUsername] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [userimage,setUserimage] =useState();
   const { user } = useUser();
   useEffect(() => {
     setNewPost((prevPost) => ({
-        ...prevPost,
-        username: username,
-        image_url: userimage,
+      ...prevPost,
+      username: username,
+      image_url: userimage,
     }));
-}, [username, userimage]);
+  }, [username, userimage]);
   useEffect(() => {
       const log = async () => {
           if (user) {
@@ -38,13 +39,13 @@ const Feed = () => {
         
         const fetchData = async () => {
           try {
-            const response = await axios.get("http://localhost:5000/gposts");
+            setIsLoading(true)
+            const response = await axios.get("https://ecovate-nqq4.onrender.com/gposts");
             setPosts(response.data);
-            console.log("--------------------", response.data);
           } catch (error) {
             console.error("Error in fetch posts", error);
           } finally {
-            setLoad(false);
+            setIsLoading(false);
           }
         };
         
@@ -52,12 +53,11 @@ const Feed = () => {
           setLoad(true);
           setTimeout(() => {
             setLoad(false);
-          }, 500);
+          }, 300);
           fetchData();
         },[]);
         
         const [isModalVisible, setIsModalVisible] = useState(false);
-        const [isLoading, setIsLoading] = useState(false);
         console.log(username);
         console.log(userimage);
         const [newPost, setNewPost] = useState({
@@ -113,7 +113,7 @@ const Feed = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/posts", newPost);
+      await axios.post("https://ecovate-nqq4.onrender.com/posts", newPost);
       alert("New initiative submitted!");
       setIsModalVisible(false);
     } catch (error) {
@@ -139,7 +139,7 @@ const Feed = () => {
       {load ? (
         <Loader />
       ) : (
-        <div className="flex flex-col min-h-screen bg-green-100">
+        <div className="flex flex-col min-h-screen bg-green-50">
           <EcoNav
             searchTerm={searchTerm}
             onSearchChange={handleSearch}
@@ -206,7 +206,12 @@ const Feed = () => {
             <div className="flex-1 p-4">
               <div className="flex flex-col mb-6">
                 <div className="flex flex-row justify-between items-center mb-4">
-                  <h1 className="text-4xl font-bold mb-6 cursor-pointer">
+                  <h1 className="text-4xl font-bold mb-6 cursor-pointer"onClick={()=>{
+                    setIsLoading(true)
+                    setTimeout(() => {
+                    setSearchTerm('');
+                    setIsLoading(false);
+                  }, 800);}}>
                     <a>
                       <span className="text-green-700">Eco</span>Connect
                     </a>

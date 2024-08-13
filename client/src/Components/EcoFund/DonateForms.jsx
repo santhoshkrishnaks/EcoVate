@@ -6,7 +6,9 @@ import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
 
 
-const DonateForms = () => {
+const DonateForms = (postid) => {
+  console.log(postid.postid==="");
+  console.log(postid.postid);
   const { user } = useUser();
   const [step, setStep] = useState(1);
   const [paymentType, setPaymentType] = useState('one-time');
@@ -194,13 +196,22 @@ const DonateForms = () => {
          
          const getPaymentDataForPost = () => {
            const amount = selectedAmount || customAmount;
-           return {
+           
+           const paymentdata= {
              username: user.username,
              paymentType,
              amount,
              payment_method: paymentOption,
              transactionId:id,
+             
            };
+
+           if(postid.postid!="")
+           {
+            paymentdata.post_id=postid.postid;
+           }
+           return paymentdata;
+          
          };
 
         setTimeout(async() => {
@@ -209,14 +220,14 @@ const DonateForms = () => {
             const data=getPaymentDataForPost();
         console.log(data);
         try{
-          const response=await axios.post("http://localhost:5000/ecofund",{...data});
+          const response=await axios.post("https://ecovate-nqq4.onrender.com/ecofund",{...data});
           console.log("Posted successfully",response);
         }
         catch(error){
           console.error('Error posting data:', error);
         }
 
-        }, 1000); // Delay step transition by 1000ms (1 second)
+        }, 1000);
       }
     }
   };

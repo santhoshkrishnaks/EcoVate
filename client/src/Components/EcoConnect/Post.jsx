@@ -14,7 +14,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
   const fetchComment = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/gcomment/${post._id}`
+        `https://ecovate-nqq4.onrender.com/gcomment/${post._id}`
       );
       setComments(response.data);
     } catch (error) {
@@ -28,7 +28,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
 
   const fetchLike = async () => {
     try {
-      const responseLike = await axios.get('http://localhost:3000/glike', {
+      const responseLike = await axios.get('https://ecovate-nqq4.onrender.com/glike', {
         params: {
           post_id: post._id,
           username: currentUser
@@ -50,8 +50,8 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
       username: currentUser
     };
     try {
-      await axios.put("http://localhost:3000/ulike", body);
-      const response=await axios.put(`http://localhost:3000/ulikes/${post._id}`);
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
+      const response=await axios.put(`https://ecovate-nqq4.onrender.com/ulikes/${post._id}`);
       setlikes(response.data.likes);
       fetchLike();
     } catch (error) {
@@ -65,8 +65,8 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
       username: currentUser
     };
     try {
-      await axios.put("http://localhost:3000/ulike", body);
-      const response=await axios.put(`http://localhost:3000/dlikes/${post._id}`);
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
+      const response=await axios.put(`https://ecovate-nqq4.onrender.com/dlikes/${post._id}`);
       setlikes(response.data.likes);
       fetchLike();
     } catch (error) {
@@ -76,7 +76,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(`http://localhost:3000/dposts/${post._id}`);
+      await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`);
       alert("Post deleted!");
       fetchData();
     } catch (error) {
@@ -92,7 +92,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
         content: commentText,
       };
       try {
-        await axios.post("http://localhost:3000/comment", newComment);
+        await axios.post("https://ecovate-nqq4.onrender.com/comment", newComment);
         setCommentText("");
         setShowCommentBox(false);
         fetchComment();
@@ -106,7 +106,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
 
   const handleDeleteComment = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/dcomment/${id}`);
+      await axios.delete(`https://ecovate-nqq4.onrender.com/dcomment/${id}`);
       fetchComment();
     } catch (error) {
       console.error(error);
