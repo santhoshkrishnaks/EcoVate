@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'; 
 import { useUser } from '@clerk/clerk-react';
+import axios from 'axios';
 
 
 const DonateForms = () => {
@@ -39,19 +40,9 @@ const DonateForms = () => {
   const amountsOneTime = [1000, 5000, 1500, 2000];
   const amountsMonthly = [25, 50, 100, 250, 500];
     
-    const getPaymentDataForPost = () => {
-      
-      const amount = selectedAmount || customAmount;
-      return {
-        username:user.username,
-        paymentType,
-        amount,
-        payment_method:paymentOption,
-        transactionId,
-      };
-    };
+    
 
-  const generateTransactionId = () => {
+  const generateTransactionId =async () => {
     const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
 
@@ -66,9 +57,16 @@ const DonateForms = () => {
     for (let i = 0; i < 10; i++) {
       transactionId += numbers.charAt(Math.floor(Math.random() * numbers.length));
     }
+    console.log(transactionId);
+    
+    
+
+ 
 
     return transactionId;
   };
+  
+ 
 
   const handlePaymentTypeChange = (type) => {
     setPaymentType(type);
@@ -180,7 +178,7 @@ const DonateForms = () => {
     return valid;
   };
 
-  const handleNextStep = () => {
+  const handleNextStep =async () => {
     if (step === 1) {
       if (!selectedAmount && !customAmount) {
         setErrors((prevErrors) => ({ ...prevErrors, amount: 'Please select or enter an amount' }));
@@ -190,10 +188,34 @@ const DonateForms = () => {
       setStep(2);
     } else if (step === 2) {
       if (validateStep2()) {
-        setTransactionId(generateTransactionId());
-        
-        setTimeout(() => {
+        const id=await generateTransactionId();
+        setTransactionId(id);
+        console.log(id);
+         
+         const getPaymentDataForPost = () => {
+           const amount = selectedAmount || customAmount;
+           return {
+             username: user.username,
+             paymentType,
+             amount,
+             payment_method: paymentOption,
+             transactionId:id,
+           };
+         };
+
+        setTimeout(async() => {
           setStep(3);
+          //post
+            const data=getPaymentDataForPost();
+        console.log(data);
+        try{
+          const response=await axios.post("http://localhost:5000/ecofund",{...data});
+          console.log("Posted successfully",response);
+        }
+        catch(error){
+          console.error('Error posting data:', error);
+        }
+
         }, 1000); // Delay step transition by 1000ms (1 second)
       }
     }
