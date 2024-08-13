@@ -23,7 +23,7 @@ const ecoconnectSchema = mongoose.Schema(
       required: true,
     },
     tags: {
-      type: String,
+      type: [String],
       required: true,
     },
     location: {
@@ -46,7 +46,7 @@ const ecoconnectSchema = mongoose.Schema(
       type: Number,
       default: 0,
       required: false,
-    },
+    }
   },
   {
     timestamps: true,

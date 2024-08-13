@@ -12,10 +12,6 @@ const commentSchema=new mongoose.Schema({
     content:{
          type:String,
          required:false,
-    },
-     number:{
-        type:Number,
-         required:false,
     }
 },{
     timestamps:true,

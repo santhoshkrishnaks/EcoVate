@@ -1,40 +1,36 @@
-import React, { useState } from "react";
+// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { UploadButton } from "@bytescale/upload-widget-react";
 
 const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
+  
   const [imagePreview, setImagePreview] = useState("");
+  const [upload, setUpload] = useState(false);
   const [showLightbox, setShowLightbox] = useState(false);
+  useEffect(() => {
+    formData.image = imagePreview;
+    console.log(imagePreview);
+  }, [imagePreview]);
 
   if (!isVisible) return null;
 
-  // Handle image file change
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-        onChange({ target: { name: "image", value: reader.result } });
-        console.log(reader.result);
-      };
-      reader.readAsDataURL(file);
-      console.log(reader.readAsDataURL(file));
-    }
-  };
+  const options = {
+    apiKey: "public_W142ijZ3bsGoZhEyoow2HLDdFryK",
+    maxFileCount: 1,
+  };;
 
   const handleTagsChange = (e) => {
     const { value } = e.target;
-    const tagsArray =value
+    const tagsArray = value
       .split(",")
       .map((tag) => tag.trim())
       .filter((tag) => tag); // Trim and filter out empty values
     onChange({ target: { name: "tags", value: tagsArray } });
   };
-  // Handle opening the lightbox
   const handleOpenLightbox = () => {
     setShowLightbox(true);
   };
 
-  // Handle closing the lightbox
   const handleCloseLightbox = () => {
     setShowLightbox(false);
   };
@@ -83,14 +79,21 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               className="p-2 border rounded-lg"
               required
             />
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="p-2 border rounded-lg"
-              required
-            />
+            <div className="p-2 border rounded-lg">
+            <UploadButton
+              options={options}
+              onComplete={(files) =>{
+                setImagePreview(files.map((x) => x.fileUrl).join("\n"))
+                setUpload(!upload);
+              }
+              }
+            >
+              {({ onClick }) => (
+                <div>{upload?<span className="text-gray-400">{"Uploaded"}</span>:<div><span className="text-gray-400">{"Upload    "}</span><button onClick={onClick}>Choose File</button></div>}</div>
+                
+              )}
+            </UploadButton>
+            </div>
             {imagePreview && (
               <div className="my-4">
                 <img
@@ -183,7 +186,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
               src={imagePreview}
               alt="Preview"
               className="max-w-full max-h-full object-contain cursor-pointer"
-              onClick={(e) => e.stopPropagation()} // Prevent lightbox from closing when clicking on the image
+              onClick={(e) => e.stopPropagation()}
             />
           </div>
         )}

@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Header_Footer/Footer";
 import Nav from "../Header_Footer/Nav";
-import { useEffect ,useContext} from "react";
+import { useEffect, useContext } from "react";
 import Create from "../Context";
 import Loader from "../Loader/Loader.jsx";
+import { useUser } from "@clerk/clerk-react";
+import axios from "axios";
+
 // EnergyForm Component
 const EnergyForm = ({ formData, handleChange }) => {
   useEffect(() => {
@@ -18,7 +21,9 @@ const EnergyForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Energy Consumption</h2>
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Energy Consumption
+      </h2>
       <div>
         <label className="block text-gray-600">
           Monthly Electricity Consumption (kWh)
@@ -82,73 +87,75 @@ const EnergyForm = ({ formData, handleChange }) => {
 };
 
 // TransportationForm Component
-const TransportationForm = ({ formData, handleChange }) =>{
+const TransportationForm = ({ formData, handleChange }) => {
   document.addEventListener("wheel", function (event) {
     if (document.activeElement.type === "number") {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className=" md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">Transportation</h2>
-    <div>
-      <label className="block text-gray-600">Vehicle Type and Model</label>
-      <input
-        type="text"
-        name="vehicleType"
-        value={formData.vehicleType || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Fuel Type</label>
-      <select
-        name="fuelType"
-        value={formData.fuelType || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      >
-        <option value="Gasoline">Gasoline</option>
-        <option value="Diesel">Diesel</option>
-        <option value="Electric">Electric</option>
-      </select>
-    </div>
-    <div>
-      <label className="block text-gray-600">Annual Mileage</label>
-      <input
-        type="number"
-        name="annualMileage"
-        value={formData.annualMileage || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Public Transport Usage (Monthly)
-      </label>
-      <input
-        type="text"
-        name="publicTransport"
-        value={formData.publicTransport || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Air Travel Details</label>
-      <input
-        type="text"
-        name="airTravel"
-        value={formData.airTravel || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className=" md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">
+        Transportation
+      </h2>
+      <div>
+        <label className="block text-gray-600">Vehicle Type and Model</label>
+        <input
+          type="text"
+          name="vehicleType"
+          value={formData.vehicleType || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Fuel Type</label>
+        <select
+          name="fuelType"
+          value={formData.fuelType || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        >
+          <option value="Gasoline">Gasoline</option>
+          <option value="Diesel">Diesel</option>
+          <option value="Electric">Electric</option>
+        </select>
+      </div>
+      <div>
+        <label className="block text-gray-600">Annual Mileage</label>
+        <input
+          type="number"
+          name="annualMileage"
+          value={formData.annualMileage || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Public Transport Usage (Monthly)
+        </label>
+        <input
+          type="text"
+          name="publicTransport"
+          value={formData.publicTransport || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Air Travel Details</label>
+        <input
+          type="text"
+          name="airTravel"
+          value={formData.airTravel || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // HousingForm Component
 const HousingForm = ({ formData, handleChange }) => {
@@ -157,46 +164,48 @@ const HousingForm = ({ formData, handleChange }) => {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Housing</h2>
-    <div>
-      <label className="block text-gray-600">
-        Size of Residence (Square Feet)
-      </label>
-      <input
-        type="number"
-        name="residenceSize"
-        value={formData.residenceSize || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Type of Housing</label>
-      <input
-        type="text"
-        name="housingType"
-        value={formData.housingType || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Insulation and Energy Efficiency
-      </label>
-      <input
-        type="text"
-        name="insulation"
-        value={formData.insulation || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Housing
+      </h2>
+      <div>
+        <label className="block text-gray-600">
+          Size of Residence (Square Feet)
+        </label>
+        <input
+          type="number"
+          name="residenceSize"
+          value={formData.residenceSize || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Type of Housing</label>
+        <input
+          type="text"
+          name="housingType"
+          value={formData.housingType || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Insulation and Energy Efficiency
+        </label>
+        <input
+          type="text"
+          name="insulation"
+          value={formData.insulation || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // DietForm Component
 const DietForm = ({ formData, handleChange }) => {
@@ -205,130 +214,136 @@ const DietForm = ({ formData, handleChange }) => {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">Diet and Food Consumption</h2>
-    <div>
-      <label className="block text-gray-600">Dietary Preferences</label>
-      <input
-        type="text"
-        name="dietaryPreferences"
-        value={formData.dietaryPreferences || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Frequency of Meat and Dairy Consumption
-      </label>
-      <input
-        type="text"
-        name="meatDairyConsumption"
-        value={formData.meatDairyConsumption || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Food Waste per Week/Month</label>
-      <input
-        type="number"
-        name="foodWaste"
-        value={formData.foodWaste || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">
+        Diet and Food Consumption
+      </h2>
+      <div>
+        <label className="block text-gray-600">Dietary Preferences</label>
+        <input
+          type="text"
+          name="dietaryPreferences"
+          value={formData.dietaryPreferences || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Frequency of Meat and Dairy Consumption
+        </label>
+        <input
+          type="text"
+          name="meatDairyConsumption"
+          value={formData.meatDairyConsumption || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Food Waste per Week/Month</label>
+        <input
+          type="number"
+          name="foodWaste"
+          value={formData.foodWaste || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // WasteForm Component
-const WasteForm = ({ formData, handleChange }) =>{ 
+const WasteForm = ({ formData, handleChange }) => {
   document.addEventListener("wheel", function (event) {
     if (document.activeElement.type === "number") {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Waste Production</h2>
-    <div>
-      <label className="block text-gray-600">
-        Amount of Household Waste Generated
-      </label>
-      <input
-        type="number"
-        name="householdWaste"
-        value={formData.householdWaste || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Recycling and Composting Practices
-      </label>
-      <input
-        type="text"
-        name="recyclingPractices"
-        value={formData.recyclingPractices || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Type of Waste</label>
-      <input
-        type="text"
-        name="wasteType"
-        value={formData.wasteType || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Waste Production
+      </h2>
+      <div>
+        <label className="block text-gray-600">
+          Amount of Household Waste Generated
+        </label>
+        <input
+          type="number"
+          name="householdWaste"
+          value={formData.householdWaste || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Recycling and Composting Practices
+        </label>
+        <input
+          type="text"
+          name="recyclingPractices"
+          value={formData.recyclingPractices || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Type of Waste</label>
+        <input
+          type="text"
+          name="wasteType"
+          value={formData.wasteType || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // WaterForm Component
-const WaterForm = ({ formData, handleChange }) =>{
+const WaterForm = ({ formData, handleChange }) => {
   document.addEventListener("wheel", function (event) {
     if (document.activeElement.type === "number") {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Water Usage</h2>
-    <div>
-      <label className="block text-gray-600">
-        Monthly Water Usage (Gallons/Liters)
-      </label>
-      <input
-        type="number"
-        name="waterUsage"
-        value={formData.waterUsage || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Water Conservation Practices
-      </label>
-      <input
-        type="text"
-        name="waterConservation"
-        value={formData.waterConservation || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Water Usage
+      </h2>
+      <div>
+        <label className="block text-gray-600">
+          Monthly Water Usage (Gallons/Liters)
+        </label>
+        <input
+          type="number"
+          name="waterUsage"
+          value={formData.waterUsage || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Water Conservation Practices
+        </label>
+        <input
+          type="text"
+          name="waterConservation"
+          value={formData.waterConservation || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // GoodsForm Component
 const GoodsForm = ({ formData, handleChange }) => {
@@ -337,44 +352,46 @@ const GoodsForm = ({ formData, handleChange }) => {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Goods and Services</h2>
-    <div>
-      <label className="block text-gray-600">Annual Spending on Goods</label>
-      <input
-        type="number"
-        name="goodsSpending"
-        value={formData.goodsSpending || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Type of Goods Purchased</label>
-      <input
-        type="text"
-        name="goodsType"
-        value={formData.goodsType || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">
-        Frequency of Purchasing New Goods
-      </label>
-      <input
-        type="text"
-        name="goodsFrequency"
-        value={formData.goodsFrequency || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Goods and Services
+      </h2>
+      <div>
+        <label className="block text-gray-600">Annual Spending on Goods</label>
+        <input
+          type="number"
+          name="goodsSpending"
+          value={formData.goodsSpending || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Type of Goods Purchased</label>
+        <input
+          type="text"
+          name="goodsType"
+          value={formData.goodsType || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">
+          Frequency of Purchasing New Goods
+        </label>
+        <input
+          type="text"
+          name="goodsFrequency"
+          value={formData.goodsFrequency || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // LifestyleForm Component
 const LifestyleForm = ({ formData, handleChange }) => {
@@ -383,32 +400,34 @@ const LifestyleForm = ({ formData, handleChange }) => {
       document.activeElement.blur();
     }
   });
-  return(
-  <form className="space-y-4">
-    <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Lifestyle Choices</h2>
-    <div>
-      <label className="block text-gray-600">Frequency of Travel</label>
-      <input
-        type="text"
-        name="travelFrequency"
-        value={formData.travelFrequency || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-    <div>
-      <label className="block text-gray-600">Lifestyle Habits</label>
-      <input
-        type="text"
-        name="lifestyleHabits"
-        value={formData.lifestyleHabits || ""}
-        onChange={handleChange}
-        className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
-      />
-    </div>
-  </form>
-);
-}
+  return (
+    <form className="space-y-4">
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Lifestyle Choices
+      </h2>
+      <div>
+        <label className="block text-gray-600">Frequency of Travel</label>
+        <input
+          type="text"
+          name="travelFrequency"
+          value={formData.travelFrequency || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+      <div>
+        <label className="block text-gray-600">Lifestyle Habits</label>
+        <input
+          type="text"
+          name="lifestyleHabits"
+          value={formData.lifestyleHabits || ""}
+          onChange={handleChange}
+          className="w-[80%] mt-1 p-2 border border-gray-300 rounded"
+        />
+      </div>
+    </form>
+  );
+};
 
 // OffsetsForm Component
 const OffsetsForm = ({ formData, handleChange }) => {
@@ -419,7 +438,9 @@ const OffsetsForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">Carbon Offsets</h2>
+      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+        Carbon Offsets
+      </h2>
       <div>
         <label className="block text-gray-600">Amount Spent on Offsets</label>
         <input
@@ -448,8 +469,6 @@ const OffsetsForm = ({ formData, handleChange }) => {
 };
 
 const calculateCarbonFootprint = (formData) => {
-  // Implement your calculation logic here
-  // Example calculation logic:
   const energyScore = formData.electricityConsumption * 0.5; // Simplified example
   const transportationScore = formData.annualMileage * 0.1; // Simplified example
   const housingScore = formData.residenceSize * 0.3; // Simplified example
@@ -506,6 +525,9 @@ const Ecocalc = () => {
     offsetsSpent: "",
     offsetsType: "",
   });
+
+  const { user } = useUser(); // Importing user from Clerk
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -514,230 +536,265 @@ const Ecocalc = () => {
       [e.target.name]: e.target.value,
     });
   };
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Calculate scores based on formData
     const scores = calculateCarbonFootprint(formData);
+    const totalFootprint = Object.values(scores).reduce((acc, score) => acc + score, 0);
 
+    const userData = {
+      username: user.username,
+      email: user.email,
+      // You can add more fields as needed, but ensure they are serializable
+    };
+    try {
+      await axios.post("http://localhost:3000/ecocalc", {
+        username: user.username,
+        footprint: totalFootprint,
+      });
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
     // Navigate to results page and pass both formData and scores via state
     navigate("/result", {
       state: {
         scores,
-        user: { name: "John Doe", email: "john.doe@example.com" }, // You can update this with actual user data
-        formData, // Pass the form data to the results page
+        user: userData,
+        formData,
       },
     });
   };
-  const {load,setLoad}=useContext(Create);
+  const { load, setLoad } = useContext(Create);
   useEffect(() => {
     setLoad(true);
     setTimeout(() => {
       setLoad(false);
     }, 500);
-  }, [])
+  }, []);
   return (
     <div>
-{
-  load?(<Loader/>):(
-    <div>
-      <Nav />
-      <div className="bg-green-50 min-h-screen w-screen p-6 ecocal">
+      {load ? (
+        <Loader />
+      ) : (
         <div>
-          <h1 className="text-5xl font-bold text-center items-center text-neutral-700">
-            <span className="text-5xl text-green-700 font-bold">Eco</span>
-            Calc
-          </h1>
-          <h2 className="lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9">
-            Greening Corporate Practices
-          </h2>
-        </div>
-        <div className="container w-[60vw] bg-white shadow-md rounded-lg p-8 rounded-[24px] my-[20px]">
-          <div className="inline-block text-left">
+          <Nav />
+          <div className="bg-green-50 min-h-screen w-screen p-6 ecocal">
             <div>
-              <button
-                type="button"
-                className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-green-600 text-white rounded px-3 py-2 text-sm font-semibold"
-                id="menu-button"
-                aria-expanded={isOpen}
-                aria-haspopup="true"
-                onClick={toggleMenu}
-              >
-                Select
-                <svg
-                  className="-mr-1 h-5 w-5 black"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                    clipRule="evenodd"
+              <h1 className="text-5xl font-bold text-center items-center text-neutral-700">
+                <span className="text-5xl text-green-700 font-bold">Eco</span>
+                Calc
+              </h1>
+              <h2 className="lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9">
+                Greening Corporate Practices
+              </h2>
+            </div>
+            <div className="container w-[60vw] bg-white shadow-md rounded-lg p-8 rounded-[24px] my-[20px]">
+              <div className="inline-block text-left">
+                <div>
+                  <button
+                    type="button"
+                    className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-green-600 text-white rounded px-3 py-2 text-sm font-semibold"
+                    id="menu-button"
+                    aria-expanded={isOpen}
+                    aria-haspopup="true"
+                    onClick={toggleMenu}
+                  >
+                    Select
+                    <svg
+                      className="-mr-1 h-5 w-5 black"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </button>
+                </div>
+
+                {isOpen && (
+                  <div
+                    className="absolute z-10 mt-2 w-96 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 "
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabIndex="-1"
+                  >
+                    <div className="py-1 " role="none">
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50 "
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-0"
+                        onClick={() => {
+                          setActiveTab("energy");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Energy
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-1"
+                        onClick={() => {
+                          setActiveTab("transportation");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Transportation
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50 "
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-2"
+                        onClick={() => {
+                          setActiveTab("housing");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Housing
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-2"
+                        onClick={() => {
+                          setActiveTab("diet");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Diet
+                      </span>
+                      <span
+                        className="cursor-pointer block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        id="menu-item-2"
+                        onClick={() => {
+                          setActiveTab("waste");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Waste
+                      </span>
+                      <span
+                        className="block px-4 py-2  text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={() => {
+                          setActiveTab("water");
+                          setIsOpen(false);
+                        }}
+                        id="menu-item-2"
+                      >
+                        Water
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={() => {
+                          setActiveTab("goods");
+                          setIsOpen(false);
+                        }}
+                        id="menu-item-2"
+                      >
+                        Goods
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={() => {
+                          setActiveTab("lifestyle");
+                          setIsOpen(false);
+                        }}
+                        id="menu-item-2"
+                      >
+                        LifeStyle
+                      </span>
+                      <span
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        role="menuitem"
+                        tabIndex="-1"
+                        onClick={() => {
+                          setActiveTab("offsets");
+                          setIsOpen(false);
+                        }}
+                        id="menu-item-2"
+                      >
+                        Offsets
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="mb-6">
+                {activeTab === "energy" && (
+                  <EnergyForm formData={formData} handleChange={handleChange} />
+                )}
+                {activeTab === "transportation" && (
+                  <TransportationForm
+                    formData={formData}
+                    handleChange={handleChange}
                   />
-                </svg>
+                )}
+                {activeTab === "housing" && (
+                  <HousingForm
+                    formData={formData}
+                    handleChange={handleChange}
+                  />
+                )}
+                {activeTab === "diet" && (
+                  <DietForm formData={formData} handleChange={handleChange} />
+                )}
+                {activeTab === "waste" && (
+                  <WasteForm formData={formData} handleChange={handleChange} />
+                )}
+                {activeTab === "water" && (
+                  <WaterForm formData={formData} handleChange={handleChange} />
+                )}
+                {activeTab === "goods" && (
+                  <GoodsForm formData={formData} handleChange={handleChange} />
+                )}
+                {activeTab === "lifestyle" && (
+                  <LifestyleForm
+                    formData={formData}
+                    handleChange={handleChange}
+                  />
+                )}
+                {activeTab === "offsets" && (
+                  <OffsetsForm
+                    formData={formData}
+                    handleChange={handleChange}
+                  />
+                )}
+              </div>
+
+              <button
+                onClick={handleSubmit}
+                className="py-2 px-4 bg-green-600 text-white rounded"
+              >
+                Submit
               </button>
             </div>
-
-            {isOpen && (
-              <div
-                className="absolute z-10 mt-2 w-96 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 "
-                role="menu"
-                aria-orientation="vertical"
-                aria-labelledby="menu-button"
-                tabIndex="-1"
-              >
-                <div className="py-1 " role="none">
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50 "
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-0"
-                    onClick={()=>{setActiveTab('energy')
-                      setIsOpen(false);
-                    }}
-                  >
-                    Energy
-                  </span>
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-1"
-                    onClick={()=>{setActiveTab('transportation')
-                      setIsOpen(false);
-                    }}
-                  >
-                    Transportation
-                  </span>
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50 "
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-2"
-                    onClick={()=>{setActiveTab('housing')
-                      setIsOpen(false);
-                    }}
-                  >
-                    Housing
-                  </span>
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-2"
-                    onClick={()=>{setActiveTab('diet')
-                      setIsOpen(false);
-                    }}
-                  >
-                    Diet
-                  </span>
-                  <span
-                    className="cursor-pointer block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-2"
-                    onClick={()=>{setActiveTab('waste')
-                      setIsOpen(false);
-                    }}
-                  >
-                    Waste
-                  </span>
-                  <span
-                    className="block px-4 py-2  text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    onClick={()=>{setActiveTab('water')
-                      setIsOpen(false);
-                    }}
-                    id="menu-item-2"
-                  >
-                    Water
-                  </span>
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    onClick={()=>{setActiveTab('goods')
-                      setIsOpen(false);
-                    }}
-                    id="menu-item-2"
-                  >
-                    Goods
-                  </span>
-                  <span
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    onClick={()=>{setActiveTab('lifestyle')
-                      setIsOpen(false);
-                    }}
-                    id="menu-item-2"
-                  >
-                    LifeStyle
-                  </span>
-                  <span                   
-                    className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
-                    role="menuitem"
-                    tabIndex="-1"
-                    onClick={()=>{setActiveTab('offsets')
-                      setIsOpen(false);
-                    }}
-                    id="menu-item-2"
-                  >
-                    Offsets
-                  </span>
-                </div>
-              </div>
-            )}
           </div>
-
-          <div className="mb-6">
-            {activeTab === "energy" && (
-              <EnergyForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "transportation" && (
-              <TransportationForm
-                formData={formData}
-                handleChange={handleChange}
-              />
-            )}
-            {activeTab === "housing" && (
-              <HousingForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "diet" && (
-              <DietForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "waste" && (
-              <WasteForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "water" && (
-              <WaterForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "goods" && (
-              <GoodsForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "lifestyle" && (
-              <LifestyleForm formData={formData} handleChange={handleChange} />
-            )}
-            {activeTab === "offsets" && (
-              <OffsetsForm formData={formData} handleChange={handleChange} />
-            )}
-          </div>
-
-          <button
-            onClick={handleSubmit}
-            className="py-2 px-4 bg-green-600 text-white rounded"
-          >
-            Submit
-          </button>
+          <Footer />
         </div>
-      </div>
-      <Footer />
-    </div>)}
+      )}
     </div>
   );
 };

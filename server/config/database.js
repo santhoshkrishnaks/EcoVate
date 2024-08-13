@@ -9,6 +9,7 @@ import ecovisionSchema from "../model/model.ecovision.js";
 import newsSchema from "../model/model.news.js";
 import userSchema from "../model/model.user.js";
 import volunteerSchema from "../model/model.volunteer.js";
+import likesSchema from "../model/model.likes.js";
 dotenv.config();
 export const connectdb = () => {
   if (!process.env.MONGO_URI) {
@@ -31,3 +32,4 @@ export const EcoCalc = mongoose.model("EcoCalc", ecocalcSchema);
 export const EcoVision = mongoose.model("EcoVision", ecovisionSchema);
 export const Comment = mongoose.model("Comment", commentSchema);
 export const News = mongoose.model("News", newsSchema);
+export const likes= mongoose.model("Likes",likesSchema); 
