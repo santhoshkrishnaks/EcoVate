@@ -8,7 +8,7 @@ const VolunteerSubmissions = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get('http://localhost:5000/volunteer')
+    axios.get('http://localhost:3000/volunteer')
       .then(response => {
         setSubmissions(response.data);
         setLoading(false);
@@ -20,7 +20,7 @@ const VolunteerSubmissions = () => {
   }, []);
 
   const handleAccept = (id, email) => {
-    axios.post('http://localhost:5000/volunteer/decision', {
+    axios.post('http://localhost:3000/volunteer/decision', {
       id,
       action: 'accept'
     })
@@ -35,7 +35,7 @@ const VolunteerSubmissions = () => {
   };
 
   const handleReject = (id, email) => {
-    axios.post('http://localhost:5000/volunteer/decision', {
+    axios.post('http://localhost:3000/volunteer/decision', {
       id,
       action: 'reject'
     })
@@ -64,7 +64,10 @@ const VolunteerSubmissions = () => {
               <p className="text-gray-600 mb-1"><strong>Phone:</strong> {submission.phone}</p>
               <p className="text-gray-600 mb-1"><strong>Address:</strong> {submission.address}</p>
               <p className="text-gray-600 mb-1"><strong>Age:</strong> {submission.age}</p>
-              <p className="text-gray-600 mb-1"><strong>Preferred Activities:</strong> {submission.preferred_activities.join(', ')}</p>
+              <p className="text-gray-600 mb-1">
+                <strong>Preferred Activities:</strong> 
+                {(submission.preferred_activities || []).join(', ')}
+              </p>
               <p className="text-gray-600 mb-1"><strong>Availability:</strong> {submission.availability}</p>
               <p className="text-gray-600 mb-4"><strong>Motivation:</strong> {submission.motivation}</p>
             </div>

@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: "info.ecovate@gmail.com",
-        pass: "njqm czvf lkbs wlne"
+        pass: "njqm czvf lkbs wlne" // Consider using environment variables for sensitive information
     }
 });
 
@@ -28,6 +28,29 @@ const postvolunteer = async (req, res) => {
     try {
         const volunt = new Volunteer(req.body);
         await volunt.save();
+
+        // Send confirmation email
+        const subject = 'Thank You for Applying to EcoVate';
+        const text = `
+Dear ${volunt.username},
+
+Thank you for applying to join EcoVate as a volunteer. We have received your application and will review it shortly.
+
+If your application is successful, you will receive further details on how to get started. In the meantime, if you have any questions, feel free to reach out to us at info.ecovate@gmail.com.
+
+Thank you for your interest in contributing to our sustainability initiatives.
+
+Best regards,
+
+Vimal C
+Founder, CEO
+EcoVate Team
+info.ecovate@gmail.com
+EcoVate Global Website
+        `;
+
+        await sendEmail(volunt.email_address, subject, text);
+
         res.status(200).json(volunt);
     } catch (error) {
         res.status(400).json({ error: error.message });
@@ -73,7 +96,7 @@ Thank you for your commitment to environmental sustainability. We are thrilled t
 Best regards,
 
 Vimal C
-Founder,CEO
+Founder, CEO
 EcoVate Team
 info.ecovate@gmail.com
 EcoVate Global Website
@@ -92,7 +115,7 @@ Thank you for your understanding.
 Best regards,
 
 Vimal C
-Founder,CEO
+Founder, CEO
 EcoVate Team
 info.ecovate@gmail.com
 EcoVate Global Website
