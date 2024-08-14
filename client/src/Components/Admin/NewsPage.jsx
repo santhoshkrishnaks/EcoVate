@@ -52,7 +52,7 @@ const NewsPage = () => {
 
     if(deletePost){
       try {
-        await axios.delete(`https://ecovate-nqq4.onrender.com/econews/${id}`)
+        await axios.delete(`https://ecovate-nqq4.onrender.com/${id}`)
         const response = await axios.get('https://ecovate-nqq4.onrender.com/econews');
         setNewsList(response.data);
         window.alert("News item deleted successfully.");

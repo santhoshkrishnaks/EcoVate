@@ -26,7 +26,7 @@ const sendEmail = async (to, subject, text) => {
 
 const postvolunteer = async (req, res) => {
   try {
-    const volunt = new Volunteer(req.body);
+    const volunt = new Volunteer.create(req.body);
     await volunt.save();
 
 

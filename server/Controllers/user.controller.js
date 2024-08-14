@@ -2,7 +2,7 @@ import { User, connectdb } from "../config/database.js";
 import { Webhook } from "svix";
 import dotenv from "dotenv";
 dotenv.config();
-const login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const payloadString = req.body.toString();
 
@@ -75,4 +75,16 @@ const login = async (req, res) => {
     });
   }
 };
-export default login;
+export const getuser=async (req,res)=>{
+  try{
+    const {username}=req.params;
+    const user=await User.findOne({ userName: new RegExp(username, "i") });
+    if(!user){
+      res.status(404).json("Not Found");
+    }
+    res.status(200).json(user);
+  }
+  catch(error){
+    res.status(400).json({error:error.message});
+  }
+}

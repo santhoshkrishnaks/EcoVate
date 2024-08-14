@@ -134,7 +134,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
             onClick={() => onProfileClick(post.username)}
           />
           <div className="post-user-info ml-4">
-            <div className="user-name font-semibold cursor-pointer">
+            <div className="user-name font-semibold cursor-pointer" onClick={() => onProfileClick(post.username)} >
               {post.username}
             </div>
             <div className="post-location text-gray-700">
