@@ -89,6 +89,9 @@ const Feed = () => {
 
   const topHashtags = getTopHashtags();
 
+  const onProfileClick = (username) => {
+      
+  }  
   const handleSearch = (term) => {
     setIsLoading(true);
 
@@ -311,6 +314,7 @@ const Feed = () => {
                       handleSearch={handleSearch}
                       fetchData={fetchData}
                       currentUser={currentUser}
+                      onProfileClick={onProfileClick}
                     />
                   </div>
                 ))

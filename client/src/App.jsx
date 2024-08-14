@@ -17,13 +17,13 @@ import { Page1 } from "./Components/EcoCorp/Page1.jsx";
 import { ProjectPop } from "./Components/EcoVision/ProjectPop.jsx";
 import Create from "./Components/Context.jsx";
 import Form from "./Components/EcoCorp/EcoCorpForm.jsx";
-// import ProfilePage from "./Components/EcoConnect/Profile.jsx";
+import UserProfilePage from "./Components/Profile.jsx";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
-  const [load,setLoad]=useState(false);
+  const [load, setLoad] = useState(false);
   return (
     <div>
-      <Create.Provider value={{ showForm, setShowForm,load,setLoad }}>
+      <Create.Provider value={{ showForm, setShowForm, load, setLoad }}>
         <Router>
           <Routes>
             <Route path="/Ecoconnect" element={<Feed />} />
@@ -33,6 +33,7 @@ const App = () => {
             <Route path="/Ecocalc" element={<Ecocalc />} />
             <Route path="/result" element={<Results />} />
             <Route path="/Ecofund" element={<Donate />} />
+            <Route path="/Profile" element={<UserProfilePage />} />
             <Route path="/form" element={<Form />} />
             <Route path="/" element={<Home />} />
             <Route

@@ -6,6 +6,7 @@ import {
   getPostAll,
   getPostbyUser,
   UpdateLike,
+  getpostbyid,
 } from "../Controllers/ecoconnect.controller.js";
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.get("/getposts/:username", getPostbyUser);
 router.delete("/dposts/:id", deletebyId);
 router.put("/dlikes/:id1", DeleteLike);
 router.put("/ulikes/:id1", UpdateLike);
+router.get("/posts/:id", getpostbyid);
 
 export default router;
