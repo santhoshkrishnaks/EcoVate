@@ -2,36 +2,36 @@ import { Volunteer } from "../config/database.js";
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: "info.ecovate@gmail.com",
-        pass: "njqm czvf lkbs wlne" // Consider using environment variables for sensitive information
-    }
+  service: "gmail",
+  auth: {
+    user: "info.ecovate@gmail.com",
+    pass: "njqm czvf lkbs wlne", // Consider using environment variables for sensitive information
+  },
 });
 
 const sendEmail = async (to, subject, text) => {
-    const mailOptions = {
-        from: "info.ecovate@gmail.com",
-        to,
-        subject,
-        text
-    };
+  const mailOptions = {
+    from: "info.ecovate@gmail.com",
+    to,
+    subject,
+    text,
+  };
 
-    try {
-        await transporter.sendMail(mailOptions);
-    } catch (error) {
-        throw new Error(`Failed to send email: ${error.message}`);
-    }
+  try {
+    await transporter.sendMail(mailOptions);
+  } catch (error) {
+    throw new Error(`Failed to send email: ${error.message}`);
+  }
 };
 
 const postvolunteer = async (req, res) => {
-    try {
-        const volunt = new Volunteer(req.body);
-        await volunt.save();
+  try {
+    const volunt = new Volunteer(req.body);
+    await volunt.save();
 
-        // Send confirmation email
-        const subject = 'Thank You for Applying to EcoVate';
-        const text = `
+    // Send confirmation email
+    const subject = "Thank You for Applying to EcoVate";
+    const text = `
 Dear ${volunt.username},
 
 Thank you for applying to join EcoVate as a volunteer. We have received your application and will review it shortly.
@@ -49,42 +49,43 @@ info.ecovate@gmail.com
 EcoVate Global Website
         `;
 
-        await sendEmail(volunt.email_address, subject, text);
+    await sendEmail(volunt.email_address, subject, text);
 
-        res.status(200).json(volunt);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
+    res.status(200).json(volunt);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const getvolunteer = async (req, res) => {
-    try {
-        const vol = await Volunteer.find({});
-        res.status(200).json(vol);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
+  try {
+    const vol = await Volunteer.find({});
+    res.status(200).json(vol);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const decideApplication = async (req, res) => {
-    const { id, action } = req.body;
+  const { id, action } = req.body;
 
-    if (!id || !action) {
-        return res.status(400).json({ error: 'Missing required fields' });
+  if (!id || !action) {
+    return res.status(400).json({ error: "Missing required fields" });
+  }
+
+  try {
+    const volunteer = await Volunteer.findById(id);
+
+    if (!volunteer) {
+      return res.status(404).json({ error: "Volunteer not found" });
     }
 
-    try {
-        const volunteer = await Volunteer.findById(id);
+    let subject, text;
 
-        if (!volunteer) {
-            return res.status(404).json({ error: 'Volunteer not found' });
-        }
-
-        let subject, text;
-
-        if (action === 'accept') {
-            subject = 'Congratulations! Your Application to Join EcoVate Has Been Accepted';
-            text = `
+    if (action === "accept") {
+      subject =
+        "Congratulations! Your Application to Join EcoVate Has Been Accepted";
+      text = `
 Dear ${volunteer.username},
 
 Congratulations! We are pleased to inform you that your application to join EcoVate has been accepted. We are excited to have you on board and look forward to working together on our sustainability initiatives.
@@ -101,9 +102,9 @@ EcoVate Team
 info.ecovate@gmail.com
 EcoVate Global Website
             `;
-        } else if (action === 'reject') {
-            subject = 'Application Rejection Notification from EcoVate';
-            text = `
+    } else if (action === "reject") {
+      subject = "Application Rejection Notification from EcoVate";
+      text = `
 Dear ${volunteer.username},
 
 Thank you for your interest in joining EcoVate. After careful consideration, we regret to inform you that we are unable to accept your application at this time.
@@ -120,19 +121,15 @@ EcoVate Team
 info.ecovate@gmail.com
 EcoVate Global Website
             `;
-        } else {
-            return res.status(400).json({ error: 'Invalid action' });
-        }
-
-        await sendEmail(volunteer.email_address, subject, text);
-        res.status(200).json({ message: `Application ${action}ed successfully` });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
+    } else {
+      return res.status(400).json({ error: "Invalid action" });
     }
+
+    await sendEmail(volunteer.email_address, subject, text);
+    res.status(200).json({ message: `Application ${action}ed successfully` });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 };
 
-export {
-    postvolunteer,
-    getvolunteer,
-    decideApplication,
-};
+export { postvolunteer, getvolunteer, decideApplication };

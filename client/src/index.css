@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 
-
+.postimg{
+  width: 48px;
+  height: 48px;
+}
 .post-image {
   height: 350px;
   width: 600px;

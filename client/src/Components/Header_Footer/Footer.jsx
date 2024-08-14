@@ -1,10 +1,24 @@
-import logo from '../../assets/logo.png';
-import {Link} from "react-router-dom"
-import { useEffect } from 'react';
+import logo from "../../assets/logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "@clerk/clerk-react";
 const Footer = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+  const { isSignedIn } = useAuth();
+  const navi = useNavigate();
+  const currentYear = new Date().getFullYear();
+
+  const handleNavigation = () => {
+    navi("/");
+    setTimeout(() => {
+      const contactElement = document.getElementById("contact");
+      if (contactElement) {
+        contactElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 550); // Adjust delay as necessary
+  };
   return (
     <section className="py-10 bg-green-100 sm:pt-7 lg:pt-11">
       <div className="px-4 mx-auto n sm:px-6 lg:px-8 max-w-7xl">
@@ -81,7 +95,7 @@ const Footer = () => {
                   to="https://github.com/santhoshkrishnaks/EcoVate"
                   title=""
                   className="flex items-center justify-center text-white transition-all duration-200 bg-gray-800 rounded-full w-7 h-7 hover:bg-blue-600 focus:bg-blue-600"
-                  target='blank'
+                  target="blank"
                 >
                   <svg
                     className="w-4 h-4"
@@ -107,19 +121,25 @@ const Footer = () => {
 
             <ul className="mt-6 space-y-4 text-lg text-neutral-600 font-semibold">
               <li>
-                <Link
-                  to="/Ecoconnect"
+                <span
+                  onClick={() => {
+                    if (isSignedIn) {
+                      navi("/Ecoconnect");
+                    } else {
+                      navi("/signin");
+                    }
+                  }}
                   title=""
-                  className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
+                  className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600 cursor-pointer"
                 >
                   {" "}
                   EcoConnect{" "}
-                </Link>
+                </span>
               </li>
 
               <li>
                 <Link
-                  to="/Ecocorp"
+                to='/Ecocorp'
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >
@@ -128,35 +148,53 @@ const Footer = () => {
               </li>
 
               <li>
-                <Link
-                  to="/Ecofund"
+                <span
+                onClick={() => {
+                  if (isSignedIn) {
+                    navi("/Ecofund");
+                  } else {
+                    navi("/signin");
+                  }
+                }}
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >
                   {" "}
                   EcoFund
-                </Link>
+                </span>
               </li>
 
               <li>
-                <Link
-                  to="/Ecocalc"
+                <span
+                onClick={() => {
+                  if (isSignedIn) {
+                    navi("/Ecocalc");
+                  } else {
+                    navi("/signin");
+                  }
+                }}
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >
                   {" "}
                   EcoCalc
-                </Link>
+                </span>
               </li>
               <li>
-                <Link
-                  to="/Ecovision"
+                <span
+                onClick={() => {
+                  if (isSignedIn) {
+                    navi("/Ecovision");
+                  } else {
+                    navi("/signin");
+                  }
+                }}
                   title=""
                   className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
                 >
                   {" "}
                   EcoVision
-                </Link>
+                </span>
               </li>
             </ul>
           </div>
@@ -168,27 +206,15 @@ const Footer = () => {
 
             <ul className="mt-6 space-y-4 text-lg text-neutral-600 font-semibold">
               <li>
-                <Link
-                  to="#contact"
+                <span
+                onClick={handleNavigation}
                   title=""
-                  className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
+                  className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600 cursor-pointer"
                 >
                   {" "}
                   Support{" "}
-                </Link>
+                </span>
               </li>
-
-              {/* <li>
-                    //     <a to="#" title="" className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Delivery Details </a>
-                    // </li>
-
-                    // <li>
-                    //     <a to="#" title="" className="flex  transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Terms & Conditions </a>
-                    // </li>
-
-                    // <li>
-                    //     <a to="#" title="" className="flex transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Privacy Policy </a>
-                    // </li>*/}
             </ul>
           </div>
         </div>
@@ -196,11 +222,11 @@ const Footer = () => {
         <hr className="mt-6 mb-10 border-gray-200" />
 
         <p className="text-base text-center text-neurtal-950">
-          © Copyright 2024, All Rights Reserved by EcoVate
+          © Copyright {currentYear}, All Rights Reserved by EcoVate
         </p>
       </div>
     </section>
   );
-}
+};
 
-export default Footer
+export default Footer;

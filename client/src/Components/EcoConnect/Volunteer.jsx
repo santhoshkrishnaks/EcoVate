@@ -1,91 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useUser } from "@clerk/clerk-react";
+import {ClerkLoading, useUser} from '@clerk/clerk-react'
 
 const JoinVolunteerForm = ({ onClose }) => {
-  const { user } = useUser();
-  const [formData, setFormData] = useState({
-    username: user.username || "",
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    age: "",
-    preferredActivities: [],
-    availability: "",
-    motivation: "",
-    otherActivity: "",
-  });
+  const {user}=useUser();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [age, setAge] = useState("");
+  const [preferredActivities, setPreferredActivities] = useState([]);
+  const [availability, setAvailability] = useState("");
+  const [motivation, setMotivation] = useState("");
+  const [otherActivity, setOtherActivity] = useState(""); // State for "Other" activity
   const [showOtherInput, setShowOtherInput] = useState(false); // State to toggle input visibility
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [activityError, setActivityError] = useState(false); // New state for activity error
 
-  // Handle change for all inputs
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleActivityChange = (e) => {
-    const { value, checked } = e.target;  // Destructuring `checked` from the event object
+const username=user.username
   
-    if (value === "Other") {
-      setShowOtherInput(checked);  // Update the state to show/hide the "Other" input based on `checked`
-  
-      setFormData((prev) => {
-        if (checked) {
-          // If checked, add "Other" to preferredActivities
-          return {
-            ...prev,
-            preferredActivities: [...prev.preferredActivities, "Other"],
-          };
-        } else {
-          // If unchecked, remove "Other" from preferredActivities and clear otherActivity
-          return {
-            ...prev,
-            preferredActivities: prev.preferredActivities.filter(
-              (activity) => activity !== "Other"
-            ),
-            otherActivity: "",  // Assuming you want to clear the 'otherActivity' field when "Other" is unchecked
-          };
-        }
-      });
-    } else {
-      // Handle all other activities
-      setFormData((prev) => ({
-        ...prev,
-       preferredActivities: checked
-          ? [...prev.preferredActivities, value]  // Add the activity if checked
-          : prev.preferredActivities.filter((activity) => activity !== value),  // Remove the activity if unchecked
-      }));
-    }
-  };
-  
-  const handleOtherInputChange = (e) => {
-    const newActivity = e.target.value;
-    setFormData((prev) => ({
-      ...prev,
-      otherActivity: newActivity,
-    }));
-    if (newActivity && !formData.preferredActivities.includes("Other")) {
-      setFormData((prev) => ({
-        ...prev,
-        preferredActivities: [...prev.preferredActivities, "Other"],
-      }));
-    } else if (!newActivity) {
-      setFormData((prev) => ({
-        ...prev,
-        preferredActivities: prev.preferredActivities.filter(
-          (activity) => activity !== "Other"
-        ),
-      }));
-    }
-  };
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -93,7 +27,7 @@ const JoinVolunteerForm = ({ onClose }) => {
     setActivityError(false); // Reset activity error
 
     // Check if at least one preferred activity is selected
-    if (formData.preferredActivities.length === 0 && !showOtherInput) {
+    if (preferredActivities.length === 0 && !showOtherInput) {
       setActivityError(true);
       setLoading(false);
       return;
@@ -101,36 +35,84 @@ const JoinVolunteerForm = ({ onClose }) => {
 
     try {
       // Replace with your backend API URL
-      const response = await axios.post("http://localhost:3000/volunteer", {
-        ...formData,
+      const response = await axios.post("https://ecovate-nqq4.onrender.com/volunteer", {
+        username: username,
+        name,
+        email,
+        phone,
+        address,
+        age,
+        preferredActivities: preferredActivities,
+        availability,
+        motivation,
       });
-      console.log(formData);
 
       if (response.status !== 200) {
         throw new Error("Something went wrong!");
       }
 
-      // Reset the form
-      setFormData({
-        username: user.username || "",
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        age: "",
-        preferredActivities: [],
-        availability: "",
-        motivation: "",
-        otherActivity: "",
-      });
-      setShowOtherInput(false);
+      // Clear form fields
+      setName("");
+      setEmail("");
+      setPhone("");
+      setAddress("");
+      setAge("");
+      setPreferredActivities([]);
+      setAvailability("");
+      setMotivation("");
+      setOtherActivity("");
+      setShowOtherInput(false); // Hide "Other" input on successful submission
 
+      
+      onClose(); // Close the form if provided
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
-      onClose(); // Close the form if provided
     }
+  };
+
+  const handleActivityChange = (e) => {
+    const { value, checked } = e.target;
+
+    if (value === "Other") {
+      setShowOtherInput(checked);
+      if (checked) {
+        setPreferredActivities((prev) => [...prev, "Other"]);
+      } else {
+        setPreferredActivities((prev) =>
+          prev.filter((activity) => activity !== "Other")
+        );
+        setOtherActivity(""); // Clear "Other" input if unchecked
+      }
+    } else {
+      setPreferredActivities((prev) =>
+        checked
+          ? [...prev, value]
+          : prev.filter((activity) => activity !== value)
+      );
+    }
+  };
+
+  const handleOtherInputChange = (e) => {
+    const newActivity = e.target.value;
+    setOtherActivity(newActivity);
+    if (newActivity && !preferredActivities.includes("Other")) {
+      setPreferredActivities((prev) => [...prev, "Other"]);
+    } else if (!newActivity) {
+      setPreferredActivities((prev) =>
+        prev.filter((activity) => activity !== "Other")
+      );
+    }
+  
+  };
+console.log(preferredActivities);
+  // Check if "Other" should be shown based on preferredActivities
+  const isOtherChecked = preferredActivities.includes("Other");
+
+  const handleAvailabilityChange = (e) => {
+    const { value } = e.target;
+    setAvailability(value);
   };
 
   return (
@@ -170,9 +152,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             <input
               type="text"
               id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -187,9 +168,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             <input
               type="email"
               id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -204,9 +184,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             <input
               type="tel"
               id="phone"
-              name="phone"
-              value={formData.phone}
-              onChange={handleInputChange}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -221,9 +200,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             <input
               type="text"
               id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleInputChange}
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -238,9 +216,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             <input
               type="number"
               id="age"
-              name="age"
-              value={formData.age}
-              onChange={handleInputChange}
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
@@ -263,7 +240,9 @@ const JoinVolunteerForm = ({ onClose }) => {
                     type="checkbox"
                     value={activity}
                     checked={
-                      formData.preferredActivities.includes(activity)
+                      isOtherChecked
+                        ? activity === "Other"
+                        : preferredActivities.includes(activity)
                     }
                     onChange={handleActivityChange}
                     className="form-checkbox"
@@ -274,7 +253,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               {showOtherInput && (
                 <input
                   type="text"
-                  value={formData.otherActivity}
+                  value={otherActivity}
                   onChange={handleOtherInputChange}
                   placeholder="Please specify"
                   className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -295,9 +274,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             </label>
             <select
               id="availability"
-              name="availability"
-              value={formData.availability}
-              onChange={handleInputChange}
+              value={availability}
+              onChange={handleAvailabilityChange}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
@@ -309,16 +287,15 @@ const JoinVolunteerForm = ({ onClose }) => {
 
           <div className="mb-4">
             <label className="inline-flex items-center">
-              <span>
+              <span className="">
                 Why do you want to join us?{" "}
                 <span className="text-slate-400">(Optional)</span>
               </span>
             </label>
             <textarea
               id="motivation"
-              name="motivation"
-              value={formData.motivation}
-              onChange={handleInputChange}
+              value={motivation}
+              onChange={(e) => setMotivation(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
               placeholder="Share your motivation"
@@ -346,4 +323,4 @@ const JoinVolunteerForm = ({ onClose }) => {
   );
 };
 
-export default JoinVolunteerForm;
+export default JoinVolunteerForm

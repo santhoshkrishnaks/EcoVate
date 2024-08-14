@@ -55,10 +55,8 @@ export const getpostbyid =async(req,res)=>{
 
 export const deletebyId = async (req, res) => {
   try {
-    const { title } = req.params;
-    const deletepost = await EcoConnect.findOneAndDelete({
-      title: new RegExp(`^${title}$`, "i"),
-    });
+    const { id } = req.params;
+    const deletepost = await EcoConnect.findByIdAndDelete(id);
     if (!deletepost) {
       return res.status(404).json({ message: "post not found" });
     }
@@ -108,4 +106,16 @@ export const UpdateLike = async (req, res) => {
     res.status(500).send(error);
     console.log(error);
   }
+};
+
+//get post by id
+export const getpostbyid = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const posttt = await EcoConnect.findById(id);
+    if (!posttt) {
+      return res.status(404).json("Post not found");
+    }
+    res.status(200).json(posttt);
+  } catch (error) {}
 };

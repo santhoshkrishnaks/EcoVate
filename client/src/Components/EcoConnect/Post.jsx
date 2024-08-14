@@ -1,55 +1,121 @@
 import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
-import {Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
-  const [likes, setLikes] = useState(0);
+const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => {
   const [liked, setLiked] = useState(false);
-  const [comments, setComments] = useState(post.comments || []);
+  const [likes,setlikes]=useState(post.likes);
+  const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState(false);
   const navi = useNavigate();
 
-  useEffect(() => {
-    if (post.comments) {
-      setComments(post.comments);
+  const fetchComment = async () => {
+    try {
+      const response = await axios.get(
+        `https://ecovate-nqq4.onrender.com/gcomment/${post._id}`
+      );
+      setComments(response.data);
+    } catch (error) {
+      console.error(error);
     }
-  }, [post.comments]);
-
-  const handleLike = () => {
-    setLiked(!liked);
-    setLikes((prevLikes) => (liked ? prevLikes - 1 : prevLikes + 1));
   };
 
-  const handleDeletePost = () => {
-    // Logic to delete the post
-    alert("Post deleted!");
+  useEffect(() => {
+    fetchComment();
+  });
+
+  const fetchLike = async () => {
+    try {
+      const responseLike = await axios.get('https://ecovate-nqq4.onrender.com/glike', {
+        params: {
+          post_id: post._id,
+          username: currentUser
+        }
+      });
+      setLiked(responseLike.data.liked);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  useEffect(() => {
+    fetchLike();
+  }, [post._id,currentUser]);
 
-  const handleAddComment = () => {
+  const handleLike = async () => {
+    const body = {
+      post_id: post._id,
+      username: currentUser
+    };
+    try {
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
+      const response=await axios.put(`https://ecovate-nqq4.onrender.com/ulikes/${post._id}`);
+      setlikes(response.data.likes);
+      fetchLike();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDLike = async () => {
+    const body = {
+      post_id: post._id,
+      username: currentUser
+    };
+    try {
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
+      const response=await axios.put(`https://ecovate-nqq4.onrender.com/dlikes/${post._id}`);
+      setlikes(response.data.likes);
+      fetchLike();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeletePost = async () => {
+    try {
+      await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`);
+      alert("Post deleted!");
+      fetchData();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddComment = async () => {
     if (commentText.trim()) {
       const newComment = {
-        text: commentText,
-        user: {
-          name: "Current User", // Placeholder for actual user data
-        },
+        post_id: post._id,
+        username: currentUser,
+        content: commentText,
       };
-      setComments([...comments, newComment]);
-      setCommentText("");
-      setShowCommentBox(false);
+      try {
+        await axios.post("https://ecovate-nqq4.onrender.com/comment", newComment);
+        setCommentText("");
+        setShowCommentBox(false);
+        fetchComment();
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
     } else {
       console.error("Comment text is empty");
     }
   };
 
-  const handleDeleteComment = (index) => {
-    setComments(comments.filter((_, i) => i !== index));
+  const handleDeleteComment = async (id) => {
+    try {
+      await axios.delete(`https://ecovate-nqq4.onrender.com/dcomment/${id}`);
+      fetchComment();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleJoinTeam = () => {
     const subject = `Interested in joining your team for: ${post.title}`;
-    const body = `Hi ${post.user.name},\n\nI'm interested in joining your team for the initiative titled "${post.title}". Please let me know how I can get involved.\n\nThank you!`;
+    const body = `Hi ${post.username},\n\nI'm interested in joining your team for the initiative titled "${post.title}". Please let me know how I can get involved.\n\nThank you!`;
     const mailtoLink = `mailto:${
       post.contactEmail || ""
     }?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -60,86 +126,43 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
   return (
     <div className="post bg-white rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
       <div className="post-header flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
-        <div className="post-header flex sm:items-center justify-between mb-4 sm:mb-0 delete">
-          {/* Profile */}
-          <div className="flex">
-            <img
-              src={post.user.profilePicture}
-              alt={post.user.name}
-              className="profile-picture w-12 h-12 rounded-full cursor-pointer"
-              onClick={() => onProfileClick(post.userId)}
-            />
-
-            {/* User details */}
-            <div className="post-user-info ml-4">
-              <div
-                className="user-name font-semibold cursor-pointer"
-                onClick={() => onProfileClick(post.userId)}
-              >
-                {post.user.name}
-              </div>
-
-              <div className="post-location text-gray-700">
-                {post.location && (
-                  <span className="text-slate-700">{post.location}</span>
-                )}
-              </div>
-
-              <div className="post-timestamp text-gray-500 text-sm">
-                {new Date(post.timestamp).toLocaleString()}
-              </div>
+        <div className="flex">
+          <img
+            src={post.image_url}
+            alt={post.username}
+            className="profile-picture rounded-full cursor-pointer postimg"
+            onClick={() => onProfileClick(post.username)}
+          />
+          <div className="post-user-info ml-4">
+            <div className="user-name font-semibold cursor-pointer">
+              {post.username}
+            </div>
+            <div className="post-location text-gray-700">
+              {post.location && <span className="text-slate-700">{post.location}</span>}
+            </div>
+            <div className="post-timestamp text-gray-500 text-sm">
+              {new Date(post.createdAt).toLocaleString()}
             </div>
           </div>
-          <div className="sm:hidden block">
-            {currentUser.id === post.userId && (
-              <button
-                onClick={handleDeletePost}
-                className=" text-white px-4 py-2"
-              >
-                <img src={img} height={30} width={30} />
-              </button>
-            )}
-          </div>
         </div>
-
-        {/* Status */}
-
-        <div className="flex fex-row gap-2">
-          <div className="post-status text-green-500 font-semibold sm:mr-4 mt-3">
-            {post.status}
-          </div>
-
-          <div className="hidden sm:block">
-            {currentUser.id === post.userId && (
-              <button
-                onClick={handleDeletePost}
-                className=" text-white px-4 py-2"
-              >
-                <img src={img} height={30} width={30} />
-              </button>
-            )}
-          </div>
-        </div>
+        {currentUser === post.username && (
+          <button onClick={handleDeletePost} className="text-white px-4 py-2">
+            <img src={img} height={30} width={30} alt="Delete Post" />
+          </button>
+        )}
       </div>
-
       <div className="post-content mb-4">
         <h3 className="text-xl font-bold mb-2 text-slate-700">{post.title}</h3>
-
-        {post.image && (
-          <img
-            src={post.image}
-            alt="Post content"
-            className="w-full h-auto rounded-lg"
-          />
-        )}
+        {post.image && <img src={post.image} alt="Post content" className="w-full h-auto rounded-lg" />}
       </div>
       <p className="mb-2">{post.description}</p>
       <div className="post-engagement flex flex-row space-x-4 mb-4">
         <button
-          onClick={handleLike}
+          onClick={liked ? handleDLike : handleLike}
           className={`like-button ${liked ? "text-red-500" : "text-blue-500"}`}
         >
-          {liked ? "Unlike" : "Like"}
+          {liked ? "Unlike " : "Like "}
+          <span>({likes})</span>
         </button>
         <button
           onClick={() => setShowCommentBox(!showCommentBox)}
@@ -148,10 +171,7 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
           Comment
         </button>
         {post.status === "Ongoing" && (
-          <Link
-            to={post.donationLink}
-            className="donate-button text-blue-500 mt-0"
-          >
+          <Link to="/Ecofund" className="donate-button text-blue-500 mt-0">
             Donate
           </Link>
         )}
@@ -178,20 +198,19 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
             key={index}
             className="comment bg-gray-100 p-2 rounded-lg mb-2 flex flex-col sm:flex-row items-start sm:items-center"
           >
-            <div className="comment-user font-semibold mr-2">
-              {comment.user?.name || "Anonymous"}:
-            </div>
-            <div className="comment-text flex-1">{comment.text}</div>
-            <button
-              onClick={() => handleDeleteComment(index)}
-              className="text-red-500 mt-2 sm:mt-0"
-            >
-              <img src={img} alt="delete" height={20} width={20} />
-            </button>
+            <div className="comment-user font-semibold mr-2">{comment.username}:</div>
+            <div className="comment-text flex-1">{comment.content}</div>
+            {currentUser === comment.username && (
+              <button
+                onClick={() => handleDeleteComment(comment._id)}
+                className="text-red-500 mt-2 sm:mt-0"
+              >
+                <img src={img} alt="Delete Comment" height={20} width={20} />
+              </button>
+            )}
           </div>
         ))}
       </div>
-
       {post.status === "Ongoing" && (
         <div className="post-call-to-action mb-4 lg:block">
           <p className="hidden md:block">Be Part of This Impactful Change!</p>
@@ -200,7 +219,6 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser }) => {
           </button>
         </div>
       )}
-
       <div className="post-tags flex flex-wrap">
         {post.tags.map((tag) => (
           <button

@@ -43,7 +43,7 @@ const Form = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3000/ecovision', mappedData);
+      const response = await axios.post('https://ecovate-nqq4.onrender.com/ecovision', mappedData);
       console.log('Form data submitted:', response.data);
       setShowForm(false);
     } catch (error) {
