@@ -29,27 +29,7 @@ const postvolunteer = async (req, res) => {
     const volunt = new Volunteer(req.body);
     await volunt.save();
 
-    // Send confirmation email
-    const subject = "Thank You for Applying to EcoVate";
-    const text = `
-Dear ${volunt.username},
 
-Thank you for applying to join EcoVate as a volunteer. We have received your application and will review it shortly.
-
-If your application is successful, you will receive further details on how to get started. In the meantime, if you have any questions, feel free to reach out to us at info.ecovate@gmail.com.
-
-Thank you for your interest in contributing to our sustainability initiatives.
-
-Best regards,
-
-Vimal C
-Founder, CEO
-EcoVate Team
-info.ecovate@gmail.com
-EcoVate Global Website
-        `;
-
-    await sendEmail(volunt.email_address, subject, text);
 
     res.status(200).json(volunt);
   } catch (error) {

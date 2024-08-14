@@ -8,7 +8,7 @@ const VolunteerSubmissions = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get('http://localhost:3000/volunteer')
+    axios.get('https://ecovate-nqq4.onrender.com/volunteer')
       .then(response => {
         setSubmissions(response.data);
         setLoading(false);
@@ -20,7 +20,7 @@ const VolunteerSubmissions = () => {
   }, []);
 
   const handleAccept = (id, email) => {
-    axios.post('http://localhost:3000/volunteer/decision', {
+    axios.post('https://ecovate-nqq4.onrender.com/volunteer/decision', {
       id,
       action: 'accept'
     })
@@ -35,7 +35,7 @@ const VolunteerSubmissions = () => {
   };
 
   const handleReject = (id, email) => {
-    axios.post('http://localhost:3000/volunteer/decision', {
+    axios.post('https://ecovate-nqq4.onrender.com/volunteer/decision', {
       id,
       action: 'reject'
     })

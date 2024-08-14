@@ -108,14 +108,5 @@ export const UpdateLike = async (req, res) => {
   }
 };
 
-//get post by id
-export const getpostbyid = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const posttt = await EcoConnect.findById(id);
-    if (!posttt) {
-      return res.status(404).json("Post not found");
-    }
-    res.status(200).json(posttt);
-  } catch (error) {}
-};
+
+
