@@ -1,32 +1,31 @@
 import React, { useState } from "react";
 import axios from "axios";
-import {ClerkLoading, useUser} from '@clerk/clerk-react'
+import { useUser } from '@clerk/clerk-react';
 
 const JoinVolunteerForm = ({ onClose }) => {
-  const {user}=useUser();
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const { user } = useUser();
+  const [username, setUsername] = useState(user.username || "");
+  const [email_address, setEmail] = useState(user.email || "");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [age, setAge] = useState("");
   const [preferredActivities, setPreferredActivities] = useState([]);
   const [availability, setAvailability] = useState("");
   const [motivation, setMotivation] = useState("");
-  const [otherActivity, setOtherActivity] = useState(""); // State for "Other" activity
-  const [showOtherInput, setShowOtherInput] = useState(false); // State to toggle input visibility
+  const [otherActivity, setOtherActivity] = useState("");
+  const [showOtherInput, setShowOtherInput] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [activityError, setActivityError] = useState(false); // New state for activity error
+  const [activityError, setActivityError] = useState(false);
 
-const username=user.username
-  
+  const isOtherChecked = preferredActivities.includes("Other");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setError(null);
-    setActivityError(false); // Reset activity error
+    setActivityError(false);
 
-    // Check if at least one preferred activity is selected
     if (preferredActivities.length === 0 && !showOtherInput) {
       setActivityError(true);
       setLoading(false);
@@ -34,15 +33,13 @@ const username=user.username
     }
 
     try {
-      // Replace with your backend API URL
       const response = await axios.post("https://ecovate-nqq4.onrender.com/volunteer", {
-        username: username,
-        name,
-        email,
+        email_address,
+        username,
         phone,
         address,
-        age,
-        preferredActivities: preferredActivities,
+        age: Number(age),
+        preferredActivities,
         availability,
         motivation,
       });
@@ -52,7 +49,7 @@ const username=user.username
       }
 
       // Clear form fields
-      setName("");
+      setUsername("");
       setEmail("");
       setPhone("");
       setAddress("");
@@ -61,10 +58,9 @@ const username=user.username
       setAvailability("");
       setMotivation("");
       setOtherActivity("");
-      setShowOtherInput(false); // Hide "Other" input on successful submission
+      setShowOtherInput(false);
 
-      
-      onClose(); // Close the form if provided
+      onClose();
     } catch (error) {
       setError(error.message);
     } finally {
@@ -78,12 +74,12 @@ const username=user.username
     if (value === "Other") {
       setShowOtherInput(checked);
       if (checked) {
-        setPreferredActivities((prev) => [...prev, "Other"]);
+        setPreferredActivities((prev) => [...prev, otherActivity]);
       } else {
         setPreferredActivities((prev) =>
-          prev.filter((activity) => activity !== "Other")
+          prev.filter((activity) => activity !== otherActivity)
         );
-        setOtherActivity(""); // Clear "Other" input if unchecked
+        setOtherActivity("");
       }
     } else {
       setPreferredActivities((prev) =>
@@ -104,11 +100,7 @@ const username=user.username
         prev.filter((activity) => activity !== "Other")
       );
     }
-  
   };
-console.log(preferredActivities);
-  // Check if "Other" should be shown based on preferredActivities
-  const isOtherChecked = preferredActivities.includes("Other");
 
   const handleAvailabilityChange = (e) => {
     const { value } = e.target;
@@ -144,31 +136,31 @@ console.log(preferredActivities);
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              Username
             </label>
             <input
               type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
           <div className="mb-4">
             <label
-              htmlFor="email"
+              htmlFor="email_address"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              Email Address
             </label>
             <input
               type="email"
-              id="email"
-              value={email}
+              id="email_address"
+              value={email_address}
               onChange={(e) => setEmail(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
@@ -240,8 +232,8 @@ console.log(preferredActivities);
                     type="checkbox"
                     value={activity}
                     checked={
-                      isOtherChecked
-                        ? activity === "Other"
+                      activity === "Other"
+                        ? isOtherChecked
                         : preferredActivities.includes(activity)
                     }
                     onChange={handleActivityChange}
@@ -323,4 +315,4 @@ console.log(preferredActivities);
   );
 };
 
-export default JoinVolunteerForm
+export default JoinVolunteerForm;

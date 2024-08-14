@@ -10,7 +10,7 @@ const NewsPage = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/econews');
+        const response = await axios.get('https://ecovate-nqq4.onrender.com/econews');
         setNewsList(response.data);
       } catch (error) {
         console.error('Error fetching news:', error);
@@ -29,10 +29,10 @@ const NewsPage = () => {
     if (confirmPost) {
       try {
         // Post the new news item to the server
-        await axios.post('http://localhost:3000/econews', { title, content });
+        await axios.post('https://ecovate-nqq4.onrender.com/econews', { title, content });
         
         // Fetch the updated news list after posting
-        const response = await axios.get('http://localhost:3000/econews');
+        const response = await axios.get('https://ecovate-nqq4.onrender.com/econews');
         setNewsList(response.data);
         
         // Clear the input fields
@@ -52,8 +52,8 @@ const NewsPage = () => {
 
     if(deletePost){
       try {
-        await axios.delete(`http://localhost:3000/econews/${id}`)
-        const response = await axios.get('http://localhost:3000/econews');
+        await axios.delete(`https://ecovate-nqq4.onrender.com/${id}`)
+        const response = await axios.get('https://ecovate-nqq4.onrender.com/econews');
         setNewsList(response.data);
         window.alert("News item deleted successfully.");
       } 

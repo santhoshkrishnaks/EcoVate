@@ -4,7 +4,7 @@ import Modal from "./Modal";
 import Footer from "../Header_Footer/Footer";
 import EcoNav from "./EcoNav";
 import JoinVolunteerForm from "./Volunteer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import newpost from "../../assets/newpost.svg";
 import Loader from "../Loader/Loader.jsx";
 import Create from "../Context";
@@ -19,6 +19,18 @@ const Feed = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userimage,setUserimage] =useState();
   const { user } = useUser();
+  const navi =useNavigate();
+  const [news,setNews]=useState([]);
+  const getnews = async() =>{
+    try {
+      const response=await axios.get("https://ecovate-nqq4.onrender.com/econews");
+      console.log(response.data);
+      setNews(response.data);
+    } catch (error) {
+      console.log("===",error);
+    }
+  }
+
   useEffect(() => {
     setNewPost((prevPost) => ({
       ...prevPost,
@@ -55,6 +67,7 @@ const Feed = () => {
             setLoad(false);
           }, 300);
           fetchData();
+          getnews()
         },[]);
         
         const [isModalVisible, setIsModalVisible] = useState(false);
@@ -88,9 +101,9 @@ const Feed = () => {
   };
 
   const topHashtags = getTopHashtags();
-
-  const onProfileClick = (username) => {
-      
+  const onProfileClick = (user) => {
+    localStorage.setItem("profileuser",user);
+    navi('/profile');
   }  
   const handleSearch = (term) => {
     setIsLoading(true);
@@ -347,20 +360,14 @@ const Feed = () => {
               <h2 className="text-xl font-bold mb-4">Recent News</h2>
               <ul>
                 <li className="mb-2">
-                  <Link to="#" className="text-blue-500">
-                    New tree planting record set in Central Park!
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link to="#" className="text-blue-500">
-                    Volunteers clean up over 500 pounds of trash from local
-                    beaches.
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link to="#" className="text-blue-500">
-                    Community solar energy project reaches new milestone.
-                  </Link>
+                <a href="https://www.energy.gov/eere/solar/solar-energy-wildlife-and-environment#:~:text=How%20Does%20Solar%20Energy%20Interact,humans%2C%20wildlife%2C%20and%20ecosystems.">
+                {news.map((newsItem) => (
+                  <li key={newsItem.id} className="mb-2">
+                    {newsItem.title}
+                  </li>
+                ))}
+   </a>
+
                 </li>
                 <li className="mb-2 mt-10">
                   <iframe

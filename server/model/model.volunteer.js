@@ -19,7 +19,7 @@ const volunteerSchema = mongoose.Schema(
       required: true,
     },
     age: {
-      type: Number,
+      type: String,
       required: true,
     },
     preferredActivities: {

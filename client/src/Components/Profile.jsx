@@ -1,37 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
 import Nav from "./Header_Footer/Nav";
+import Create from "./Context";
 
 const UserProfilePage = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([])
+  const profileuser=localStorage.getItem("profileuser");
   const [donations, setDonations] = useState([]);
   const [postDetails, setPostDetails] = useState({});
   const [showDonations, setShowDonations] = useState(false);
   const [totalDonationAmount, setTotalDonationAmount] = useState(0);
-  const [username, setUsername] = useState();
-  const [userimage, setUserimage] = useState();
-  const [firstname, setFirstname] = useState();
-  const [lastname, setLastname] = useState();
-  const { user } = useUser();
+  const [user1, setUser1] = useState([{}]);
 
-  //   console.log(user.username); // Static username
-   useEffect(() => {
-     const log = async () => {
-       if (user) {
-         setUsername(user.username);
-         setUserimage(user.imageUrl);
-         setFirstname(user.firstName);
-         setLastname(user.lastName);
-       }
-     };
-
-     log();
-   }, [user]);
-  useEffect(() => {
-    if (username != "") {
-      axios
-        .get(`https://ecovate-nqq4.onrender.com/getposts/${username}`)
+   const getposts = () =>{
+    axios
+        .get(`https://ecovate-nqq4.onrender.com/getposts/${profileuser}`)
         .then((response) => {
           console.log("Posts API response:", response.data); // Log the posts API response
           if (response.data) {
@@ -43,10 +27,10 @@ const UserProfilePage = () => {
         .catch((error) => {
           console.error("Error fetching user posts:", error.message);
         });
-
-      // Fetch user donations
-      axios
-        .get(`https://ecovate-nqq4.onrender.com/ecofund/${username}`)
+   }
+  const getdonation=()=>{
+    axios
+        .get(`https://ecovate-nqq4.onrender.com/ecofund/${profileuser}`)
         .then((response) => {
           console.log("Donations API response:", response.data); // Log the donations API response
           if (Array.isArray(response.data)) {
@@ -56,7 +40,7 @@ const UserProfilePage = () => {
             response.data.forEach((donation) => {
               if (donation.post_id) {
                 axios
-                  .get(`http://localhost:5000/posts/${donation.post_id}`)
+                  .get(`https://ecovate-nqq4.onrender.com/posts/${donation.post_id}`)
                   .then((response) => {
                     setPostDetails((prevDetails) => ({
                       ...prevDetails,
@@ -71,18 +55,24 @@ const UserProfilePage = () => {
                   });
               }
             });
-          } else {
-            console.error(
-              "Unexpected donations data structure:",
-              response.data
-            );
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching user donations:", error.message);
-        });
-    }
-  },[username]);
+  }
+})
+}
+const getuser = async () => {
+  try {
+    const user1 = await axios.get(`http://localhost:5000/user/${profileuser}`);
+    console.log('Response:', user1);
+    setUser1(user1.data);
+  } catch (error) {
+    console.log('Error:', error.response ? error.response.data : error.message);
+  }
+};
+
+  useEffect(() => {
+    getuser();
+    getposts();
+    getdonation();
+  },[]);
 
   // Calculate total donation amount
   const calculateTotalDonations = (donations) => {
@@ -96,14 +86,6 @@ const UserProfilePage = () => {
       setTotalDonationAmount(0);
     }
   };
-
-  // Toggle between user's posts and donations
-  const postsToDisplay = showDonations
-    ? posts.filter((post) =>
-        donations.some((donation) => donation.post_id === post._id)
-      )
-    : posts;
-
   return (
     <div>
         <Nav />
@@ -111,16 +93,16 @@ const UserProfilePage = () => {
         {/* User Profile Section */}
         <div className="mt-5 user-info flex items-center mb-6 w-full max-w-2xl">
           <img
-            src={userimage} // Placeholder image
-            alt={username}
+            src={user1.profileImg} // Placeholder image
+            alt={user1.userName}
             className="profile-picture w-20 h-20 rounded-full"
           />
           <div className="ml-4">
             <h2 className="text-2xl lg:text-4xl font-bold text-green-700">
-              {firstname} {lastname}
+              {user1.firstName} {user1.lastName}
             </h2>
             <a href="#" className="text-green-700 text-lg lg:text-xl">
-              {username}
+              {user1.userName}
             </a>
             <p className="text-green-700 font-semibold mt-2 text-lg">
               Total Donated: ${totalDonationAmount}

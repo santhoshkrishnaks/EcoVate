@@ -18,14 +18,19 @@ import { ProjectPop } from "./Components/EcoVision/ProjectPop.jsx";
 import Create from "./Components/Context.jsx";
 import Form from "./Components/EcoCorp/EcoCorpForm.jsx";
 import UserProfilePage from "./Components/Profile.jsx";
+import NewsPage from './Components/Admin/NewsPage.jsx'
+import VolunteerSubmissions from './Components/Admin/VolunteerSubmissions.jsx'
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [load, setLoad] = useState(false);
+  const [profileuser,setProfileuser]=useState();
   return (
     <div>
-      <Create.Provider value={{ showForm, setShowForm, load, setLoad }}>
+      <Create.Provider value={{ showForm, setShowForm, load, setLoad,profileuser,setProfileuser }}>
         <Router>
           <Routes>
+          <Route path="/admin/news" element ={<NewsPage/>}/>
+            <Route path="/admin/volunteer" element={<VolunteerSubmissions/>}/>
             <Route path="/Ecoconnect" element={<Feed />} />
             <Route path="/Ecovision" element={<ProjectPop />} />
             <Route path="/Ecoconnect" element={<Feed />} />
