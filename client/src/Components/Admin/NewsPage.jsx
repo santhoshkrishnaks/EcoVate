@@ -65,10 +65,6 @@ const NewsPage = () => {
       }
     }
   }
-  const {user}=useUser();
-  if (user.publicMetadata.role !== 'admin') {
-    return <div>Access Denied</div>;
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
