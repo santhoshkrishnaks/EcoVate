@@ -20,6 +20,7 @@ import Form from "./Components/EcoCorp/EcoCorpForm.jsx";
 import UserProfilePage from "./Components/Profile.jsx";
 import NewsPage from './Components/Admin/NewsPage.jsx'
 import VolunteerSubmissions from './Components/Admin/VolunteerSubmissions.jsx'
+import EcoVisionSubmissions from "./Components/Admin/EcovisionSubmissions.jsx";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [load, setLoad] = useState(false);
