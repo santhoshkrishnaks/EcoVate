@@ -38,10 +38,6 @@ const FundPage = () => {
   // Separate payments based on whether they have a post_id or not
   const donationsToPosts = payments.filter((payment) => payment.post_id);
   const donationsToUs = payments.filter((payment) => !payment.post_id);
-  const {user}=useUser();
-  if (user.publicMetadata.role !== 'admin') {
-    return <div>Access Denied</div>;
-  }
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto p-6">
