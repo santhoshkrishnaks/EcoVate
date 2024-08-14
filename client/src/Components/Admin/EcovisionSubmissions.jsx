@@ -5,6 +5,17 @@ import { useUser } from "@clerk/clerk-react";
 const EcoVisionSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
   const [expanded, setExpanded] = useState(null);
+  const [admin,setAdmin]=useState("");
+  const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
 
   useEffect(() => {
     // Fetch data from the API
@@ -34,7 +45,9 @@ const EcoVisionSubmissions = () => {
   const toggleExpand = (index) => {
     setExpanded(expanded === index ? null : index);
   };
-  
+  if ( admin !== "admin") {
+    return <div>Access Denied</div>;
+  }
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">EcoVision Project Submissions</h1>

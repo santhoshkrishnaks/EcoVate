@@ -60,7 +60,7 @@ const UserProfilePage = () => {
 }
 const getuser = async () => {
   try {
-    const user1 = await axios.get(`http://localhost:5000/user/${profileuser}`);
+    const user1 = await axios.get(`https://ecovate-nqq4.onrender.com/user/${profileuser}`);
     console.log('Response:', user1);
     setUser1(user1.data);
   } catch (error) {

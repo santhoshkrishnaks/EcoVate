@@ -6,7 +6,17 @@ const NewsPage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [newsList, setNewsList] = useState([]);
-
+  const [admin,setAdmin]=useState("");
+  const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
   // Fetch news from the database when the component mounts
   useEffect(() => {
     const fetchNews = async () => {
@@ -65,7 +75,9 @@ const NewsPage = () => {
       }
     }
   }
-
+  if ( admin !== "admin") {
+    return <div>Access Denied</div>;
+  }
   return (
     <div className="min-h-screen bg-gray-50">
     <div className="container mx-auto p-6">

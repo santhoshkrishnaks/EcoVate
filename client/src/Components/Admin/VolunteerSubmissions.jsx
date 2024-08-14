@@ -6,7 +6,17 @@ const VolunteerSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state for fetching data
   const [error, setError] = useState(""); // Error state for fetching data
+  const [admin,setAdmin]=useState("");
   const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
   useEffect(() => {
     // Fetch data from the API
     axios.get('https://ecovate-nqq4.onrender.com/volunteer')
@@ -53,7 +63,7 @@ const VolunteerSubmissions = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  if (user.publicMetadata.role !== 'admin') {
+  if ( admin !== "admin") {
     return <div>Access Denied</div>;
   }
   return (

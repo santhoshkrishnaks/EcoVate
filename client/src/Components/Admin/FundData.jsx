@@ -7,6 +7,17 @@ const FundPage = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [admin,setAdmin]=useState("");
+  const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -38,6 +49,9 @@ const FundPage = () => {
   // Separate payments based on whether they have a post_id or not
   const donationsToPosts = payments.filter((payment) => payment.post_id);
   const donationsToUs = payments.filter((payment) => !payment.post_id);
+  if ( admin !== "admin") {
+    return <div>Access Denied</div>;
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto p-6">
