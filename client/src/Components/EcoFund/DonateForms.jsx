@@ -220,14 +220,14 @@ const DonateForms = (postid) => {
             const data=getPaymentDataForPost();
         console.log(data);
         try{
-          const response=await axios.post("http://localhost:5000/ecofund",{...data});
+          const response=await axios.post("https://ecovate-nqq4.onrender.com/ecofund",{...data});
           console.log("Posted successfully",response);
         }
         catch(error){
           console.error('Error posting data:', error);
         }
 
-        }, 1000); // Delay step transition by 1000ms (1 second)
+        }, 1000);
       }
     }
   };

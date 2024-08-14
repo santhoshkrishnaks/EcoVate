@@ -42,10 +42,8 @@ export const getPostbyUser = async (req, res) => {
 
 export const deletebyId = async (req, res) => {
   try {
-    const { title } = req.params;
-    const deletepost = await EcoConnect.findOneAndDelete({
-      title: new RegExp(`^${title}$`, "i"),
-    });
+    const { id } = req.params;
+    const deletepost = await EcoConnect.findByIdAndDelete(id);
     if (!deletepost) {
       return res.status(404).json({ message: "post not found" });
     }

@@ -35,7 +35,6 @@ const App = () => {
             <Route path="/Ecofund" element={<Donate />} />
             <Route path="/Profile" element={<UserProfilePage />} />
             <Route path="/form" element={<Form />} />
-            {/* <Route path="/profile" element={<ProfilePage/>} /> */}
             <Route path="/" element={<Home />} />
             <Route
               path="/signin"

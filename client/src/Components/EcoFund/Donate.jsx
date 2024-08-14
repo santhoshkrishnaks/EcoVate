@@ -6,7 +6,6 @@ import Nav from "../Header_Footer/Nav";
 import Footer from "../Header_Footer/Footer";
 import Create from "../Context";
 import Loader from "../Loader/Loader.jsx";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export const Donate = () => {

@@ -525,9 +525,18 @@ const Ecocalc = () => {
     offsetsSpent: "",
     offsetsType: "",
   });
-
-  const { user } = useUser(); // Importing user from Clerk
-
+  const { load, setLoad } = useContext(Create);
+  const [username,setUsername] = useState();
+  const { user } = useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setUsername(user.username);
+          }
+        };
+        log();
+      }, [user]);
+  const [send,setSend]=useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -545,20 +554,25 @@ const Ecocalc = () => {
   const handleSubmit = async () => {
     // Calculate scores based on formData
     const scores = calculateCarbonFootprint(formData);
-    const totalFootprint = Object.values(scores).reduce((acc, score) => acc + score, 0);
+    const totalFootprint = Object.values(scores).reduce(
+      (acc, score) => acc + score,
+      0
+    );
 
     const userData = {
-      username: user.username,
-      email: user.email,
-      // You can add more fields as needed, but ensure they are serializable
+      username:username
     };
     try {
-      await axios.post("http://localhost:5000/ecocalc", {
-        username: user.username,
+      setSend(true);
+      await axios.post("https://ecovate-nqq4.onrender.com/ecocalc", {
+        username: username,
         footprint: totalFootprint,
       });
     } catch (error) {
       console.error("Error posting data:", error);
+    }
+    finally{
+      setSend(false);
     }
     // Navigate to results page and pass both formData and scores via state
     navigate("/result", {
@@ -569,7 +583,6 @@ const Ecocalc = () => {
       },
     });
   };
-  const { load, setLoad } = useContext(Create);
   useEffect(() => {
     setLoad(true);
     setTimeout(() => {
@@ -788,7 +801,7 @@ const Ecocalc = () => {
                 onClick={handleSubmit}
                 className="py-2 px-4 bg-green-600 text-white rounded"
               >
-                Submit
+                {send?("Submitting..."):("Submit")}
               </button>
             </div>
           </div>
