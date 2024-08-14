@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const EcoVisionSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
@@ -7,27 +7,27 @@ const EcoVisionSubmissions = () => {
 
   useEffect(() => {
     // Fetch data from the API
-    axios.get("http://localhost:3000/ecovision")
+    axios.get('https://ecovate-nqq4.onrender.com/ecovision')
       .then((response) => setSubmissions(response.data))
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
   const handleApprove = (id) => {
-    axios.post("http://localhost:3000/approvevision", { id })
+    axios.post('https://ecovate-nqq4.onrender.com/approvevision', { id })
       .then(() => {
-        console.log("Approved:", id);
-        // Update the UI or show a notification
+        console.log('Approval email sent:', id);
+        // Optionally update the UI or show a notification
       })
-      .catch((error) => console.error("Error approving project:", error));
+      .catch((error) => console.error('Error sending approval email:', error));
   };
 
   const handleReject = (id) => {
-    axios.post("http://localhost:3000/rejectvision", { id })
+    axios.post('https://ecovate-nqq4.onrender.com/rejectvision', { id })
       .then(() => {
-        console.log("Rejected:", id);
-        // Update the UI or show a notification
+        console.log('Rejection email sent:', id);
+        // Optionally update the UI or show a notification
       })
-      .catch((error) => console.error("Error rejecting project:", error));
+      .catch((error) => console.error('Error sending rejection email:', error));
   };
 
   const toggleExpand = (index) => {

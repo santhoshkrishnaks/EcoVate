@@ -14,7 +14,6 @@ const Hero = () => {
             <p className="mt-3 text-base text-neutral-700 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
             EcoVate provides innovative solutions for environmental sustainability, with EcoConnect for environmentalist communities, EcoCorp for corporate green credits, and much more.
             </p>
-            
             <div className="mt-5 sm:mt-8 sm:flex lg:justify-start">
               <div className="rounded-md shadow">
                 <a
@@ -52,7 +51,6 @@ const Hero = () => {
               ></dotlottie-player>
             </div>
           </div>
-          {/* End of Image Section */}
         </div>
       </section>
       </div>

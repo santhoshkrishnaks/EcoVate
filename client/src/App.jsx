@@ -21,6 +21,7 @@ import UserProfilePage from "./Components/Profile.jsx";
 import NewsPage from './Components/Admin/NewsPage.jsx'
 import VolunteerSubmissions from './Components/Admin/VolunteerSubmissions.jsx'
 import FundData from "./Components/Admin/FundData.jsx";
+import EcoVisionSubmissions from "./Components/Admin/EcovisionSubmissions.jsx";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [load, setLoad] = useState(false);
@@ -42,6 +43,9 @@ const App = () => {
             <Route path="/Ecofund" element={<Donate />} />
             <Route path="/Profile" element={<UserProfilePage />} />
             <Route path="/form" element={<Form />} />
+            <Route path="/admin/news" element ={<NewsPage/>}/>
+            <Route path="/admin/volunteer" element={<VolunteerSubmissions/>}/>
+            <Route path="/admin/vision" element ={<EcoVisionSubmissions/>}/>
             <Route path="/" element={<Home />} />
             <Route
               path="/signin"
