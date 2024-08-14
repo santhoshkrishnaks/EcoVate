@@ -34,10 +34,7 @@ const EcoVisionSubmissions = () => {
   const toggleExpand = (index) => {
     setExpanded(expanded === index ? null : index);
   };
-  const {user}=useUser();
-  if (user.publicMetadata.role !== 'admin') {
-    return <div>Access Denied</div>;
-  }
+  
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">EcoVision Project Submissions</h1>
