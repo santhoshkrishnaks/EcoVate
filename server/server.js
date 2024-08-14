@@ -33,6 +33,6 @@ app.use("/", commentrouter);
 app.use("/", likerouter);
 
 
-app.listen(5000, () => {
+app.listen(3000, () => {
   console.log(`listening on port 5000`);
 });
