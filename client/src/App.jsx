@@ -20,6 +20,7 @@ import Form from "./Components/EcoCorp/EcoCorpForm.jsx";
 import UserProfilePage from "./Components/Profile.jsx";
 import NewsPage from './Components/Admin/NewsPage.jsx'
 import VolunteerSubmissions from './Components/Admin/VolunteerSubmissions.jsx'
+import FundData from "./Components/Admin/FundData.jsx";
 const App = () => {
   const [showForm, setShowForm] = useState(false);
   const [load, setLoad] = useState(false);
@@ -30,6 +31,7 @@ const App = () => {
         <Router>
           <Routes>
           <Route path="/admin/news" element ={<NewsPage/>}/>
+          <Route path="/admin/fund" element ={<FundData/>}/>
             <Route path="/admin/volunteer" element={<VolunteerSubmissions/>}/>
             <Route path="/Ecoconnect" element={<Feed />} />
             <Route path="/Ecovision" element={<ProjectPop />} />

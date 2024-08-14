@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useUser } from '@clerk/clerk-react';
 
 const NewsPage = () => {
   const [title, setTitle] = useState('');
@@ -63,6 +64,10 @@ const NewsPage = () => {
 
       }
     }
+  }
+  const {user}=useUser();
+  if (user.publicMetadata.role !== 'admin') {
+    return <div>Access Denied</div>;
   }
 
   return (

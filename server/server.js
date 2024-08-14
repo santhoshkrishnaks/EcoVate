@@ -1,6 +1,5 @@
 import express from "express";
 import { connectdb } from "./config/database.js";
-import { landController } from "./Controllers/landing.controller.js";
 import corprouter from "./Routes/route.ecocorp.js";
 import cors from "cors";
 import connectrouter from "./Routes/route.ecoconnect.js";

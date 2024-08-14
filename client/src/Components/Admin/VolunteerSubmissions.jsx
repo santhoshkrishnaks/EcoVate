@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
 
 const VolunteerSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state for fetching data
   const [error, setError] = useState(""); // Error state for fetching data
-
+  const {user}=useUser();
   useEffect(() => {
     // Fetch data from the API
     axios.get('https://ecovate-nqq4.onrender.com/volunteer')
@@ -52,6 +53,9 @@ const VolunteerSubmissions = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
+  if (user.publicMetadata.role !== 'admin') {
+    return <div>Access Denied</div>;
+  }
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Volunteer Submissions</h1>
