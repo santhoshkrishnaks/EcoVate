@@ -6,7 +6,9 @@ import { useUser } from '@clerk/clerk-react';
 import axios from 'axios';
 
 
-const DonateForms = () => {
+const DonateForms = (postid) => {
+  console.log(postid.postid==="");
+  console.log(postid.postid);
   const { user } = useUser();
   const [step, setStep] = useState(1);
   const [paymentType, setPaymentType] = useState('one-time');
@@ -194,13 +196,22 @@ const DonateForms = () => {
          
          const getPaymentDataForPost = () => {
            const amount = selectedAmount || customAmount;
-           return {
+           
+           const paymentdata= {
              username: user.username,
              paymentType,
              amount,
              payment_method: paymentOption,
              transactionId:id,
+             
            };
+
+           if(postid.postid!="")
+           {
+            paymentdata.post_id=postid.postid;
+           }
+           return paymentdata;
+          
          };
 
         setTimeout(async() => {
