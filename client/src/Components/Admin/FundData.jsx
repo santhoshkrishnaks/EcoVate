@@ -12,13 +12,13 @@ const FundPage = () => {
     const fetchPayments = async () => {
       try {
         const paymentsResponse = await axios.get(
-          "http://localhost:5000/ecofund"
+          "https://ecovate-nqq4.onrender.com/ecofund"
         );
         console.log("data",paymentsResponse.data); // Debugging line
         setPayments(paymentsResponse.data);
 
         const totalResponse = await axios.get(
-          "http://localhost:5000/fundtotal"
+          "https://ecovate-nqq4.onrender.com/fundtotal"
         );
         setTotalAmount(totalResponse.data.totalAmount);
 
