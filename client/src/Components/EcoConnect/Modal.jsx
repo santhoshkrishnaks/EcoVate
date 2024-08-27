@@ -15,7 +15,7 @@ const Modal = ({ isVisible, onClose, onSubmit, formData, onChange }) => {
   if (!isVisible) return null;
 
   const options = {
-    apiKey: "public_W142ijZ3bsGoZhEyoow2HLDdFryK",
+    apiKey: "public_W142ikd3ABr1P8zCZjgV9vXhHFZ4",
     maxFileCount: 1,
   };;
 
