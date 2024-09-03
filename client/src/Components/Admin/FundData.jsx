@@ -13,6 +13,7 @@ const FundPage = () => {
         const paymentsResponse = await axios.get(
           "http://localhost:5000/ecofund"
         );
+        console.log("data",paymentsResponse.data); // Debugging line
         setPayments(paymentsResponse.data);
 
         const totalResponse = await axios.get(
@@ -36,7 +37,10 @@ const FundPage = () => {
   // Separate payments based on whether they have a post_id or not
   const donationsToPosts = payments.filter((payment) => payment.post_id);
   const donationsToUs = payments.filter((payment) => !payment.post_id);
-
+  const {user}=useUser();
+  if (user.publicMetadata.role !== 'admin') {
+    return <div>Access Denied</div>;
+  }
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto p-6">
@@ -45,7 +49,7 @@ const FundPage = () => {
             Payments Overview
           </h1>
           <p className="text-lg font-semibold text-gray-700 mb-4">
-            Total Amount: ${totalAmount}
+            Total Amount: ${totalAmount || 0}
           </p>
         </div>
 
@@ -70,21 +74,22 @@ const FundPage = () => {
                   <th className="py-3 px-4 text-left text-gray-700">
                     Payment Method
                   </th>
-                  <th className="py-3 px-4 text-left text-gray-700">Post ID</th>
+                  <th className="py-3 px-4 text-left text-gray-700">Post</th>
                 </tr>
               </thead>
               <tbody>
-                {donationsToPosts.map((payment) => (
-                  <tr key={payment._id} className="border-b border-gray-200">
-                    <td className="py-3 px-4">{payment.transactionId}</td>
-                    <td className="py-3 px-4">{payment.username}</td>
-                    <td className="py-3 px-4">${payment.amount}</td>
-                    <td className="py-3 px-4">{payment.paymentType}</td>
-                    <td className="py-3 px-4">{payment.payment_method}</td>
-                    <td className="py-3 px-4">{payment.post_id}</td>
-                  </tr>
-                ))}
-              </tbody>
+  {donationsToPosts.map((payment) => (
+    <tr key={payment._id} className="border-b border-gray-200">
+      <td className="py-3 px-4">{payment.transactionId || 'N/A'}</td>
+      <td className="py-3 px-4">{payment.username || 'Anonymous'}</td>
+      <td className="py-3 px-4">${payment.amount || 0}</td>
+      <td className="py-3 px-4">{payment.paymentType || 'Unknown'}</td>
+      <td className="py-3 px-4">{payment.payment_method || 'Unknown'}</td>
+      <td className="py-3 px-4">{payment.post_id ? payment.post_id.title : 'N/A'}</td>
+    </tr>
+  ))}
+</tbody>
+
             </table>
           </div>
         </div>
@@ -115,11 +120,11 @@ const FundPage = () => {
               <tbody>
                 {donationsToUs.map((payment) => (
                   <tr key={payment._id} className="border-b border-gray-200">
-                    <td className="py-3 px-4">{payment.transactionId}</td>
-                    <td className="py-3 px-4">{payment.username}</td>
-                    <td className="py-3 px-4">${payment.amount}</td>
-                    <td className="py-3 px-4">{payment.paymentType}</td>
-                    <td className="py-3 px-4">{payment.payment_method}</td>
+                    <td className="py-3 px-4">{payment.transactionId || 'N/A'}</td>
+                    <td className="py-3 px-4">{payment.username || 'Anonymous'}</td>
+                    <td className="py-3 px-4">${payment.amount || 0}</td>
+                    <td className="py-3 px-4">{payment.paymentType || 'Unknown'}</td>
+                    <td className="py-3 px-4">{payment.payment_method || 'Unknown'}</td>
                   </tr>
                 ))}
               </tbody>
