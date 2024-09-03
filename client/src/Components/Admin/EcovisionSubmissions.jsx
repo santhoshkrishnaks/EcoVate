@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useUser } from "@clerk/clerk-react";
 
 const EcoVisionSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
   const [expanded, setExpanded] = useState(null);
+  const [admin,setAdmin]=useState("");
+  const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
 
   useEffect(() => {
     // Fetch data from the API
@@ -33,8 +45,7 @@ const EcoVisionSubmissions = () => {
   const toggleExpand = (index) => {
     setExpanded(expanded === index ? null : index);
   };
-  const {user}=useUser();
-  if (user.publicMetadata.role !== 'admin') {
+  if ( admin !== "admin") {
     return <div>Access Denied</div>;
   }
   return (

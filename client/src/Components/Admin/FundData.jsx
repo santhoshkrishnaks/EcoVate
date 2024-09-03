@@ -1,23 +1,35 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 
 const FundPage = () => {
   const [payments, setPayments] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [admin,setAdmin]=useState("");
+  const {user}=useUser();
+  useEffect(() => {
+    const log = async () => {
+        if (user) {
+            setAdmin(user.publicMetadata.role);
+          }
+        };
+        
+        log();
+      }, [user]);
 
   useEffect(() => {
     const fetchPayments = async () => {
       try {
         const paymentsResponse = await axios.get(
-          "http://localhost:5000/ecofund"
+          "https://ecovate-nqq4.onrender.com/ecofund"
         );
         console.log("data",paymentsResponse.data); // Debugging line
         setPayments(paymentsResponse.data);
 
         const totalResponse = await axios.get(
-          "http://localhost:5000/fundtotal"
+          "https://ecovate-nqq4.onrender.com/fundtotal"
         );
         setTotalAmount(totalResponse.data.totalAmount);
 
@@ -37,8 +49,7 @@ const FundPage = () => {
   // Separate payments based on whether they have a post_id or not
   const donationsToPosts = payments.filter((payment) => payment.post_id);
   const donationsToUs = payments.filter((payment) => !payment.post_id);
-  const {user}=useUser();
-  if (user.publicMetadata.role !== 'admin') {
+  if ( admin !== "admin") {
     return <div>Access Denied</div>;
   }
   return (
