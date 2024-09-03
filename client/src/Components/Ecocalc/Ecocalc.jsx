@@ -5,8 +5,8 @@ import Nav from "../Header_Footer/Nav";
 import { useEffect, useContext } from "react";
 import Create from "../Context";
 import Loader from "../Loader/Loader.jsx";
-import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 // EnergyForm Component
 const EnergyForm = ({ formData, handleChange }) => {
@@ -528,6 +528,7 @@ const Ecocalc = () => {
   const { load, setLoad } = useContext(Create);
   const [username,setUsername] = useState();
   const { user } = useUser();
+  const { getToken } = useAuth();
   useEffect(() => {
     const log = async () => {
         if (user) {
@@ -563,17 +564,34 @@ const Ecocalc = () => {
       username:username
     };
     try {
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+
       setSend(true);
-      await axios.post("https://ecovate-nqq4.onrender.com/ecocalc", {
-        username: username,
-        footprint: totalFootprint,
-      });
+      await axios.post(
+  "https://ecovate-nqq4.onrender.com/ecocalc",
+  {
+    username: username,
+    footprint: totalFootprint,
+  },
+  {
+    withCredentials: true, // Ensure cookies are sent with the request
+    headers: {
+      Authorization: `Bearer ${token}`, // Use the token variable here
+    },
+  }
+);
     } catch (error) {
       console.error("Error posting data:", error);
-    }
-    finally{
+    } finally {
       setSend(false);
     }
+    
     // Navigate to results page and pass both formData and scores via state
     navigate("/result", {
       state: {

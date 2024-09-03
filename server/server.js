@@ -13,6 +13,7 @@ import commentrouter from "./Routes/route.comments.js";
 import likerouter from "./Routes/route.likes.js";
 import userrouter from './Routes/route.user.js'
 
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -21,8 +22,7 @@ app.use(cors());
 
 connectdb();
 
-
-app.use("/", connectrouter);
+app.use("/", connectrouter);    
 app.use("/", ecovisionrouter);
 app.use("/", volunteerrouter);
 app.use("/", newsrouter);
@@ -31,9 +31,10 @@ app.use("/", corprouter);
 app.use("/", fundrouter);
 app.use("/", calcRouter);
 app.use("/", commentrouter);
-app.use("/", likerouter);
+app.use("/", likerouter); 
+
 
 
 app.listen(3000, () => {
-  console.log(`listening on port 5000`);
+  console.log(`listening on port 3000`);
 });

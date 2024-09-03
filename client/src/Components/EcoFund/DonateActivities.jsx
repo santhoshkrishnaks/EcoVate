@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DonateForms from "./DonateForms";
+import { useUser, useAuth } from '@clerk/clerk-react';
 const DonateActivities = () => {
    const [showPopup, setShowPopup] = useState(false);
   const [activities, setActivities] = useState([]);
+  const { user } = useUser();
+  const { getToken } = useAuth();
   useEffect(() => {
     const fetchActivities = async () => {
       try {
-        const response = await axios.get("https://ecovate-nqq4.onrender.com/gposts");
+        const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+      const response = await axios.get("https://ecovate-nqq4.onrender.com/gposts", {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
+      });
         setActivities(response.data);
       } catch (error) {
         console.error("Error fetching activities:", error);

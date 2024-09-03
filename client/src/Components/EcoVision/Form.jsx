@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import Create from '../Context';
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 const Form = () => {
   const { showForm, setShowForm } = useContext(Create);
   const { user } = useUser();
+  const { getToken } = useAuth();
   const [formData, setFormData] = useState({
     username: user.username || "",
     projectLeadName: '',
@@ -29,9 +30,8 @@ const Form = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Mapping form data to match schema field names
     const mappedData = {
-      username: formData.username, // Include username
+      username: formData.username,
       project_lead_name: formData.projectLeadName,
       contact_email: formData.contactEmail,
       contact_phone: formData.contactPhone,
@@ -39,21 +39,44 @@ const Form = () => {
       project_title: formData.projectTitle,
       project_description: formData.projectDescription,
       problem_statement: formData.problemStatement,
-      drivelink: formData.detailedProjectPlanLink, // Changed to drivelink
+      drivelink: formData.detailedProjectPlanLink,
     };
 
     try {
-      const response = await axios.post('https://ecovate-nqq4.onrender.com/ecovision', mappedData);
-      console.log('Form data submitted:', response.data);
+      // Acquire the token silently
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',token);
+
+      // Make the API request using the acquired token
+      const response = await axios.post(
+        'https://ecovate-nqq4.onrender.com/ecovision',
+        mappedData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            
+          },
+        }
+      );
+
+      console.log('Form data submitted successfully:', response.data);
+      alert('Form submitted successfully!');
       setShowForm(false);
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error during form submission:', error);
+      alert('Failed to submit the form. Please try again.');
     }
   };
 
   const handleFormClick = () => {
     setShowForm(false);
   };
+
 
   return (
     <form className="bg-white p-8 rounded-lg shadow-lg" onSubmit={handleFormSubmit}>

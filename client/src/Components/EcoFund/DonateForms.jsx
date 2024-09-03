@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib'; 
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
 import axios from 'axios';
 
 
@@ -10,6 +10,7 @@ const DonateForms = (postid) => {
   console.log(postid.postid==="");
   console.log(postid.postid);
   const { user } = useUser();
+  const { getToken } = useAuth();
   const [step, setStep] = useState(1);
   const [paymentType, setPaymentType] = useState('one-time');
   const [selectedAmount, setSelectedAmount] = useState('');
@@ -220,7 +221,18 @@ const DonateForms = (postid) => {
             const data=getPaymentDataForPost();
         console.log(data);
         try{
-          const response=await axios.post("https://ecovate-nqq4.onrender.com/ecofund",{...data});
+          const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+      const response = await axios.post("https://ecovate-nqq4.onrender.com/ecofund", { ...data }, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
+      });
           console.log("Posted successfully",response);
         }
         catch(error){

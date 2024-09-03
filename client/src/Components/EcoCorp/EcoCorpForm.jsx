@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import axios from "axios";
 import Footer from "../Header_Footer/Footer";
 import Nav from "../Header_Footer/Nav";
+import { useUser, useAuth } from '@clerk/clerk-react';
+
+
 
 const Form = () => {
   // State to store form data
+  const { user } = useUser();
+  const { getToken } = useAuth();
   const [formData, setFormData] = useState({
     email_address: "",
     org_name: "",
@@ -34,9 +39,21 @@ const Form = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://ecovate-nqq4.onrender.com/ecocorp", formData);
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+       await axios.post("https://ecovate-nqq4.onrender.com/ecocorp", formData, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+          'Content-Type': 'multipart/form-data', 
+        }
+      });
       console.log("Form data submitted successfully.");
-      // Optionally reset form after submission
+      
       setFormData({
         email_address: "",
         org_name: "",

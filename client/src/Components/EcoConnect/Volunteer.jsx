@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useUser } from '@clerk/clerk-react';
+import { useUser, useAuth } from '@clerk/clerk-react';
+
 
 const JoinVolunteerForm = ({ onClose }) => {
   const { user } = useUser();
+  const { getToken } = useAuth();
   const [username, setUsername] = useState(user.username || "");
   const [email_address, setEmail] = useState(user.email || "");
   const [phone, setPhone] = useState("");
@@ -33,6 +35,13 @@ const JoinVolunteerForm = ({ onClose }) => {
     }
 
     try {
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
       const response = await axios.post("https://ecovate-nqq4.onrender.com/volunteer", {
         email_address,
         username,
@@ -42,6 +51,10 @@ const JoinVolunteerForm = ({ onClose }) => {
         preferredActivities,
         availability,
         motivation,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
       });
 
       if (response.status !== 200) {

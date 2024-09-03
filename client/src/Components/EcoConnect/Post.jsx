@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useUser, useAuth } from '@clerk/clerk-react';
 
 const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => {
   const [liked, setLiked] = useState(false);
@@ -10,12 +11,23 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
   const [commentText, setCommentText] = useState("");
   const [showCommentBox, setShowCommentBox] = useState(false);
   const navi = useNavigate();
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
   const fetchComment = async () => {
     try {
-      const response = await axios.get(
-        `https://ecovate-nqq4.onrender.com/gcomment/${post._id}`
-      );
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+      const response = await axios.get(`https://ecovate-nqq4.onrender.com/gcomment/${post._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
+      });
       setComments(response.data);
     } catch (error) {
       console.error(error);
@@ -32,6 +44,9 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
         params: {
           post_id: post._id,
           username: currentUser
+        },
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
         }
       });
       setLiked(responseLike.data.liked);
@@ -50,8 +65,18 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
       username: currentUser
     };
     try {
-      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
-      const response=await axios.put(`https://ecovate-nqq4.onrender.com/ulikes/${post._id}`);
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
+    
+      
+      const response = await axios.put(`https://ecovate-nqq4.onrender.com/ulikes/${post._id}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
       setlikes(response.data.likes);
       fetchLike();
     } catch (error) {
@@ -65,8 +90,18 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
       username: currentUser
     };
     try {
-      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body);
-      const response=await axios.put(`https://ecovate-nqq4.onrender.com/dlikes/${post._id}`);
+      await axios.put("https://ecovate-nqq4.onrender.com/ulike", body, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
+    
+      
+      const response = await axios.put(`https://ecovate-nqq4.onrender.com/dlikes/${post._id}`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
       setlikes(response.data.likes);
       fetchLike();
     } catch (error) {
@@ -76,7 +111,11 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
 
   const handleDeletePost = async () => {
     try {
-      await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`);
+      const response = await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
       alert("Post deleted!");
       fetchData();
     } catch (error) {
@@ -92,7 +131,11 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
         content: commentText,
       };
       try {
-        await axios.post("https://ecovate-nqq4.onrender.com/comment", newComment);
+        await axios.post("https://ecovate-nqq4.onrender.com/comment", newComment, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+          }
+        });
         setCommentText("");
         setShowCommentBox(false);
         fetchComment();
@@ -106,7 +149,11 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
 
   const handleDeleteComment = async (id) => {
     try {
-      await axios.delete(`https://ecovate-nqq4.onrender.com/dcomment/${id}`);
+      await axios.delete(`https://ecovate-nqq4.onrender.com/dcomment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
+      });
       fetchComment();
     } catch (error) {
       console.error(error);

@@ -19,11 +19,23 @@ const Feed = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userimage,setUserimage] =useState();
   const { user } = useUser();
+  const { getToken } = useAuth();
   const navi =useNavigate();
   const [news,setNews]=useState([]);
   const getnews = async() =>{
     try {
-      const response=await axios.get("https://ecovate-nqq4.onrender.com/econews");
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+      const response = await axios.get("https://ecovate-nqq4.onrender.com/econews", {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      });
       console.log(response.data);
       setNews(response.data);
     } catch (error) {
@@ -51,8 +63,19 @@ const Feed = () => {
         
         const fetchData = async () => {
           try {
+            const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
             setIsLoading(true)
-            const response = await axios.get("https://ecovate-nqq4.onrender.com/gposts");
+            const response = await axios.get("https://ecovate-nqq4.onrender.com/gposts", {
+              headers: {
+                Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+              }
+            });
             setPosts(response.data);
           } catch (error) {
             console.error("Error in fetch posts", error);
@@ -129,7 +152,18 @@ const Feed = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://ecovate-nqq4.onrender.com/posts", newPost);
+      const token = await getToken();
+
+      if (!token) {
+        throw new Error('Failed to acquire token');
+      }
+
+      console.log('Acquired token successfully:',);
+      const response = await axios.post("https://ecovate-nqq4.onrender.com/posts", newPost, {
+        headers: {
+          Authorization: `Bearer ${token}`, // Add the Authorization header with the token
+        }
+      });
       alert("New initiative submitted!");
       setIsModalVisible(false);
     } catch (error) {
