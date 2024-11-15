@@ -33,14 +33,22 @@ const EcoVisionSubmissions = () => {
       .catch((error) => console.error('Error sending approval email:', error));
   };
 
-  const handleReject = (id) => {
-    axios.post('https://ecovate-nqq4.onrender.com/rejectvision', { id })
-      .then(() => {
-        console.log('Rejection email sent:', id);
-        // Optionally update the UI or show a notification
-      })
-      .catch((error) => console.error('Error sending rejection email:', error));
+  const handleReject = async (id) => {
+    try{
+    await axios.post('https://ecovate-nqq4.onrender.com/rejectvision', { id });
       
+        console.log('Rejection email sent:', id);
+        const response = await axios.get(
+          "https://ecovate-nqq4.onrender.com/ecovision"
+        );
+        setSubmissions(response.data);
+        window.alert("Rejection successful");
+        // Optionally update the UI or show a notification
+    }
+      catch(error){
+        console.error('Error sending rejection email:', error);
+      }
+
   };
 
   const toggleExpand = (index) => {

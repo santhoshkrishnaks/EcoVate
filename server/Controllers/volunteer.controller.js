@@ -39,7 +39,7 @@ const postvolunteer = async (req, res) => {
 
 const getvolunteer = async (req, res) => {
   try {
-    const vol = await Volunteer.find({});
+    const vol = await Volunteer.find({ status:false });
     res.status(200).json(vol);
   } catch (error) {
     res.status(400).json({ error: error.message });

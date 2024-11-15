@@ -46,7 +46,7 @@ const VolunteerSubmissions = () => {
   };
 
   const handleReject = (id, email) => {
-    axios.post('https://ecovate-nqq4.onrender.com/decision', {
+    axios.post('https://ecovate-nqq4.onrender.com/volunteer/decision', {
       id,
       action: 'reject'
     })
