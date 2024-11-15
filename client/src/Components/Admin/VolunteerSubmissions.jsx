@@ -30,35 +30,53 @@ const VolunteerSubmissions = () => {
       });
   }, []);
 
-  const handleAccept = (id, email) => {
-    axios.post('https://ecovate-nqq4.onrender.com/volunteer/decision', {
-      id,
-      action: 'accept'
-    })
-    .then(response => {
+  const handleAccept = async (id, email) => {
+    try {
+      // Send the acceptance request
+      await axios.post("https://ecovate-nqq4.onrender.com/volunteer/decision", {
+        id,
+        action: "accept",
+      });
+
       console.log("Accepted:", id);
-      alert("Volunteer accepted and email sent.");
-    })
-    .catch(error => {
+
+      // Fetch the updated data
+      const response = await axios.get(
+        "https://ecovate-nqq4.onrender.com/volunteer"
+      );
+      setSubmissions(response.data); // Update the state with the new data
+
+      window.alert("Volunteer accepted and email sent.");
+    } catch (error) {
       console.error("Error accepting submission:", error);
-      alert("Failed to accept volunteer.");
-    });
+      window.alert("Failed to accept volunteer. Please try again.");
+    }
   };
 
-  const handleReject = (id, email) => {
-    axios.post('https://ecovate-nqq4.onrender.com/volunteer/decision', {
-      id,
-      action: 'reject'
-    })
-    .then(response => {
-      console.log("Rejected:", id);
-      alert("Volunteer rejected and email sent.");
-    })
-    .catch(error => {
-      console.error("Error rejecting submission:", error);
-      alert("Failed to reject volunteer.");
-    });
-  };
+
+ const handleReject = async (id, email) => {
+   try {
+     // Send the rejection request
+     await axios.post("https://ecovate-nqq4.onrender.com/volunteer/decision", {
+       id,
+       action: "reject",
+     });
+
+     console.log("Rejected:", id);
+
+     // Fetch the updated data
+     const response = await axios.get(
+       "https://ecovate-nqq4.onrender.com/volunteer"
+     );
+     setSubmissions(response.data); // Update the state with the new data
+
+     window.alert("Volunteer rejected and email sent.");
+   } catch (error) {
+     console.error("Error rejecting submission:", error);
+     window.alert("Failed to reject volunteer. Please try again.");
+   }
+ };
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
