@@ -47,7 +47,7 @@ const Form = () => {
       const response = await axios.post('https://ecovate-nqq4.onrender.com/ecovision', mappedData);
       console.log('Form data submitted:', response.data);
       setShowForm(false);
-      toast.success('Your Application has been received. We will get back to you soon.',{
+      toast.success('Thanks for applying! We’ll reach out shortly.',{
         duration: 3000
       });
       
