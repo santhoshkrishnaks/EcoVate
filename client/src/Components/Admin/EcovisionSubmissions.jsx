@@ -40,6 +40,7 @@ const EcoVisionSubmissions = () => {
         // Optionally update the UI or show a notification
       })
       .catch((error) => console.error('Error sending rejection email:', error));
+      
   };
 
   const toggleExpand = (index) => {
