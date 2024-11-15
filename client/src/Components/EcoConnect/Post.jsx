@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import img from "../../assets/delete.svg";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import {toast} from 'react-hot-toast';
 
 const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => {
   const [liked, setLiked] = useState(false);
@@ -75,14 +76,19 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
   };
 
   const handleDeletePost = async () => {
-    try {
-      await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`);
-      alert("Post deleted!");
-      fetchData();
-    } catch (error) {
-      console.error(error);
+    const isConfirmed = window.confirm("Are you sure you want to delete this post?");
+
+    if (isConfirmed) {
+        try {
+            await axios.delete(`https://ecovate-nqq4.onrender.com/dposts/${post._id}`);
+            toast.success("Post successfully deleted!"); 
+            fetchData(); 
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occurred while deleting the post."); 
+        }
     }
-  };
+};
 
   const handleAddComment = async () => {
     if (commentText.trim()) {
@@ -124,39 +130,39 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
   };
 
   return (
-    <div className="post bg-white rounded-lg shadow-md p-4 mb-6 mx-2 sm:mx-4 md:mx-6 lg:mx-8">
-      <div className="post-header flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+    <div className="p-4 mx-2 mb-6 bg-white rounded-lg shadow-md post sm:mx-4 md:mx-6 lg:mx-8">
+      <div className="flex flex-col items-start justify-between mb-4 post-header sm:flex-row sm:items-center">
         <div className="flex">
           <img
             src={post.image_url}
             alt={post.username}
-            className="profile-picture rounded-full cursor-pointer postimg"
+            className="rounded-full cursor-pointer profile-picture postimg"
             onClick={() => onProfileClick(post.username)}
           />
-          <div className="post-user-info ml-4">
-            <div className="user-name font-semibold cursor-pointer" onClick={() => onProfileClick(post.username)} >
+          <div className="ml-4 post-user-info">
+            <div className="font-semibold cursor-pointer user-name" onClick={() => onProfileClick(post.username)} >
               {post.username}
             </div>
-            <div className="post-location text-gray-700">
+            <div className="text-gray-700 post-location">
               {post.location && <span className="text-slate-700">{post.location}</span>}
             </div>
-            <div className="post-timestamp text-gray-500 text-sm">
+            <div className="text-sm text-gray-500 post-timestamp">
               {new Date(post.createdAt).toLocaleString()}
             </div>
           </div>
         </div>
         {currentUser === post.username && (
-          <button onClick={handleDeletePost} className="text-white px-4 py-2">
+          <button onClick={handleDeletePost} className="px-4 py-2 text-white">
             <img src={img} height={30} width={30} alt="Delete Post" />
           </button>
         )}
       </div>
-      <div className="post-content mb-4">
-        <h3 className="text-xl font-bold mb-2 text-slate-700">{post.title}</h3>
+      <div className="mb-4 post-content">
+        <h3 className="mb-2 text-xl font-bold text-slate-700">{post.title}</h3>
         {post.image && <img src={post.image} alt="Post content" className="w-full h-auto rounded-lg" />}
       </div>
       <p className="mb-2">{post.description}</p>
-      <div className="post-engagement flex flex-row space-x-4 mb-4">
+      <div className="flex flex-row mb-4 space-x-4 post-engagement">
         <button
           onClick={liked ? handleDLike : handleLike}
           className={`like-button ${liked ? "text-red-500" : "text-blue-500"}`}
@@ -166,44 +172,44 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
         </button>
         <button
           onClick={() => setShowCommentBox(!showCommentBox)}
-          className="comment-button text-blue-500 mt-0"
+          className="mt-0 text-blue-500 comment-button"
         >
           Comment
         </button>
         {post.status === "Ongoing" && (
-          <Link to="/Ecofund" className="donate-button text-blue-500 mt-0">
+          <Link to="/Ecofund" className="mt-0 text-blue-500 donate-button">
             Donate
           </Link>
         )}
       </div>
       {showCommentBox && (
-        <div className="comment-box mt-4">
+        <div className="mt-4 comment-box">
           <textarea
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Write a comment..."
-            className="w-full p-2 border rounded-lg mb-2"
+            className="w-full p-2 mb-2 border rounded-lg"
           />
           <button
             onClick={handleAddComment}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+            className="px-4 py-2 text-white transition duration-200 bg-blue-500 rounded-lg shadow hover:bg-blue-700"
           >
             Add Comment
           </button>
         </div>
       )}
-      <div className="comments mt-4">
+      <div className="mt-4 comments">
         {comments.map((comment, index) => (
           <div
             key={index}
-            className="comment bg-gray-100 p-2 rounded-lg mb-2 flex flex-col sm:flex-row items-start sm:items-center"
+            className="flex flex-col items-start p-2 mb-2 bg-gray-100 rounded-lg comment sm:flex-row sm:items-center"
           >
-            <div className="comment-user font-semibold mr-2">{comment.username}:</div>
-            <div className="comment-text flex-1">{comment.content}</div>
+            <div className="mr-2 font-semibold comment-user">{comment.username}:</div>
+            <div className="flex-1 comment-text">{comment.content}</div>
             {currentUser === comment.username && (
               <button
                 onClick={() => handleDeleteComment(comment._id)}
-                className="text-red-500 mt-2 sm:mt-0"
+                className="mt-2 text-red-500 sm:mt-0"
               >
                 <img src={img} alt="Delete Comment" height={20} width={20} />
               </button>
@@ -212,18 +218,18 @@ const Post = ({ post, onProfileClick, handleSearch, currentUser,fetchData }) => 
         ))}
       </div>
       {post.status === "Ongoing" && (
-        <div className="post-call-to-action mb-4 lg:block">
+        <div className="mb-4 post-call-to-action lg:block">
           <p className="hidden md:block">Be Part of This Impactful Change!</p>
           <button onClick={handleJoinTeam} className="text-green-700">
             Join the team
           </button>
         </div>
       )}
-      <div className="post-tags flex flex-wrap">
+      <div className="flex flex-wrap post-tags">
         {post.tags.map((tag) => (
           <button
             key={tag}
-            className="post-tag bg-teal-100 text-teal-800 px-2 py-1 rounded-lg mr-2 mb-2"
+            className="px-2 py-1 mb-2 mr-2 text-teal-800 bg-teal-100 rounded-lg post-tag"
             onClick={() => handleSearch(tag)}
           >
             #{tag}

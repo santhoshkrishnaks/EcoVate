@@ -22,7 +22,7 @@ const DonateActivities = () => {
     setShowPopup(true);
   };
   return (
-    <div className="  lg:gap-19 p-6 bg-green-100">
+    <div className="p-6 bg-green-100 lg:gap-19">
       {activities.map((activity, index) => (
         <div
           key={index}
@@ -31,28 +31,28 @@ const DonateActivities = () => {
           <img
             src={activity.image}
             alt={activity.title}
-            className="w-full md:w-1/3 h-48 object-cover"
+            className="object-cover w-full h-48 md:w-1/3"
           />
-          <div className="p-4 flex-1">
-            <h2 className="text-xl font-bold mb-2">{activity.title}</h2>
-            <p className="text-gray-700 mb-2">{activity.description}</p>
+          <div className="flex-1 p-4 overflow-y-scroll max-h-48">
+            <h2 className="mb-2 text-xl font-bold">{activity.title}</h2>
+            <p className="mb-2 text-gray-700">{activity.description}</p>
             <div className="flex items-center mb-4">
               <div className="flex justify-end space-x-4">
-                <button className="bg-blue-500 text-white md:px-4 md:py-2 rounded-md">
+                <button className="text-white bg-blue-500 rounded-md md:px-4 md:py-2">
                   Read More
                 </button>
                 <button
-                  className="bg-green-500 text-white md:px-4 md:py-2 rounded-md"
+                  className="text-white bg-green-500 rounded-md md:px-4 md:py-2"
                   onClick={handleDonateNowClick}
                 >
                   Donate Now
                 </button>
                 {showPopup && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center ">
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 ">
                     <div className="bg-green-100 p-1 rounded shadow-lg w-[600px]">
                       <div className="flex">
                         <button
-                          className=" ml-5 align-right text-xl font-bold text-black-600"
+                          className="ml-5 text-xl font-bold align-right text-black-600"
                           onClick={handleClosePopup}
                         >
                           &times;

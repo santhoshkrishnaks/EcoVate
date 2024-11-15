@@ -1,50 +1,79 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import '@dotlottie/player-component/dist/dotlottie-player.mjs';
-import {Link} from "react-router-dom"
+import { useUser, useAuth } from '@clerk/clerk-react';
+import toast from 'react-hot-toast';
+
 const Hero = () => {
-    const lottiePlayerSrc="https://lottie.host/575d36dd-4d87-421f-ae2f-4600b6e9215f/JJWwJ87e6Z.json"
+  const { user } = useUser();
+  const { isSignedIn, signOut } = useAuth();
+
+  useEffect(() => {
+    // Show toast only once per login, even across page reloads
+    const showToastOnce = () => {
+      // If user is signed in and the toast flag is not set in localStorage, show toast
+      if (isSignedIn && !localStorage.getItem('toastShown')) {
+        toast.success(`Welcome back ${user.username}`, {
+          duration: 4000,
+        });
+        localStorage.setItem('toastShown', 'true'); // Mark the toast as shown
+      }
+    };
+
+    showToastOnce();
+  }, [isSignedIn, user]); // Run effect when `isSignedIn` or `user` changes
+
+  useEffect(() => {
+    // Reset the localStorage flag when the user logs out
+    if (!isSignedIn) {
+      localStorage.removeItem('toastShown'); // Remove the flag upon logout
+    }
+  }, [isSignedIn]); // This will run whenever the user logs in or out
+
+  const lottiePlayerSrc =
+    'https://lottie.host/575d36dd-4d87-421f-ae2f-4600b6e9215f/JJWwJ87e6Z.json';
+
   return (
     <div className='min-h-screen bg-green-100'>
-    <section className="sm:mt-6  lg:-mt-[112px]  max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen ">
-        <div className="mb-10 mx-auto max-w-7xl px-4 sm:-mt-[24px] sm:px-6 lg:mt-20 lg:px-3 xl:mt-28 flex gap-3 flex-col lg:flex-row">
-          <div className="text-left lg:py-14 sm:py-8 mt-10">
-            <h1 className="text-4xl tracking-tight font-extrabold text-neutral-700 sm:text-5xl md:text-6xl lg:text-7xl">
-              <span className="block text-neutral-700 xl:inline">Redefining <span className="block xl:inline text-green-900">Sustainability</span> with Every Choice</span>
+      <section className='sm:mt-6 lg:-mt-[112px] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-screen '>
+        <div className='mb-10 mx-auto max-w-7xl px-4 sm:-mt-[24px] sm:px-6 lg:mt-20 lg:px-3 xl:mt-28 flex gap-3 flex-col lg:flex-row'>
+          <div className='mt-10 text-left lg:py-14 sm:py-8'>
+            <h1 className='text-4xl font-extrabold tracking-tight text-neutral-700 sm:text-5xl md:text-6xl lg:text-7xl'>
+              <span className='block text-neutral-700 xl:inline'>
+                Redefining{' '}
+                <span className='block text-green-900 xl:inline'>Sustainability</span> with Every Choice
+              </span>
             </h1>
-            <p className="mt-3 text-base text-neutral-700 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl">
-            EcoVate provides innovative solutions for environmental sustainability, with EcoConnect for environmentalist communities, EcoCorp for corporate green credits, and much more.
+            <p className='mt-3 text-base text-neutral-700 sm:mt-5 sm:text-lg sm:max-w-xl md:mt-5 md:text-xl'>
+              EcoVate provides innovative solutions for environmental sustainability, with EcoConnect for environmentalist communities, EcoCorp for corporate green credits, and much more.
             </p>
-            <div className="mt-5 sm:mt-8 sm:flex lg:justify-start">
-              <div className="rounded-md shadow">
+            <div className='mt-5 sm:mt-8 sm:flex lg:justify-start'>
+              <div className='rounded-md shadow'>
                 <a
                   href='#connect'
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-800 hover:bg-gray-600 md:py-4 md:text-lg md:px-10"
+                  className='flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-gray-800 border border-transparent rounded-md hover:bg-gray-600 md:py-4 md:text-lg md:px-10'
                 >
                   Explore Now !!
                 </a>
               </div>
-              <div className="mt-3 sm:mt-0 sm:ml-3">
-              </div>
             </div>
-            
           </div>
-         
-          <div className="lg:inset-y-0 lg:right-0 lg:w-1/2 lg:py-12 sm:mt-8  ">
-            <div className="hidden sm:block">
+
+          <div className='lg:inset-y-0 lg:right-0 lg:w-1/2 lg:py-12 sm:mt-8 '>
+            <div className='hidden sm:block'>
               <dotlottie-player
                 src={lottiePlayerSrc}
-                background="transparent"
-                speed="1"
+                background='transparent'
+                speed='1'
                 style={{ width: '550px', height: '550px' }}
                 loop
                 autoplay
               ></dotlottie-player>
             </div>
-            <div className="block sm:hidden">
+            <div className='block sm:hidden'>
               <dotlottie-player
-               src={lottiePlayerSrc}
-                background="transparent"
-                speed="1"
+                src={lottiePlayerSrc}
+                background='transparent'
+                speed='1'
                 style={{ width: '290px', height: '350px' }}
                 loop
                 autoplay
@@ -53,8 +82,8 @@ const Hero = () => {
           </div>
         </div>
       </section>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
-export default Hero
+export default Hero;

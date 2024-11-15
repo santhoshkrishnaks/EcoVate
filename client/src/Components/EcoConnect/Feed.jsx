@@ -10,6 +10,7 @@ import Loader from "../Loader/Loader.jsx";
 import Create from "../Context";
 import { useUser, useAuth } from "@clerk/clerk-react";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Feed = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -130,9 +131,10 @@ const Feed = () => {
     e.preventDefault();
     try {
       await axios.post("https://ecovate-nqq4.onrender.com/posts", newPost);
-      alert("New initiative submitted!");
+    toast.success("Post created successfully"); 
       setIsModalVisible(false);
     } catch (error) {
+      toast.error("Error creating post. Please try again.");
       console.log(error);
     } finally {
       fetchData();
@@ -163,10 +165,10 @@ const Feed = () => {
             setSearchTerm={setSearchTerm}
           />
 
-          <div className="flex flex-col md:flex-row flex-grow">
+          <div className="flex flex-col flex-grow md:flex-row">
             {/* Left Sidebar */}
-            <div className="md:w-1/4 p-4 hidden md:block sticky top-20 h-screen overflow-y-auto">
-              <h2 className="text-xl font-bold mb-4">Popular Initiatives</h2>
+            <div className="sticky hidden h-screen p-4 overflow-y-auto md:w-1/4 md:block top-20">
+              <h2 className="mb-4 text-xl font-bold">Popular Initiatives</h2>
               <ul>
                 {topHashtags.map((hashtag) => (
                   <li key={hashtag} className="mb-2">
@@ -181,7 +183,7 @@ const Feed = () => {
               </ul>
 
               <div className="mt-6">
-                <h3 className="text-lg font-bold mb-4">Upcoming Events</h3>
+                <h3 className="mb-4 text-lg font-bold">Upcoming Events</h3>
                 <ul>
                   <li className="mb-2">
                     <Link to="#" className="text-blue-500">
@@ -202,7 +204,7 @@ const Feed = () => {
               </div>
 
               <div className="mt-6">
-                <h3 className="text-lg font-bold mb-4">
+                <h3 className="mb-4 text-lg font-bold">
                   Join Our Volunteer Program
                 </h3>
                 <p className="mb-4">
@@ -211,7 +213,7 @@ const Feed = () => {
                 </p>
                 <button
                   onClick={handleJoinNowClick}
-                  className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+                  className="px-4 py-2 text-white transition duration-200 rounded-lg shadow bg-slate-700 hover:bg-green-700"
                 >
                   Join Us
                 </button>
@@ -221,8 +223,8 @@ const Feed = () => {
             {/* Main Feed Content */}
             <div className="flex-1 p-4">
               <div className="flex flex-col mb-6">
-                <div className="flex flex-row justify-between items-center mb-4">
-                  <h1 className="text-4xl font-bold mb-6 cursor-pointer"onClick={()=>{
+                <div className="flex flex-row items-center justify-between mb-4">
+                  <h1 className="mb-6 text-4xl font-bold cursor-pointer"onClick={()=>{
                     setIsLoading(true)
                     setTimeout(() => {
                     setSearchTerm('');
@@ -234,11 +236,11 @@ const Feed = () => {
                   </h1>
                   <button
                     onClick={handleCreatePost}
-                    className="bg-slate-700 text-white px-4 py-2 hidden sm:block rounded-lg shadow hover:bg-green-700 transition duration-200"
+                    className="hidden px-4 py-2 text-white transition duration-200 rounded-lg shadow bg-slate-700 sm:block hover:bg-green-700"
                   >
                     Post New Initiative
                   </button>
-                  <div className="block sm:hidden mb-3">
+                  <div className="block mb-3 sm:hidden">
                     <img
                       src={newpost}
                       height={40}
@@ -250,7 +252,7 @@ const Feed = () => {
               </div>
 
               {/* Hashtags */}
-              <div className="flex md:hidden mb-4">
+              <div className="flex mb-4 md:hidden">
                 <ul className="flex flex-row flex-wrap">
                   {topHashtags.map((hashtag) => (
                     <li key={hashtag} className="mb-2">
@@ -267,12 +269,12 @@ const Feed = () => {
 
               {/* Posts */}
               {isLoading ? (
-                <div className="flex min-h-screen flex-col bg-green-100 py-12 px-4">
-                  <div className="relative bg-white p-4 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg rounded-lg">
-                    <div className="m-2 max-w-sm animate-pulse">
-                      <div className="flex items-center justify-center h-52 w-full bg-green-400 dark:bg-green-300 sm:w-96">
+                <div className="flex flex-col min-h-screen px-4 py-12 bg-green-100">
+                  <div className="relative p-4 bg-white rounded-lg shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg">
+                    <div className="max-w-sm m-2 animate-pulse">
+                      <div className="flex items-center justify-center w-full bg-green-400 h-52 dark:bg-green-300 sm:w-96">
                         <svg
-                          className="h-12 w-12 text-gray-200"
+                          className="w-12 h-12 text-gray-200"
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 640 512"
                           aria-hidden="true"
@@ -282,7 +284,7 @@ const Feed = () => {
                           <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z" />
                         </svg>
                       </div>
-                      <div className="h-8 w-48 mb-4 mt-2 rounded-full bg-green-400 dark:bg-green-300"></div>
+                      <div className="w-48 h-8 mt-2 mb-4 bg-green-400 rounded-full dark:bg-green-300"></div>
                       <div className="h-2 max-w-[360px] mb-2.5 rounded-full bg-green-400 dark:bg-green-300"></div>
                       <div className="h-6 rounded-full mb-2.5 bg-green-400 dark:bg-green-300"></div>
                       <div className="h-6 max-w-[330px] rounded-full mb-2.5 bg-green-400 dark:bg-green-300"></div>
@@ -290,7 +292,7 @@ const Feed = () => {
                     </div>
                     <div className="flex items-center">
                       <svg
-                        className="h-16 w-16 mr-1 animate-pulse text-green-400 dark:text-green-300"
+                        className="w-16 h-16 mr-1 text-green-400 animate-pulse dark:text-green-300"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -304,8 +306,8 @@ const Feed = () => {
                         />
                       </svg>
                       <div className="flex flex-col gap-2 animate-pulse">
-                        <div className="h-3 w-48 rounded-full bg-green-400 dark:bg-green-300"></div>
-                        <div className="h-2 w-46 rounded-full bg-green-400 dark:bg-green-300"></div>
+                        <div className="w-48 h-3 bg-green-400 rounded-full dark:bg-green-300"></div>
+                        <div className="h-2 bg-green-400 rounded-full w-46 dark:bg-green-300"></div>
                       </div>
                     </div>
                   </div>
@@ -332,14 +334,14 @@ const Feed = () => {
                   </div>
                 ))
               ) : (
-                <div className="text-center text-gray-500 py-10">
+                <div className="py-10 text-center text-gray-500">
                   <p>No initiatives found for your search.</p>
                 </div>
               )}
 
               {/* Volunteer Form */}
-              <div className="mt-6 flex-col md:hidden">
-                <h3 className="text-lg font-bold mb-4">
+              <div className="flex-col mt-6 md:hidden">
+                <h3 className="mb-4 text-lg font-bold">
                   Join Our Volunteer Program
                 </h3>
                 <p className="mb-4">
@@ -348,7 +350,7 @@ const Feed = () => {
                 </p>
                 <button
                   onClick={handleJoinNowClick}
-                  className="bg-slate-700 text-white px-4 py-2 rounded-lg shadow hover:bg-green-700 transition duration-200"
+                  className="px-4 py-2 text-white transition duration-200 rounded-lg shadow bg-slate-700 hover:bg-green-700"
                 >
                   Join Us
                 </button>
@@ -356,8 +358,8 @@ const Feed = () => {
             </div>
 
             {/* Right Sidebar */}
-            <div className="md:w-1/4 p-4 hidden md:block sticky top-20 h-screen overflow-y-auto">
-              <h2 className="text-xl font-bold mb-4">Recent News</h2>
+            <div className="sticky hidden h-screen p-4 overflow-y-auto md:w-1/4 md:block top-20">
+              <h2 className="mb-4 text-xl font-bold">Recent News</h2>
               <ul>
                 <li className="mb-2">
                 <a href="https://www.energy.gov/eere/solar/solar-energy-wildlife-and-environment#:~:text=How%20Does%20Solar%20Energy%20Interact,humans%2C%20wildlife%2C%20and%20ecosystems.">
@@ -369,7 +371,7 @@ const Feed = () => {
    </a>
 
                 </li>
-                <li className="mb-2 mt-10">
+                <li className="mt-10 mb-2">
                   <iframe
                     width="90%"
                     height="100%"

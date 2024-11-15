@@ -6,21 +6,21 @@ const Feature = () => {
   const { isSignedIn } = useAuth();
   const navi=useNavigate();
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <div className="flex-1 bg-slate-50">
         <StatsSection />
       </div>
 
       <div
-        className="flex-1 bg-green-100 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4"
+        className="flex flex-col items-center justify-between flex-1 p-4 bg-green-100 lg:flex-row lg:items-start"
         id="connect"
       >
         {/* Content */}
-        <div className="flex flex-col items-center text-center space-y-4 lg:space-y-6 lg:w-1/2">
-          <h1 className="text-2xl lg:text-6xl font-bold">
+        <div className="flex flex-col items-center space-y-4 text-center lg:space-y-6 lg:w-1/2">
+          <h1 className="text-2xl font-bold lg:text-6xl">
             <span className="text-green-700">Eco</span>Connect
           </h1>
-          <p className="text-lg lg:text-2xl mb-6">
+          <p className="mb-6 text-lg lg:text-2xl">
             Ecoconnect is an innovative product that aims to streamline your
             processes and enhance efficiency. Our solution is designed with
             cutting-edge technology to provide you with the best experience
@@ -34,14 +34,14 @@ const Feature = () => {
                 navi("/signin");
               }
             }}
-            className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"
+            className="inline-block px-8 py-3 font-semibold text-white bg-green-700 rounded-lg cursor-pointer hover:bg-green-900"
           >
             Join Now !!
           </span>
         </div>
 
         {/* Animated SVG */}
-        <div className="flex-shrink-0 w-64 lg:w-1/2 flex justify-center lg:justify-end mt-4 lg:mt-0 sm:mr-14">
+        <div className="flex justify-center flex-shrink-0 w-64 mt-4 lg:w-1/2 lg:justify-end lg:mt-0 sm:mr-14">
           <dotlottie-player
             src="https://lottie.host/17eb718b-3798-4226-bdf3-2546136598e0/iYQALYy1BM.json"
             background="transparent"
