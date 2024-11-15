@@ -626,7 +626,7 @@ const Ecocalc = () => {
                 Calc
               </h1>
               <h2 className="lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9">
-                Greening Corporate Practices
+                Measure to Manage: Calculate your carbon footprint
               </h2>
             </div>
             <div className="container w-[60vw] bg-white shadow-md rounded-lg p-8 rounded-[24px] my-[20px]">
