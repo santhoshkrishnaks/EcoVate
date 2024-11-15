@@ -47,7 +47,7 @@ const postvision = async (req, res) => {
 // Get all EcoVision projects
 const getvision = async (req, res) => {
   try {
-    const projects = await EcoVision.find({});
+    const projects = await EcoVision.find({ status: false });
     res.status(200).json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error); // Log the error
