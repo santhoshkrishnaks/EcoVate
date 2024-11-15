@@ -1,33 +1,36 @@
-import React, { useEffect } from 'react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import '@dotlottie/player-component/dist/dotlottie-player.mjs';
-import { useUser, useAuth } from '@clerk/clerk-react';
+import React, { useEffect, useRef } from 'react';
 import toast from 'react-hot-toast';
 
 const Hero = () => {
   const { user } = useUser();
-  const { isSignedIn, signOut } = useAuth();
+  const { isSignedIn } = useAuth();
+
+  const hasMounted = useRef(false); 
+  const hasShownToast = useRef(false); 
 
   useEffect(() => {
-    // Show toast only once per login, even across page reloads
-    const showToastOnce = () => {
-      // If user is signed in and the toast flag is not set in localStorage, show toast
-      if (isSignedIn && !localStorage.getItem('toastShown')) {
+  
+    if (isSignedIn && !hasShownToast.current) {
+ 
+      if (!sessionStorage.getItem('toastShown')) {
         toast.success(`Welcome back ${user.username}`, {
           duration: 4000,
         });
-        localStorage.setItem('toastShown', 'true'); // Mark the toast as shown
-      }
-    };
 
-    showToastOnce();
-  }, [isSignedIn, user]); // Run effect when `isSignedIn` or `user` changes
+        sessionStorage.setItem('toastShown', 'true'); 
+        hasShownToast.current = true; 
+      }
+    }
+  }, [isSignedIn, user]); 
 
   useEffect(() => {
-    // Reset the localStorage flag when the user logs out
-    if (!isSignedIn) {
-      localStorage.removeItem('toastShown'); // Remove the flag upon logout
+    
+    if (!hasMounted.current) {
+      hasMounted.current = true;
     }
-  }, [isSignedIn]); // This will run whenever the user logs in or out
+  }, []); 
 
   const lottiePlayerSrc =
     'https://lottie.host/575d36dd-4d87-421f-ae2f-4600b6e9215f/JJWwJ87e6Z.json';
