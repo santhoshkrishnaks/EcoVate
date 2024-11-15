@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-react";
 import React, { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 import {
   BrowserRouter as Router,
   Route,
@@ -28,6 +29,7 @@ const App = () => {
   const [profileuser,setProfileuser]=useState();
   return (
     <div>
+      <Toaster />
       <Create.Provider value={{ showForm, setShowForm, load, setLoad,profileuser,setProfileuser }}>
         <Router>
           <Routes>

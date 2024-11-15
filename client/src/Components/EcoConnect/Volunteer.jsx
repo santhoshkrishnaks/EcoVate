@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useUser } from '@clerk/clerk-react';
+import {toast} from 'react-hot-toast';
 
 const JoinVolunteerForm = ({ onClose }) => {
   const { user } = useUser();
@@ -45,10 +46,13 @@ const JoinVolunteerForm = ({ onClose }) => {
       });
 
       if (response.status !== 200) {
+        toast.error("Error submitting form. Please try again later.");
         throw new Error("Something went wrong!");
       }
 
-      // Clear form fields
+      toast.success("Thank you for your interest in volunteering with us! we will get back to you soon.",{
+        duration: 3000
+      });
       setUsername("");
       setEmail("");
       setPhone("");
@@ -108,12 +112,12 @@ const JoinVolunteerForm = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-6 max-w-md relative w-11/12 md:w-6/12 lg:w-6/12 xl:w-5/12 h-3/4 max-h-[70vh] overflow-auto">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+          className="absolute text-gray-500 top-4 right-4 hover:text-gray-700"
           aria-label="Close"
         >
           <svg
@@ -131,8 +135,8 @@ const JoinVolunteerForm = ({ onClose }) => {
             ></path>
           </svg>
         </button>
-        <h2 className="text-2xl font-bold mb-4">Join Our Volunteer Program</h2>
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+        <h2 className="mb-4 text-2xl font-bold">Join Our Volunteer Program</h2>
+        {error && <div className="mb-4 text-red-500">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label
@@ -146,7 +150,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -162,7 +166,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="email_address"
               value={email_address}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -178,7 +182,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -194,7 +198,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -210,7 +214,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="age"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
           </div>
@@ -219,7 +223,7 @@ const JoinVolunteerForm = ({ onClose }) => {
             <label className="block text-sm font-medium text-gray-700">
               Preferred Volunteer Activities
             </label>
-            <div className="mt-1 flex flex-col">
+            <div className="flex flex-col mt-1">
               {[
                 "Beach Clean-Up",
                 "Tree Planting",
@@ -248,11 +252,11 @@ const JoinVolunteerForm = ({ onClose }) => {
                   value={otherActivity}
                   onChange={handleOtherInputChange}
                   placeholder="Please specify"
-                  className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               )}
               {activityError && (
-                <div className="text-red-500 mt-2">This field is required.</div>
+                <div className="mt-2 text-red-500">This field is required.</div>
               )}
             </div>
           </div>
@@ -268,7 +272,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="availability"
               value={availability}
               onChange={handleAvailabilityChange}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             >
               <option value="">Select availability</option>
@@ -288,7 +292,7 @@ const JoinVolunteerForm = ({ onClose }) => {
               id="motivation"
               value={motivation}
               onChange={(e) => setMotivation(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="block w-full px-3 py-2 mt-1 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               rows="4"
               placeholder="Share your motivation"
             ></textarea>
@@ -297,13 +301,13 @@ const JoinVolunteerForm = ({ onClose }) => {
             <button
               type="button"
               onClick={onClose}
-              className="bg-gray-500 text-white px-4 py-2 rounded-lg shadow mr-2"
+              className="px-4 py-2 mr-2 text-white bg-gray-500 rounded-lg shadow"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition duration-200"
+              className="px-4 py-2 text-white transition duration-200 bg-blue-500 rounded-lg shadow hover:bg-blue-700"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}

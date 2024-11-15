@@ -7,6 +7,7 @@ import Create from "../Context";
 import Loader from "../Loader/Loader.jsx";
 import { useUser } from "@clerk/clerk-react";
 import axios from "axios";
+import {toast} from 'react-hot-toast';
 
 // EnergyForm Component
 const EnergyForm = ({ formData, handleChange }) => {
@@ -21,7 +22,7 @@ const EnergyForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Energy Consumption
       </h2>
       <div>
@@ -95,7 +96,7 @@ const TransportationForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className=" md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Transportation
       </h2>
       <div>
@@ -166,7 +167,7 @@ const HousingForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Housing
       </h2>
       <div>
@@ -216,7 +217,7 @@ const DietForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5 text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Diet and Food Consumption
       </h2>
       <div>
@@ -264,7 +265,7 @@ const WasteForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Waste Production
       </h2>
       <div>
@@ -314,7 +315,7 @@ const WaterForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Water Usage
       </h2>
       <div>
@@ -354,7 +355,7 @@ const GoodsForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Goods and Services
       </h2>
       <div>
@@ -402,7 +403,7 @@ const LifestyleForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Lifestyle Choices
       </h2>
       <div>
@@ -438,7 +439,7 @@ const OffsetsForm = ({ formData, handleChange }) => {
   });
   return (
     <form className="space-y-4">
-      <h2 className="md:text-3xl text-xl mt-5  text-green-500 text-center mb-10 text-bold">
+      <h2 className="mt-5 mb-10 text-xl text-center text-green-500 md:text-3xl text-bold">
         Carbon Offsets
       </h2>
       <div>
@@ -552,37 +553,59 @@ const Ecocalc = () => {
     setIsOpen(!isOpen);
   };
   const handleSubmit = async () => {
-    // Calculate scores based on formData
-    const scores = calculateCarbonFootprint(formData);
-    const totalFootprint = Object.values(scores).reduce(
-      (acc, score) => acc + score,
-      0
-    );
+  const submittingToastId = toast.loading('Submitting...', { id: 'submit' });
 
-    const userData = {
-      username:username
-    };
-    try {
-      setSend(true);
-      await axios.post("https://ecovate-nqq4.onrender.com/ecocalc", {
-        username: username,
-        footprint: totalFootprint,
-      });
-    } catch (error) {
-      console.error("Error posting data:", error);
-    }
-    finally{
-      setSend(false);
-    }
-    // Navigate to results page and pass both formData and scores via state
-    navigate("/result", {
-      state: {
-        scores,
-        user: userData,
-        formData,
-      },
+  try {
+    setSend(true);
+
+    setTimeout(() => {
+      toast.dismiss(submittingToastId);
+      
+      const analyzingToastId = toast.loading('Analyzing the uses...', { id: 'analyze' });
+
+      setTimeout(() => {
+        toast.dismiss(analyzingToastId);
+        
+        const generatingToastId = toast.loading('Generating report...', { id: 'generate' });
+
+        setTimeout(() => {
+          toast.dismiss(generatingToastId);
+
+          const successToastId = toast.success('Successfully generated! Redirecting...', { id: 'success' });
+
+          setTimeout(() => {
+            navigate("/result", {
+              state: {
+                scores: calculateCarbonFootprint(formData),
+                user: { username },
+                formData,
+              },
+            });
+          }, 3000);
+
+        }, 5000);
+
+      }, 3000);
+
+    }, 4000);
+
+    const scores = calculateCarbonFootprint(formData);
+    const totalFootprint = Object.values(scores).reduce((acc, score) => acc + score, 0);
+
+    await axios.post("https://ecovate-nqq4.onrender.com/ecocalc", {
+      username: username,
+      footprint: totalFootprint,
     });
-  };
+
+  } catch (error) {
+    toast.error('Error posting data!', { id: 'submit' });
+    console.error("Error posting data:", error);
+  } finally {
+    setSend(false);
+  }
+};
+
+
   useEffect(() => {
     setLoad(true);
     setTimeout(() => {
@@ -596,14 +619,14 @@ const Ecocalc = () => {
       ) : (
         <div>
           <Nav />
-          <div className="bg-green-50 min-h-screen w-screen p-6 ecocal">
+          <div className="w-screen min-h-screen p-6 bg-green-50 ecocal">
             <div>
-              <h1 className="text-5xl font-bold text-center items-center text-neutral-700">
-                <span className="text-5xl text-green-700 font-bold">Eco</span>
+              <h1 className="items-center text-5xl font-bold text-center text-neutral-700">
+                <span className="text-5xl font-bold text-green-700">Eco</span>
                 Calc
               </h1>
               <h2 className="lg:text-3xl lg:mt-[20px] mb-[20px] font-bold text-center items-center text-transparent bg-clip-text bg-gradient-to-r from-green-900 to-green-300 mb-9">
-                Greening Corporate Practices
+                Measure to Manage: Calculate your carbon footprint
               </h2>
             </div>
             <div className="container w-[60vw] bg-white shadow-md rounded-lg p-8 rounded-[24px] my-[20px]">
@@ -619,7 +642,7 @@ const Ecocalc = () => {
                   >
                     Select
                     <svg
-                      className="-mr-1 h-5 w-5 black"
+                      className="w-5 h-5 -mr-1 black"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                       aria-hidden="true"
@@ -635,7 +658,7 @@ const Ecocalc = () => {
 
                 {isOpen && (
                   <div
-                    className="absolute z-10 mt-2 w-96 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 "
+                    className="absolute z-10 mt-2 origin-top-right bg-white rounded-md shadow-lg w-96 ring-1 ring-black ring-opacity-5 "
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="menu-button"
@@ -691,7 +714,7 @@ const Ecocalc = () => {
                         Diet
                       </span>
                       <span
-                        className="cursor-pointer block px-4 py-2 text-sm cursor-pointer text-gray-700 hover:bg-green-50"
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
                         role="menuitem"
                         tabIndex="-1"
                         id="menu-item-2"
@@ -703,7 +726,7 @@ const Ecocalc = () => {
                         Waste
                       </span>
                       <span
-                        className="block px-4 py-2  text-sm text-gray-700 cursor-pointer hover:bg-green-50"
+                        className="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-green-50"
                         role="menuitem"
                         tabIndex="-1"
                         onClick={() => {
@@ -799,7 +822,7 @@ const Ecocalc = () => {
 
               <button
                 onClick={handleSubmit}
-                className="py-2 px-4 bg-green-600 text-white rounded"
+                className="px-4 py-2 text-white bg-green-600 rounded"
               >
                 {send?("Submitting..."):("Submit")}
               </button>

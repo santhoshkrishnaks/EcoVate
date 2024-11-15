@@ -305,7 +305,7 @@ const DonateForms = (postid) => {
 
         {step === 1 && (
           <div>
-            <h1 className="text-2xl font-bold mb-4">Choose Amount</h1>
+            <h1 className="mb-4 text-2xl font-bold">Choose Amount</h1>
             <div className="flex mb-4 space-x-2">
               <button
                 onClick={() => handlePaymentTypeChange('one-time')}
@@ -350,7 +350,7 @@ const DonateForms = (postid) => {
                     placeholder="Custom Amount"
                     value={customAmount}
                     onChange={handleCustomAmountChange}
-                    className="border border-gray-300 p-2 rounded w-full"
+                    className="w-full p-2 border border-gray-300 rounded"
                   />
                 </div>
               )}
@@ -358,7 +358,7 @@ const DonateForms = (postid) => {
             </div>
             <button
               onClick={handleNextStep}
-              className="bg-green-500 text-white px-4 py-2 rounded w-full"
+              className="w-full px-4 py-2 text-white bg-green-500 rounded"
             >
               Next
             </button>
@@ -367,7 +367,7 @@ const DonateForms = (postid) => {
 
         {step === 2 && (
           <div>
-            <h1 className="text-2xl font-bold mb-4">Enter Payment Details</h1>
+            <h1 className="mb-4 text-2xl font-bold">Enter Payment Details</h1>
             <div className="mb-4">
               <button
                 onClick={() => handlePaymentOptionChange('card')}
@@ -388,7 +388,7 @@ const DonateForms = (postid) => {
                 Net Banking
               </button>
             </div>
-            {errors.paymentOption && <p className="text-red-500 mb-4">{errors.paymentOption}</p>}
+            {errors.paymentOption && <p className="mb-4 text-red-500">{errors.paymentOption}</p>}
             {paymentOption === 'card' && (
               <div>
                 <input
@@ -397,27 +397,27 @@ const DonateForms = (postid) => {
                   placeholder="Card Number"
                   value={cardNumber}
                   onChange={handleCardDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                 />
-                {errors.cardNumber && <p className="text-red-500 mb-4">{errors.cardNumber}</p>}
+                {errors.cardNumber && <p className="mb-4 text-red-500">{errors.cardNumber}</p>}
                 <input
                   type="text"
                   name="expiryDate"
                   placeholder="Expiry Date (MM/YY)"
                   value={expiryDate}
                   onChange={handleCardDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                 />
-                {errors.expiryDate && <p className="text-red-500 mb-4">{errors.expiryDate}</p>}
+                {errors.expiryDate && <p className="mb-4 text-red-500">{errors.expiryDate}</p>}
                 <input
                   type="text"
                   name="cvv"
                   placeholder="CVV"
                   value={cvv}
                   onChange={handleCardDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                 />
-                {errors.cvv && <p className="text-red-500 mb-4">{errors.cvv}</p>}
+                {errors.cvv && <p className="mb-4 text-red-500">{errors.cvv}</p>}
               </div>
             )}
             {paymentOption === 'upi' && (
@@ -426,10 +426,10 @@ const DonateForms = (postid) => {
                 placeholder="UPI ID"
                 value={upiId}
                 onChange={handleUpiIdChange}
-                className="border border-gray-300 p-2 rounded w-full mb-4"
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
               />
             )}
-            {errors.upiId && <p className="text-red-500 mb-4">{errors.upiId}</p>}
+            {errors.upiId && <p className="mb-4 text-red-500">{errors.upiId}</p>}
             {paymentOption === 'netbanking' && (
               <div>
                 <input
@@ -438,55 +438,55 @@ const DonateForms = (postid) => {
                   placeholder="Account Holder Name"
                   value={accountHolderName}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                   required
                 />
-                {errors.accountHolderName && <p className="text-red-500 mb-4">{errors.accountHolderName}</p>}
+                {errors.accountHolderName && <p className="mb-4 text-red-500">{errors.accountHolderName}</p>}
                 <input
                   type="text"
                   name="accountNumber"
                   placeholder="Account Number"
                   value={accountNumber}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                   required
                 />
-                {errors.accountNumber && <p className="text-red-500 mb-4">{errors.accountNumber}</p>}
+                {errors.accountNumber && <p className="mb-4 text-red-500">{errors.accountNumber}</p>}
                 <select
                   name="accountType"
                   value={accountType}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                   required
                 >
                   <option value="Savings">Savings</option>
                   <option value="Current">Current</option>
                   <option value="NRI">NRI</option>
                 </select>
-                {errors.accountType && <p className="text-red-500 mb-4">{errors.accountType}</p>}
+                {errors.accountType && <p className="mb-4 text-red-500">{errors.accountType}</p>}
                 <input
                   type="text"
                   name="ifscCode"
                   placeholder="IFSC Code"
                   value={ifscCode}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                   required
                 />
-                {errors.ifscCode && <p className="text-red-500 mb-4">{errors.ifscCode}</p>}
+                {errors.ifscCode && <p className="mb-4 text-red-500">{errors.ifscCode}</p>}
                 <input
                   type="text"
                   name="branch"
                   placeholder="Branch (optional)"
                   value={branch}
                   onChange={handleNetBankingDetailsChange}
-                  className="border border-gray-300 p-2 rounded w-full mb-4"
+                  className="w-full p-2 mb-4 border border-gray-300 rounded"
                 />
               </div>
             )}
             <button
               onClick={handleNextStep}
-              className="bg-green-500 text-white px-4 py-2 rounded w-full"
+              className="w-full px-4 py-2 text-white bg-green-500 rounded"
             >
               Confirm Payment
             </button>
@@ -496,15 +496,15 @@ const DonateForms = (postid) => {
         {step === 3 && (
           <div>
             <div className="flex items-center mb-4">
-              <FontAwesomeIcon icon={faCheckCircle} className="text-green-500 text-4xl mr-2" />
+              <FontAwesomeIcon icon={faCheckCircle} className="mr-2 text-4xl text-green-500" />
               <h1 className="text-2xl font-bold">Payment Successful</h1>
             </div>
             <p className='text-2xl font-bold text-green-700' >Thank you for your donation! Your payment was successful.</p>
-            <p className='text-1xl font-bold'>Transaction ID:  
+            <p className='font-bold text-1xl'>Transaction ID:  
                <span className='text-slate-800'>{transactionId}</span></p>
             <button
               onClick={handlePrint}
-              className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+              className="px-4 py-2 mt-4 text-white bg-blue-500 rounded"
             >
               Print Receipt
             </button>

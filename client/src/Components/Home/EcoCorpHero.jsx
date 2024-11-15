@@ -8,12 +8,12 @@ export const EcoCorpHero = () => {
   const navi=useNavigate();
   return (
     <div>
-      <div className="flex-1 bg-green-50 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
+      <div className="flex flex-col items-center justify-between flex-1 p-4 bg-green-50 lg:flex-row lg:items-start">
         <div className="flex flex-col items-center text-center space-y-4 lg:ml-[100px]  lg:mt-[70px] lg:space-y-6 lg:w-1/2">
-          <h1 className="text-2xl lg:text-6xl font-bold ">
+          <h1 className="text-2xl font-bold lg:text-6xl ">
             <span className="text-green-700">Eco</span>Corp
           </h1>
-          <p className="text-lg lg:text-2xl mb-6">
+          <p className="mb-6 text-lg lg:text-2xl">
             Empowering corporate companies with sustainable development
             solutions for a greener future.Ecovate provide tailored strategies
             and innovative solutions to help corporate organization reduce their
@@ -21,11 +21,11 @@ export const EcoCorpHero = () => {
           </p>
           <span
           onClick={()=>{ if (isSignedIn) {
-            navi('/Ecocrop');
+            navi('/Ecocorp');
           } else {
             navi('/signin');
           }}}
-            className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold cursor-pointer"
+            className="inline-block px-8 py-3 font-semibold text-white bg-green-700 rounded-lg cursor-pointer hover:bg-green-900"
           >
             Visit Now !!
           </span>
@@ -45,7 +45,7 @@ export const EcoCorpHero = () => {
       </div>
 
       {/* //2nd */}
-      <div className="flex-1 bg-green-100 flex flex-col lg:flex-row items-center lg:items-start justify-between p-4">
+      <div className="flex flex-col items-center justify-between flex-1 p-4 bg-green-100 lg:flex-row lg:items-start">
         {/* animated */}
         <div className="flex-shrink-0 w-64 lg:w-1/3 flex justify-center lg:justify-end  lg:mt-0 lg:mr-[100px] sm:mr-14">
           <dotlottie-player
@@ -59,10 +59,10 @@ export const EcoCorpHero = () => {
         </div>
 
         <div className="flex flex-col items-center text-center space-y-4 lg:ml-[100px] lg:mr-[100px] lg:mt-[20px] lg:space-y-6 lg:w-1/2">
-          <h1 className="text-2xl lg:text-6xl font-bold ">
+          <h1 className="text-2xl font-bold lg:text-6xl ">
             <span className="text-green-700">Eco</span>Calc
           </h1>
-          <p className="text-lg lg:text-2xl mb-6">
+          <p className="mb-6 text-lg lg:text-2xl">
             Calculate your carbon footprint with precision. Understand your
             environmental impact and get actionable insights to reduce emissions
             for a more sustainable future.Start your journey towards
@@ -70,7 +70,7 @@ export const EcoCorpHero = () => {
           </p>
           <Link
             to="/Ecocalc"
-            className="inline-block px-8 py-3  bg-green-700 hover:bg-green-900 text-white rounded-lg font-semibold "
+            className="inline-block px-8 py-3 font-semibold text-white bg-green-700 rounded-lg hover:bg-green-900 "
           >
             Try Now !!
           </Link>

@@ -1,7 +1,11 @@
 import { PDFDocument, rgb } from "pdf-lib";
 import { v4 as uuidv4 } from "uuid";
+import {toast} from 'react-hot-toast';
 
 export const pdfgen = async (scores, recommendations) => {
+   toast.success("The report has been downloaded successfully.",{
+      duration: 4000, 
+    });
   const totalScore = Object.values(scores).reduce((a, b) => a + b, 0);
 
   const getColorForScore = (score) => {
