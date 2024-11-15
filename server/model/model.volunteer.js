@@ -34,6 +34,11 @@ const volunteerSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    status: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     timestamps: true,

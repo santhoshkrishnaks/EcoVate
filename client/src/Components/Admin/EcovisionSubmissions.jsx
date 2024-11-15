@@ -24,22 +24,45 @@ const EcoVisionSubmissions = () => {
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  const handleApprove = (id) => {
-    axios.post('https://ecovate-nqq4.onrender.com/approvevision', { id })
-      .then(() => {
-        console.log('Approval email sent:', id);
-        // Optionally update the UI or show a notification
-      })
-      .catch((error) => console.error('Error sending approval email:', error));
+  const handleApprove = async (id) => {
+    try {
+      // Send the approval request
+      await axios.post("https://ecovate-nqq4.onrender.com/approvevision", {
+        id,
+      });
+
+      console.log("Approval email sent:", id);
+
+      // Fetch the updated data
+      const response = await axios.get(
+        "https://ecovate-nqq4.onrender.com/ecovision"
+      );
+      setSubmissions(response.data); // Update the state with the new data
+
+      window.alert("Approval successful");
+    } catch (error) {
+      console.error("Error sending approval email:", error);
+      window.alert("Failed to process the approval. Please try again.");
+    }
   };
 
-  const handleReject = (id) => {
-    axios.post('https://ecovate-nqq4.onrender.com/rejectvision', { id })
-      .then(() => {
+
+  const handleReject = async (id) => {
+    try{
+    await axios.post('https://ecovate-nqq4.onrender.com/rejectvision', { id });
+      
         console.log('Rejection email sent:', id);
+        const response = await axios.get(
+          "https://ecovate-nqq4.onrender.com/ecovision"
+        );
+        setSubmissions(response.data);
+        window.alert("Rejection successful");
         // Optionally update the UI or show a notification
-      })
-      .catch((error) => console.error('Error sending rejection email:', error));
+    }
+      catch(error){
+        console.error('Error sending rejection email:', error);
+      }
+
   };
 
   const toggleExpand = (index) => {

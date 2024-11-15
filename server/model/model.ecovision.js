@@ -46,6 +46,11 @@ const ecovisionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   {
     timestamps: true,

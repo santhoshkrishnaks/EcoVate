@@ -28,9 +28,6 @@ const postvolunteer = async (req, res) => {
   try {
     const volunt = new Volunteer(req.body);
     await volunt.save();
-
-
-
     res.status(200).json(volunt);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -39,7 +36,7 @@ const postvolunteer = async (req, res) => {
 
 const getvolunteer = async (req, res) => {
   try {
-    const vol = await Volunteer.find({});
+    const vol = await Volunteer.find({ status: false });
     res.status(200).json(vol);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -63,8 +60,11 @@ const decideApplication = async (req, res) => {
     let subject, text;
 
     if (action === "accept") {
-      subject =
-        "Congratulations! Your Application to Join EcoVate Has Been Accepted";
+      // Update the volunteer status to true
+      volunteer.status = true; // assuming 'status' field exists in the model
+      await volunteer.save();
+
+      subject = "Congratulations! Your Application to Join EcoVate Has Been Accepted";
       text = `
 Dear ${volunteer.username},
 
@@ -75,7 +75,6 @@ As the next step, we will provide you with further details on how to get started
 Thank you for your commitment to environmental sustainability. We are thrilled to welcome you to our team!
 
 Best regards,
-
 Vimal C
 Founder, CEO
 EcoVate Team
@@ -83,6 +82,9 @@ info.ecovate@gmail.com
 EcoVate Global Website
             `;
     } else if (action === "reject") {
+      // Delete the volunteer from the database
+      await Volunteer.findByIdAndDelete(id);
+
       subject = "Application Rejection Notification from EcoVate";
       text = `
 Dear ${volunteer.username},
@@ -94,7 +96,6 @@ We appreciate the effort you put into your application and encourage you to appl
 Thank you for your understanding.
 
 Best regards,
-
 Vimal C
 Founder, CEO
 EcoVate Team
@@ -105,6 +106,7 @@ EcoVate Global Website
       return res.status(400).json({ error: "Invalid action" });
     }
 
+    // Send the email after updating or deleting
     await sendEmail(volunteer.email_address, subject, text);
     res.status(200).json({ message: `Application ${action}ed successfully` });
   } catch (error) {
