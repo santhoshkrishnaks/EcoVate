@@ -80,7 +80,7 @@ const StatsSection = () => {
                     Hectares of Forest Destroyed
                   </dt>
                   <dd className="order-1 text-[28px] font-extrabold leading-none text-slate-700 lg:text-4xl">
-                    {forestHectares.toFixed(0).toLocaleString()}%
+                    {forestHectares.toFixed(0).toLocaleString()}
                   </dd>
                 </div>
                 <div className="flex flex-col p-4 sm:p-6 text-center border-t border-slate-800 sm:border-0 sm:border-l">
